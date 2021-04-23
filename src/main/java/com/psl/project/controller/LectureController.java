@@ -1,0 +1,27 @@
+package com.psl.project.controller;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import com.psl.project.services.LectureService;
+
+@Controller
+public class LectureController {
+
+	@Autowired
+	LectureService service;
+	
+	@GetMapping(value="/lectures/{course}/{cname}")
+	public String showAllLectures(HttpServletRequest request, @PathVariable("course") int cid, @PathVariable("cname") String cname) {
+		request.setAttribute("lectures",service.getAllLectures(cid));
+		request.setAttribute("course",cid);
+		request.setAttribute("cname",cname);
+		System.out.println(cid);
+		//System.out.println(service.getAllUsers());
+		return "lectures";
+	}
+}
