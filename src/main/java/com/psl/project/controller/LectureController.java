@@ -7,7 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.psl.project.repository.QuizDao;
 import com.psl.project.services.LectureService;
+import com.psl.project.services.QuestionService;
+import com.psl.project.services.QuizService;
 
 @Controller
 public class LectureController {
@@ -15,12 +18,15 @@ public class LectureController {
 	@Autowired
 	LectureService service;
 	
+	@Autowired
+	QuizService qservice;
+	
 	@GetMapping(value="/lectures/{course}/{cname}")
 	public String showAllLectures(HttpServletRequest request, @PathVariable("course") int cid, @PathVariable("cname") String cname) {
 		request.setAttribute("lectures",service.getAllLectures(cid));
 		request.setAttribute("course",cid);
 		request.setAttribute("cname",cname);
-		System.out.println(cid);
+		request.setAttribute("quiz", qservice.getQuiz(cid).get(0));
 		//System.out.println(service.getAllUsers());
 		return "lectures";
 	}

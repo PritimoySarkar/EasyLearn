@@ -30,21 +30,20 @@
 
 </head>
 <body
-	style="background-image: url('/resource/images/bg.jpg'); background-blend-mode: luminosity">
+	style="background-image: url('/resources/images/bg.jpg'); background-blend-mode: luminosity">
 	<div style="text-align: center; background-color: #86ca96">
 		<h1
 			style="background-color: white; color: #007bff; font-family: 'Brush Script MT', cursive; font-size: 60pt">Welcome
 			to EasyLearn</h1>
-		<hr>
-		<h3
-			style="font-family: Comic Sans MS, serif; color: #dd662a; font-size: 30pt">${cname}
-			course for beginners</h3>
+		<h2
+			style="font-family: Comic Sans MS, serif; color: #053971; font-size: 30pt">${cname}
+			course for beginners</h2>
 	</div>
 
 	<div>
 		<div class="container">
 			<table class="table table-primary"
-				style="border-bottom-left-radius: 30px; border-bottom-right-radius: 30px;">
+				style="border-radius: 30px 30px 30px">
 				<thead>
 					<tr class="bg-success">
 						<th scope="col">Sl No.</th>
@@ -60,19 +59,17 @@
 							<td>
 								<!-- Button trigger modal -->
 								<button type="button" class="btn btn-primary"
-									data-toggle="modal" data-target="#exampleModalCenter${lecture.slno}">
-									Launch demo modal</button>
-									
-								<!-- Modal -->
-								<div class="modal fade" id="exampleModalCenter${lecture.slno }" tabindex="-1"
-									role="dialog" aria-labelledby="exampleModalCenterTitle"
-									aria-hidden="true">
+									data-toggle="modal"
+									data-target="#exampleModalCenter${lecture.slno}">Play
+									Video</button> <!-- Modal -->
+								<div class="modal fade" id="exampleModalCenter${lecture.slno }"
+									tabindex="-1" role="dialog"
+									aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 									<div class="modal-dialog modal-dialog-centered modal-lg"
 										role="document">
 										<div class="modal-content" style="height: 700px">
 											<div class="modal-header">
-												<h5 class="modal-title" id="exampleModalLongTitle">Modal
-													title</h5>
+												<h5 class="modal-title" id="exampleModalLongTitle">${lecture.lname}</h5>
 												<button type="button" class="close" data-dismiss="modal"
 													aria-label="Close">
 													<span aria-hidden="true">&times;</span>
@@ -80,7 +77,7 @@
 											</div>
 											<div class="modal-body">
 												<iframe allowFullScreen="true" width="100%" height="100%"
-													src="${lecture.url }"></iframe>
+													src="https://www.youtube.com/embed/${lecture.url }"></iframe>
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-secondary"
@@ -94,6 +91,43 @@
 							</td>
 						</tr>
 					</c:forEach>
+					<tr>
+						<td><h4>Q.</h4></td>
+						<td><h4>Quiz for ${cname} Course</h4></td>
+						<td>
+							<button type="button" class="btn btn-primary" data-toggle="modal"
+								data-target="#quizModal">Start Quiz</button> 
+								
+								<!-- Modal -->
+							<div class="modal fade" id="quizModal"
+								tabindex="-1" role="dialog"
+								aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered"
+									role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLongTitle" style="color:blue">Are You Sure?</h5>
+											<button type="button" class="close" data-dismiss="modal"
+												aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<h1 style="color:green">Do you want to start the Quiz?</h1>
+										</div>
+										<div class="modal-footer">
+										<button type="button" onClick="window.location='/course/${quiz.qid}/quiz'" class="btn btn-primary">
+										Yes
+										</button>
+											<button type="button" class="btn btn-secondary"
+												data-dismiss="modal">No</button>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</div>

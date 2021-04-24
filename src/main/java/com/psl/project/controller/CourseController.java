@@ -20,6 +20,12 @@ public class CourseController {
 		return "courses";
 	}
 	
+	@GetMapping(value="/allcourses")
+	public String showAllCourses(HttpServletRequest request) {
+		request.setAttribute("courses", courseservice.getAllCourses());
+		return "allCourses";
+	}
+	
 	@GetMapping(value="/enrolledcourses")
 	public String showEnrolledCourse(HttpServletRequest request) {
 		request.setAttribute("courses", courseservice.getAllEnrolledCourses());
