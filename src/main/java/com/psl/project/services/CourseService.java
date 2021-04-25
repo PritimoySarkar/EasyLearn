@@ -30,7 +30,7 @@ public class CourseService {
 	
 	public List<Course> getAllEnrolledCourses(){
 		List<Course> courses = new ArrayList<Course>();
-		for(Course course: coursedao.findCourseByUser(1)) {
+		for(Course course: coursedao.findCourseByCid(1)) {
 			courses.add(course);
 		}
 		return courses;

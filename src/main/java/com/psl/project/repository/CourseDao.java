@@ -13,6 +13,6 @@ import com.psl.project.model.Course;
 public interface CourseDao extends JpaRepository<Course, Long> {
 
 	//@Query("from Course where cid=:id")
-	@Query("from Course c,UserCourse uc,User u where uc.cid=c.cid and uc.uid=u.uid and uid=:id")
-	public List<Course> findCourseByUser(@Param("id") int user);
+	//@Query("from Course c,UserCourse uc,User u where uc.cid=c.cid and uc.uid=u.uid and uid=:id")
+	public List<Course> findCourseByCid(int cid);
 }

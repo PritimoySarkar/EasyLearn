@@ -14,12 +14,6 @@ public class CourseController {
 	@Autowired
 	CourseService courseservice;
 	
-	@GetMapping(value="/courses")
-	public String showAllCourse(HttpServletRequest request) {
-		request.setAttribute("courses", courseservice.getAllCourses());
-		return "courses";
-	}
-	
 	@GetMapping(value="/allcourses")
 	public String showAllCourses(HttpServletRequest request) {
 		request.setAttribute("courses", courseservice.getAllCourses());

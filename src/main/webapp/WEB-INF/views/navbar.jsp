@@ -63,8 +63,8 @@ body > .ui.container {
     
     <!--Start: Desktop Nav-->
     <div class="computer only row">
-      <a class="header item easy-learn" style="font-size:2rem">Easy Learn</a>
-      <a class="item menu-item">All Courses</a>
+      <a href="/allcourses" class="header item easy-learn" style="font-size:2rem">Easy Learn</a>
+      <a href="/allcourses" class="item menu-item">All Courses</a>
       <a class="item menu-item">Dashboard</a>
       
       
@@ -74,8 +74,8 @@ body > .ui.container {
     
     <!--Start: Mobile Nav-->
     <div class="tablet mobile only row">
-      <a class="header item easy-learn">Easy Learn</a>
-      <a class="item menu-item">All Courses</a>
+      <a href="/allcourses" class="header item easy-learn">Easy Learn</a>
+      <a href="/allcourses" class="item menu-item">All Courses</a>
       <a class="item menu-item">Dashboard</a>
       <!-- <div class="right menu">
         <a class="menu item">
