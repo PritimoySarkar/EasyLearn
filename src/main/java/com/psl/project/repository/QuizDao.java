@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.psl.project.model.Quiz;
 
 @Repository
-public interface QuizDao extends JpaRepository<Quiz, Long>{
-
+public interface QuizDao extends JpaRepository<Quiz, Integer>{
+	//public List<Quiz> findByCid(int cid);
 	public List<Quiz> findByCid(int cid);
 }

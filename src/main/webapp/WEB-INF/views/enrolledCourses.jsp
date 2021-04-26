@@ -91,14 +91,14 @@ console.log("site cookie",document.cookie);
 										role="document">
 										<div class="modal-content">
 											<div class="modal-header">
-												<h1 class="modal-title" id="exampleModalLongTitle">Are you sure?</h1>
+												<h1 class="modal-title" id="exampleModalLongTitle">Are you ready?</h1>
 												<button type="button" class="close" data-dismiss="modal"
 													aria-label="Close">
 													<span aria-hidden="true">&times;</span>
 												</button>
 											</div>
 											<div class="modal-body">
-												<h3>Do you want to Enroll for ${course.cname} Course?</h3>
+												<h3>Do you want to explore ${course.cname} Course?</h3>
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-secondary"

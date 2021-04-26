@@ -84,13 +84,12 @@ body>.ui.container {
 					<a href="/allcourses"
 					class="item menu-item">All Courses</a> 
 					<a href="/enrolledcourses" class="item menu-item">Enrolled Courses</a>
-					<a class="item menu-item">UID: ${pageContext.request.userPrincipal.name} </a>
 					
 				<div class="right item menu-item ui simple dropdown">
 							Hello, ${pageContext.request.userPrincipal.name} <i class="dropdown icon"></i>
 							<div class="menu">
 								<div onclick="document.forms['dashboardForm'].submit()" class="item"><i class="wpforms icon"></i><a style="color:black">Dashboard</a></div>
-								<div onclick="document.forms['logoutForm'].submit()" class="item"><i class="power off icon"></i><a style="color:black">Log Out</a></div>
+								<div onclick="logOutFunction()" class="item"><i class="power off icon"></i><a style="color:black">Log Out</a></div>
 							</div>
 					
 					<!-- <a class="ui item active"><i class="power off icon"></i>Log Out</a> -->
@@ -115,5 +114,11 @@ body>.ui.container {
 			<!--End: Mobile Nav-->
 		</div>
 	</div>
+	<script>
+	function logOutFunction() {
+			document.cookie = "userid=-1"+'; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+		  	document.getElementById("logoutForm").submit();
+		}
+	</script>
 </body>
 </html>

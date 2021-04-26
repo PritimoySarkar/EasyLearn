@@ -19,4 +19,9 @@ public class QuizService {
 		List<Quiz> quiz = dao.findByCid(cid);
 		return quiz;
 	}
+	
+	public Optional<Quiz> getQuizById(int id) {
+		Optional<Quiz> q = dao.findById(id);
+		return q;
+	}
 }

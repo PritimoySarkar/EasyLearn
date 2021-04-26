@@ -38,11 +38,9 @@ public class CourseService {
 		return courses;
 	}
 	
-	public List<UserCourse> getAllEnrolledUserCourses(int uid){
-		List<UserCourse> userCourses = new ArrayList<UserCourse>();
-		for(UserCourse userCourse: userCourse.findByUid(uid)) {
-			userCourses.add(userCourse);
-		}
+	public List<UserCourse> getUserCourses(int uid,int cid){
+		//List<UserCourse> userCourses = new ArrayList<UserCourse>();
+		List<UserCourse> userCourses = userCourse.findByUserAndCourse(uid, cid);
 		return userCourses;
 	}
 	

@@ -52,7 +52,8 @@ public class UserController {
         Cookie cookie = new Cookie("userid",String.valueOf(user.getId()));
         cookie.setMaxAge(-1); 
         serResponse.addCookie(cookie);
-        return "allCourses";
+        System.out.println("Cookie saved");
+        return "redirect:/allcourses";
     }
 
     @PostMapping("/registration")

@@ -23,6 +23,7 @@ public class CourseController {
 	@Autowired
 	CourseService courseservice;
 	
+	
 	@GetMapping(value="/allcourses")
 	public String showAllCourses(HttpServletRequest request) {
 		request.setAttribute("courses", courseservice.getAllCourses());
@@ -55,10 +56,13 @@ public class CourseController {
 		System.out.println(response.get("cid"));
 		for(Cookie c:cookies) {
 			if(c.getName().equals("userid")) {
-				UserCourse uc = new UserCourse(Long.parseLong(c.getValue()),Integer.parseInt(response.get("cid")),"Enrolled",-1);
-				courseservice.insertUserCourse(uc);
+				List<UserCourse> userCourses = courseservice.getUserCourses(Integer.parseInt(c.getValue()),Integer.parseInt(response.get("cid")));
+				if(userCourses.isEmpty()) {
+					UserCourse uc = new UserCourse(Long.parseLong(c.getValue()),Integer.parseInt(response.get("cid")),"Enrolled",-1);
+					courseservice.insertUserCourse(uc);
+				}
 			}
 		}
-		return "enrolledCourses";
+		return "redirect:/enrolledcourses";
 	}
 }

@@ -14,6 +14,12 @@
 <!-- <link rel="stylesheet" href="semantic.min.css" />-->
 </head>
 <body>
+<script>
+var x = document.cookie.split(';').map(cookie => cookie.split('='))
+.reduce((accumulator , [key,value]) =>
+({...accumulator, [key.trim()]: decodeURIComponent(value)}),{});
+console.log(x);
+</script>
 <jsp:include page="loggedOutNavbar.jsp" />
 	<div class="ui grid container center aligned">
 		<div class="ui segment five wide column " style="margin-top: 60px;">
