@@ -1,7 +1,9 @@
 package com.psl.project.services;
 
+import java.lang.StackWalker.Option;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,12 @@ public class CourseService {
 		System.out.println("Course Saved");
 	}
 	
+	public Optional<Course> getCourse(int cid) {
+		//coursedao.save(c);
+		Optional<Course> course = coursedao.findById(cid);
+		return course;
+	}
+	
 	public List<Course> getAllCourses(){
 		List<Course> courses = new ArrayList<Course>();
 		for(Course course: coursedao.findAll()) {
@@ -50,5 +58,13 @@ public class CourseService {
 			courses.add(course);
 		}
 		return courses;
+	}
+	
+	public List<UserCourse> getAllEnrolledUserCourses(Long uid){
+		List<UserCourse> userCourses = userCourse.findByUid(uid);
+//		for(Course course: coursedao.findEnrolledCourses(uid)) {
+//			courses.add(course);
+//		}
+		return userCourses;
 	}
 }

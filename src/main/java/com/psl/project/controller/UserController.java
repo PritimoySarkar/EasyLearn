@@ -1,11 +1,19 @@
 package com.psl.project.controller;
 
+import com.psl.project.custom.CourseScore;
+import com.psl.project.model.Course;
 import com.psl.project.model.User;
+import com.psl.project.model.UserCourse;
+import com.psl.project.services.CourseService;
 import com.psl.project.services.SecurityService;
 import com.psl.project.services.UserService;
+import com.psl.project.services.UserServiceImpl;
 import com.psl.project.validator.UserValidator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -28,22 +36,43 @@ public class UserController {
 
     @Autowired
     private UserValidator userValidator;
+    
+    @Autowired
+    CourseService courseService;
 
     @GetMapping("/registration")
-    public String registration(Model model) {
+    public String registration(Model model,HttpServletRequest request) {
+    	Cookie[] cookies = request.getCookies();
+		for(Cookie c:cookies) {
+			if(c.getName().equals("userid")) {
+				return "redirect:/allcourses";
+			}
+		}
+		
         model.addAttribute("userForm", new User());
 
         return "registration";
     }
     
-    @PostMapping("/dashboard")
+    @GetMapping("/dashboard")
     public String showDashboard(HttpServletRequest request,@RequestParam Map<String,String> response) {
-        //System.out.println(response.get("username"));
-        User user = userService.findByUsername(response.get("username"));
-        request.setAttribute("user", user);
-        Cookie[] cookies = request.getCookies();
-        System.out.println(cookies);
-        return "dashboard";
+    	Cookie[] cookies = request.getCookies();
+    	List<CourseScore> cs = new ArrayList<CourseScore>();
+		for(Cookie c:cookies) {
+			if(c.getName().equals("userid")) {
+				Optional<User> user = userService.findByID(Long.parseLong(c.getValue()));
+				request.setAttribute("user", user);
+				List<UserCourse> userCourses = courseService.getAllEnrolledUserCourses(Long.parseLong(c.getValue()));
+				for(UserCourse uc: userCourses) {
+					Optional<Course> course = courseService.getCourse(uc.getCid());
+					System.out.println(course.get().getCname()+" "+uc.getStatus()+" "+uc.getScore());
+					CourseScore courseScore = new CourseScore(course.get().getCname(),uc.getStatus(),String.valueOf(uc.getScore()) );
+					cs.add(courseScore);
+				}
+			}
+		}
+		request.setAttribute("coursescore", cs);
+        return "dashboard_try";
     }
     
     @PostMapping("/saveuser")
@@ -71,7 +100,14 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login(Model model, String error, String logout) {
+    public String login(Model model, String error, String logout,HttpServletRequest request) {
+    	Cookie[] cookies = request.getCookies();
+		for(Cookie c:cookies) {
+			if(c.getName().equals("userid")) {
+				return "redirect:/allcourses";
+				
+			}
+		}
         if (error != null)
             model.addAttribute("error", "Your username and password is invalid.");
 

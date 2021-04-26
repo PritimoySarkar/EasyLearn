@@ -96,12 +96,12 @@
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title" id="staticBackdropLabel">Are you sure?</h5>
+									<h1 style="font-family:inherit;color:#999999" class="modal-title" id="staticBackdropLabel">Are you sure?</h1>
 									<button type="button" class="btn-close" data-bs-dismiss="modal"
 										aria-label="Close"></button>
 								</div>
 								<div class="modal-body">
-								<h2>Do you want to submit the test now?</h2>
+								<h2 style="font-family:inherit;color:#999999">Do you want to submit the test now?</h2>
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary"

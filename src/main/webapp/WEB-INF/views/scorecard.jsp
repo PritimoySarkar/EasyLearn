@@ -14,7 +14,11 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-
+<script type="text/javascript" >
+   function preventBack(){window.history.forward();}
+    setTimeout("preventBack()", 0);
+    window.onunload=function(){null};
+</script>
 </head>
 <body>
 	<jsp:include page="navbar.jsp" />
@@ -81,5 +85,15 @@
 			</div>
 		</div>
 	</div>
+	<script type = "text/javascript">
+	window.history.pushState({page: 1}, "", "");
+
+	window.onpopstate = function(event) {
+	    if(event){
+	        window.location.href = 'https://www.google.com/';
+	        // Code to handle back button or prevent from navigation
+	    }
+	}
+    </script>
 </body>
 </html>

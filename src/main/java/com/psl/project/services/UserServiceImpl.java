@@ -8,7 +8,9 @@ import com.psl.project.model.User;
 import com.psl.project.repository.RoleRepository;
 import com.psl.project.repository.UserRepository;
 
+import java.lang.StackWalker.Option;
 import java.util.HashSet;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -29,5 +31,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+    
+    public Optional<User> findByID(Long id){
+    	Optional<User> user = userRepository.findById(id);
+    	return user;
     }
 }

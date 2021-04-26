@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.psl.project.model.Course;
 
 @Repository
-public interface CourseDao extends JpaRepository<Course, Long> {
+public interface CourseDao extends JpaRepository<Course, Integer> {
 
 	//@Query("from Course where cid=:id")
 	//@Query("from Course c,UserCourse uc,User u where uc.cid=c.cid and uc.uid=u.uid and uid=:id")

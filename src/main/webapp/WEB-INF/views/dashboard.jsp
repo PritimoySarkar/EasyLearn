@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -36,7 +36,14 @@
 		<div class="ui divider"></div>
 		<div class="ui grid computer only">
 			<h1>User ID: ${userId }</h1>
-			<h1>User Name: ${pageContext.request.userPrincipal.name}</h1>
+			<div class="ui centered card">
+				<div class="image">
+					<img src="resources/images/profile.png">
+				</div>
+				<div class="content">
+					<a class="header">${pageContext.request.userPrincipal.name}</a>
+				</div>
+			</div>
 			<c:forEach var="course" items="${courses}">
 				<div class="column five wide">
 					<div class="ui card">

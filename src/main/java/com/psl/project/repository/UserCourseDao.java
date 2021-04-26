@@ -10,7 +10,7 @@ import com.psl.project.model.UserCourse;
 
 @Repository
 public interface UserCourseDao extends JpaRepository<UserCourse, Long>{
-	public List<UserCourse> findByUid(int uid);
+	public List<UserCourse> findByUid(Long uid);
 	
 	@Query(value="select * from user_course where uid=?1 and cid=?2",nativeQuery=true)
 	public List<UserCourse> findByUserAndCourse(int uid,int cid);
