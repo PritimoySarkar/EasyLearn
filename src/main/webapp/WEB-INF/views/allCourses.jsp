@@ -59,7 +59,7 @@
 
 		<!-- <h1 id="easy-learn" class="ui header">Easy Learn</h1> -->
 		<jsp:include page="navbar.jsp" />
-		<h2 class="ui header" style="margin-top: 110px">Explore Courses</h2>
+		<h2 class="ui header" style="margin-top: 110px">All available Courses</h2>
 		<div class="ui divider"></div>
 		<div class="ui grid computer only">
 			<c:forEach var="course" items="${courses}">
@@ -78,7 +78,7 @@
 							<!-- Button trigger modal -->
 								<button type="button" class="ui button teal"
 									data-toggle="modal"
-									data-target="#exampleModalCenter${course.cid}">Explore</button> 
+									data-target="#exampleModalCenter${course.cid}">Enroll</button> 
 									
 								<!-- Modal -->
 								<div class="modal fade" id="exampleModalCenter${course.cid }"
@@ -101,7 +101,8 @@
 												<button type="button" class="btn btn-secondary"
 													data-dismiss="modal">No, Not Now</button>
 												
-												<form id="dashboardForm" method="POST" action="/lectures/${course.cid}/${course.cname}">
+												<!-- <form id="dashboardForm" method="POST" action="/lectures/${course.cid}/${course.cname}"> -->
+												<form id="dashboardForm" method="POST" action="/enroll">
 										            <input type="hidden" name="username" value="${pageContext.request.userPrincipal.name}"/>
 										            <input type="hidden" name="cid" value="${course.cid}"/>
 										            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -135,7 +136,7 @@
 						</div>
 						<div class="extra content">
 							<a href="/lectures/${course.cid}/${course.cname}"
-								class="ui button teal">Explore</a>
+								class="ui button teal">Enroll</a>
 						</div>
 					</div>
 				</div>
@@ -156,7 +157,7 @@
 						</div>
 						<div class="extra content">
 							<a href="/lectures/${course.cid}/${course.cname}"
-								class="ui button teal">Explore</a>
+								class="ui button teal">Enroll</a>
 						</div>
 					</div>
 				</div>

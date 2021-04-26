@@ -83,7 +83,7 @@ body>.ui.container {
 					style="font-size: 2rem">Easy Learn</a> 
 					<a href="/allcourses"
 					class="item menu-item">All Courses</a> 
-					<a class="item menu-item">Enrolled Courses</a>
+					<a href="/enrolledcourses" class="item menu-item">Enrolled Courses</a>
 					<a class="item menu-item">UID: ${pageContext.request.userPrincipal.name} </a>
 					
 				<div class="right item menu-item ui simple dropdown">

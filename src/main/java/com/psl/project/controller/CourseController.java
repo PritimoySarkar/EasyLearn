@@ -37,13 +37,10 @@ public class CourseController {
 		Cookie[] cookies = request.getCookies();
 		for(Cookie c:cookies) {
 			if(c.getName().equals("userid")) {
-				List<UserCourse> usercourses = courseservice.getAllEnrolledUserCourses(Integer.parseInt(c.getValue()));
-				//request.setAttribute("courses", courseservice.getAllEnrolledCourses());
-				System.out.println(c.getValue());
+				List<Course> enrolledCourses = courseservice.getAllEnrolledCourses(Integer.parseInt(c.getValue()));
+				request.setAttribute("courses", enrolledCourses);
 			}
 		}
-//		List<Course> courses = courseservice.getAllEnrolledCourses();
-//		System.out.println(courses.get(0).getCname());
 		return "enrolledCourses";
 	}
 	
@@ -58,7 +55,7 @@ public class CourseController {
 		System.out.println(response.get("cid"));
 		for(Cookie c:cookies) {
 			if(c.getName().equals("userid")) {
-				UserCourse uc = new UserCourse(Integer.parseInt(c.getValue()),Integer.parseInt(response.get("cid")),"Enrolled",-1);
+				UserCourse uc = new UserCourse(Long.parseLong(c.getValue()),Integer.parseInt(response.get("cid")),"Enrolled",-1);
 				courseservice.insertUserCourse(uc);
 			}
 		}

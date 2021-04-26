@@ -81,8 +81,7 @@ console.log("site cookie",document.cookie);
 							<!-- Button trigger modal -->
 								<button type="button" class="ui button teal"
 									data-toggle="modal"
-									data-target="#exampleModalCenter${course.cid}">Play
-									Video</button> 
+									data-target="#exampleModalCenter${course.cid}">Explore</button> 
 									
 								<!-- Modal -->
 								<div class="modal fade" id="exampleModalCenter${course.cid }"

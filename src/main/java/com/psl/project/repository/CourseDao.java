@@ -15,6 +15,6 @@ public interface CourseDao extends JpaRepository<Course, Long> {
 	//@Query("from Course c,UserCourse uc,User u where uc.cid=c.cid and uc.uid=u.uid and uid=:id")
 	public List<Course> findCourseByCid(int cid);
 	
-//	@Query(value="select c.* from lms.course c,lms.user_course uc where uc.cid=c.cid and uc.uid=?1",nativeQuery=true)
-//	public List<Course> findEnrolledCourses(int cid);
+	@Query(value="select c.* from course c,user_course uc where uc.cid=c.cid and uc.uid=?1",nativeQuery=true)
+	public List<Course> findEnrolledCourses(int uid);
 }

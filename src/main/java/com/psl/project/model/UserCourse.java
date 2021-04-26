@@ -1,6 +1,8 @@
 package com.psl.project.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -9,8 +11,9 @@ import javax.persistence.Table;
 public class UserCourse {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int ucid;
-	private int uid;
+	private Long uid;
 	private int cid;
 	private String status;
 	private int score;
@@ -19,7 +22,7 @@ public class UserCourse {
 		super();
 	}
 	
-	public UserCourse(int uid, int cid, String status, int score) {
+	public UserCourse(Long uid, int cid, String status, int score) {
 		super();
 		this.uid = uid;
 		this.cid = cid;
@@ -27,7 +30,7 @@ public class UserCourse {
 		this.score = score;
 	}
 
-	public UserCourse(int ucid, int uid, int cid, String status, int score) {
+	public UserCourse(int ucid, Long uid, int cid, String status, int score) {
 		super();
 		this.ucid = ucid;
 		this.uid = uid;
@@ -41,10 +44,10 @@ public class UserCourse {
 	public void setUcid(int ucid) {
 		this.ucid = ucid;
 	}
-	public int getUid() {
+	public Long getUid() {
 		return uid;
 	}
-	public void setUid(int uid) {
+	public void setUid(Long uid) {
 		this.uid = uid;
 	}
 	public int getCid() {

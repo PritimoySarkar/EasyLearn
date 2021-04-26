@@ -31,31 +31,31 @@ public class User {
     		)
     private Set<Role> roles;
 
-//    @ManyToMany(mappedBy = "users")
-//    private List<Course> courses = new ArrayList<Course>(); 
+    @ManyToMany(mappedBy = "users")
+    private List<Course> courses = new ArrayList<Course>(); 
     
     public User() {
 		super();
 	}
 
-//	public User(Long id, String username, String password, String passwordConfirm, Set<Role> roles,
-//			List<Course> courses) {
-//		super();
-//		this.id = id;
-//		this.username = username;
-//		this.password = password;
-//		this.passwordConfirm = passwordConfirm;
-//		this.roles = roles;
-//		this.courses = courses;
-//	}
+	public User(Long id, String username, String password, String passwordConfirm, Set<Role> roles,
+			List<Course> courses) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.passwordConfirm = passwordConfirm;
+		this.roles = roles;
+		this.courses = courses;
+	}
 
-//	public List<Course> getCourses() {
-//		return courses;
-//	}
-//
-//	public void setCourses(List<Course> courses) {
-//		this.courses = courses;
-//	}
+	public List<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
+	}
 
 	public Long getId() {
         return id;

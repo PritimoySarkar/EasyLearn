@@ -23,24 +23,24 @@ public class Course {
 	private String cname;
 	private String description;
 	
-//	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-//	@JoinTable(name="user_course",joinColumns = @JoinColumn(name="cid"),inverseJoinColumns = @JoinColumn(name="uid"))
-//	private List<User> users = new ArrayList<User>();
+	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	@JoinTable(name="user_course",joinColumns = @JoinColumn(name="cid"),inverseJoinColumns = @JoinColumn(name="uid"))
+	private List<User> users = new ArrayList<User>();
 	
 	
-//	public Course(int cid, String cname, String description, List<User> users) {
-//		super();
-//		this.cid = cid;
-//		this.cname = cname;
-//		this.description = description;
-//		this.users = users;
-//	}
-//	public List<User> getUsers() {
-//		return users;
-//	}
-//	public void setUsers(List<User> users) {
-//		this.users = users;
-//	}
+	public Course(int cid, String cname, String description, List<User> users) {
+		super();
+		this.cid = cid;
+		this.cname = cname;
+		this.description = description;
+		this.users = users;
+	}
+	public List<User> getUsers() {
+		return users;
+	}
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
 	public int getCid() {
 		return cid;
 	}

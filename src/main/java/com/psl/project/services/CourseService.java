@@ -46,11 +46,11 @@ public class CourseService {
 		return userCourses;
 	}
 	
-//	public List<Course> getAllEnrolledCourses(){
-//		List<Course> courses = new ArrayList<Course>();
-//		for(Course course: coursedao.findEnrolledCourses(3)) {
-//			courses.add(course);
-//		}
-//		return courses;
-//	}
+	public List<Course> getAllEnrolledCourses(int uid){
+		List<Course> courses = new ArrayList<Course>();
+		for(Course course: coursedao.findEnrolledCourses(uid)) {
+			courses.add(course);
+		}
+		return courses;
+	}
 }
