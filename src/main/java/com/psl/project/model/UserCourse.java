@@ -18,6 +18,15 @@ public class UserCourse {
 	public UserCourse() {
 		super();
 	}
+	
+	public UserCourse(int uid, int cid, String status, int score) {
+		super();
+		this.uid = uid;
+		this.cid = cid;
+		this.status = status;
+		this.score = score;
+	}
+
 	public UserCourse(int ucid, int uid, int cid, String status, int score) {
 		super();
 		this.ucid = ucid;

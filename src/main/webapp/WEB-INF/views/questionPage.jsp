@@ -28,7 +28,7 @@
 <title>EasyLearn | All Courses</title>
 </head>
 <body
-	style="background-image: url('/resource/images/bg.jpg'); background-blend-mode: multiply">
+	style="background-image: url('/resources/images/bg.jpg'); background-blend-mode: multiply">
 	<div style="text-align: center; background-color: #03d6ff">
 		<h1
 			style="background-color: white; color: #007bff; font-family: 'Brush Script MT', cursive; font-size: 60pt">Welcome
@@ -42,6 +42,7 @@
 		<div class="row" style="margin: 20px">
 			<form action="/quiz/scorecard" method="post" style="margin:10px">
 				<br>
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 				<c:forEach var="question" items="${questions}">
 					<h6>${question.slno})&ensp;${question.question }</h6>
 					<input type="hidden" name="qid" value="${question.qid }">

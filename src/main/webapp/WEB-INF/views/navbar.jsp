@@ -66,6 +66,10 @@ body>.ui.container {
         <form id="logoutForm" method="POST" action="${contextPath}/logout">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
+        <form id="dashboardForm" method="POST" action="/dashboard">
+            <input type="hidden" name="username" value="${pageContext.request.userPrincipal.name}"/>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form>
     </c:if>
 
 	<!--Start: Nav  -->
@@ -80,12 +84,13 @@ body>.ui.container {
 					<a href="/allcourses"
 					class="item menu-item">All Courses</a> 
 					<a class="item menu-item">Enrolled Courses</a>
-
+					<a class="item menu-item">UID: ${pageContext.request.userPrincipal.name} </a>
+					
 				<div class="right item menu-item ui simple dropdown">
 							Hello, ${pageContext.request.userPrincipal.name} <i class="dropdown icon"></i>
 							<div class="menu">
-								<div class="item menu-item"><i class="wpforms icon"></i>Dashboard</div>
-								<div class="item"><i class="power off icon"></i><a onclick="document.forms['logoutForm'].submit()">Log Out</a></div>
+								<div onclick="document.forms['dashboardForm'].submit()" class="item"><i class="wpforms icon"></i><a style="color:black">Dashboard</a></div>
+								<div onclick="document.forms['logoutForm'].submit()" class="item"><i class="power off icon"></i><a style="color:black">Log Out</a></div>
 							</div>
 					
 					<!-- <a class="ui item active"><i class="power off icon"></i>Log Out</a> -->

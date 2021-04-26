@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.psl.project.repository.QuizDao;
 import com.psl.project.services.LectureService;
@@ -21,7 +22,7 @@ public class LectureController {
 	@Autowired
 	QuizService qservice;
 	
-	@GetMapping(value="/lectures/{course}/{cname}")
+	@PostMapping(value="/lectures/{course}/{cname}")
 	public String showAllLectures(HttpServletRequest request, @PathVariable("course") int cid, @PathVariable("cname") String cname) {
 		request.setAttribute("lectures",service.getAllLectures(cid));
 		request.setAttribute("course",cid);
@@ -30,4 +31,5 @@ public class LectureController {
 		//System.out.println(service.getAllUsers());
 		return "lectures";
 	}
+	
 }

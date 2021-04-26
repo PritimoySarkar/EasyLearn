@@ -7,13 +7,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.psl.project.model.Course;
+import com.psl.project.model.UserCourse;
 import com.psl.project.repository.CourseDao;
+import com.psl.project.repository.UserCourseDao;
 
 @Service
 public class CourseService {
 
 	@Autowired
 	CourseDao coursedao;
+	
+	@Autowired
+	UserCourseDao userCourse;
+	
+	public void insertUserCourse(UserCourse uc) {
+		userCourse.save(uc);
+		System.out.println("Course enrolled for the user");
+	}
 	
 	public void insertCourse(Course c) {
 		coursedao.save(c);
@@ -28,11 +38,19 @@ public class CourseService {
 		return courses;
 	}
 	
-	public List<Course> getAllEnrolledCourses(){
-		List<Course> courses = new ArrayList<Course>();
-		for(Course course: coursedao.findCourseByCid(1)) {
-			courses.add(course);
+	public List<UserCourse> getAllEnrolledUserCourses(int uid){
+		List<UserCourse> userCourses = new ArrayList<UserCourse>();
+		for(UserCourse userCourse: userCourse.findByUid(uid)) {
+			userCourses.add(userCourse);
 		}
-		return courses;
+		return userCourses;
 	}
+	
+//	public List<Course> getAllEnrolledCourses(){
+//		List<Course> courses = new ArrayList<Course>();
+//		for(Course course: coursedao.findEnrolledCourses(3)) {
+//			courses.add(course);
+//		}
+//		return courses;
+//	}
 }

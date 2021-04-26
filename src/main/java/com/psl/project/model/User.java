@@ -1,6 +1,11 @@
 package com.psl.project.model;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.Proxy;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -8,6 +13,7 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@Column(name="uid")
     private Long id;
 
     private String username;
@@ -25,7 +31,33 @@ public class User {
     		)
     private Set<Role> roles;
 
-    public Long getId() {
+//    @ManyToMany(mappedBy = "users")
+//    private List<Course> courses = new ArrayList<Course>(); 
+    
+    public User() {
+		super();
+	}
+
+//	public User(Long id, String username, String password, String passwordConfirm, Set<Role> roles,
+//			List<Course> courses) {
+//		super();
+//		this.id = id;
+//		this.username = username;
+//		this.password = password;
+//		this.passwordConfirm = passwordConfirm;
+//		this.roles = roles;
+//		this.courses = courses;
+//	}
+
+//	public List<Course> getCourses() {
+//		return courses;
+//	}
+//
+//	public void setCourses(List<Course> courses) {
+//		this.courses = courses;
+//	}
+
+	public Long getId() {
         return id;
     }
 

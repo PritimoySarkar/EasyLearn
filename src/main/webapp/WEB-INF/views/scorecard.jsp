@@ -28,7 +28,7 @@
 <title>EasyLearn | All Courses</title>
 </head>
 <body
-	style="background-image: url('/resource/images/bg.jpg'); background-blend-mode: multiply">
+	style="background-image: url('/resources/images/bg.jpg'); background-blend-mode: multiply">
 	<div style="text-align: center; background-color: #03d6ff">
 		<h1
 			style="background-color: white; color: #007bff; font-family: 'Brush Script MT', cursive; font-size: 60pt">Welcome
@@ -46,7 +46,7 @@
 					<c:when test="${status.equals('Passed')}">
 						<div class="row justify-content-center">
 							<div class="card" style="width: 18rem;">
-								<img class="card-img-top" src="/resource/images/passed.jpg" alt="Card image cap">
+								<img class="card-img-top" src="/resources/images/passed.jpg" alt="Card image cap">
 								<div class="card-body text-center">
 									<h1>Passed</h1>
 									<h4 class="card-text">Congratulation you have passed the test</h4>
@@ -57,7 +57,7 @@
 					<c:otherwise>
 						<div class="row justify-content-center">
 							<div class="card" style="width: 18rem;margin: 10px">
-								<img class="card-img-top" src="/resource/images/failed.png" alt="Card image cap">
+								<img class="card-img-top" src="/resources/images/failed.png" alt="Card image cap">
 								<div class="card-body text-center">
 									<h1>Failed</h1>
 									<h4 class="card-text">Sorry but you have to try again</h4>
