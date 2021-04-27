@@ -34,10 +34,15 @@ public class QuestionController {
 	@Autowired
 	CourseService courseService;
 	
-	@GetMapping(value="/course/{qid}/quiz")
+	@PostMapping(value="/course/{qid}/quiz")
 	public String showQuestion(HttpServletRequest request, @PathVariable("qid") int qid) {
 		request.setAttribute("questions", service.getQuestions(qid));
-		return "questionPage_new";
+		return "questionPage";
+	}
+	
+	@GetMapping(value="/course/{qid}/quiz")
+	public String doNotShowQuestion() {
+		return "redirect:/enrolledcourses";
 	}
 	
 	@PostMapping(value="/quiz/scorecard")
@@ -70,7 +75,6 @@ public class QuestionController {
 		
 		//Save score to Database
 		Optional<Quiz> quiz = quizService.getQuizById(quizId);
-		System.out.println(quiz.get().getCid());
 		
 		Cookie[] cookies = request.getCookies();
 		for(Cookie c:cookies) {
@@ -78,6 +82,7 @@ public class QuestionController {
 				List<UserCourse> userCourses = courseService.getUserCourses(Integer.parseInt(c.getValue()), quiz.get().getCid());
 				//System.out.println("User Course: "+userCourses.get(0).getUcid());
 				UserCourse uc = userCourses.get(0);
+				//System.out.println("Score: "+score+" "+totalScore);
 				uc.setScore(score);
 				uc.setStatus(status);
 				courseService.insertUserCourse(uc);

@@ -139,10 +139,16 @@
 				</div>
 				<div class="actions">
 					<div class="ui red basic cancel inverted button">Cancel</div>
-					<div class="ui teal ok inverted button"
-						onclick="location.href='/course/${quiz.qid}/quiz'">
+					
+					<div class="ui teal ok inverted button" onclick="document.getElementById('startTestForm').submit();">
+					<form id="startTestForm" method="POST" action="/course/${quiz.qid}/quiz">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					<div class="ui">
 						Start<i class="angle right icon"></i>
 					</div>
+					</form>
+					</div>
+					
 				</div>
 			</div>
 			<div class="column fourteen wide mobile only">

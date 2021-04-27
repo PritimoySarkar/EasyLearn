@@ -72,7 +72,7 @@ public class UserController {
 			}
 		}
 		request.setAttribute("coursescore", cs);
-        return "dashboard_try";
+        return "dashboard";
     }
     
     @PostMapping("/saveuser")

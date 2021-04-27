@@ -41,6 +41,55 @@ INSERT INTO `course` VALUES (1,'C++','C++ Beginner Course'),(2,'Java','Core Java
 UNLOCK TABLES;
 
 --
+-- Table structure for table `course_score`
+--
+
+DROP TABLE IF EXISTS `course_score`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `course_score` (
+  `csid` int NOT NULL,
+  `cname` varchar(255) DEFAULT NULL,
+  `score` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`csid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `course_score`
+--
+
+LOCK TABLES `course_score` WRITE;
+/*!40000 ALTER TABLE `course_score` DISABLE KEYS */;
+/*!40000 ALTER TABLE `course_score` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `course_usercourses`
+--
+
+DROP TABLE IF EXISTS `course_usercourses`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `course_usercourses` (
+  `course_cid` int NOT NULL,
+  `usercourses_ucid` int NOT NULL,
+  KEY `FK4a5gw6tvu4xvi5o55hbjog8ps` (`usercourses_ucid`),
+  KEY `FK267sy2g7kdwxkuf4hi3obm126` (`course_cid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `course_usercourses`
+--
+
+LOCK TABLES `course_usercourses` WRITE;
+/*!40000 ALTER TABLE `course_usercourses` DISABLE KEYS */;
+/*!40000 ALTER TABLE `course_usercourses` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `lecture`
 --
 
@@ -131,6 +180,29 @@ INSERT INTO `quiz` VALUES (1,'C++',20,1),(2,'Java',20,2),(3,'Python',20,3),(4,'P
 UNLOCK TABLES;
 
 --
+-- Table structure for table `role`
+--
+
+DROP TABLE IF EXISTS `role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `role` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `role`
+--
+
+LOCK TABLES `role` WRITE;
+/*!40000 ALTER TABLE `role` DISABLE KEYS */;
+/*!40000 ALTER TABLE `role` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user`
 --
 
@@ -138,14 +210,11 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
-  `uid` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
-  `email` varchar(45) DEFAULT NULL,
-  `password` varchar(45) DEFAULT NULL,
-  `profilePicture` varchar(45) DEFAULT NULL,
-  `profile_picture` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `password` varchar(255) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -154,7 +223,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'abcd','abcd@sdf','12343',NULL,NULL),(2,'fdgfdgfd','dfrewrwer','32423324',NULL,NULL);
+INSERT INTO `user` VALUES (1,'$2a$10$XORtncmW/xhfFaV4j3u0f.0LOg/I3peDzor2z0RUPbVnRrqtBxbYC','Pritimoy'),(2,'$2a$10$CGyuSQCHauTheexXopfehukWmD3vv6gXDPRq6pZRqoucfelnGpaQ6','abcdxyz'),(3,'$2a$10$D/TLFeNDH46mJ93vGc8An.K0CmrK/kIJLBgXGVmwbym1QiABO9zNy','Ashutosh'),(4,'$2a$10$b8/nCf5dAUPQRON2sWUxPesQRBm//TsnJulooTWDg4CMgbGlmGJG.','Prerak');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -166,17 +235,15 @@ DROP TABLE IF EXISTS `user_course`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_course` (
-  `ucid` int NOT NULL,
-  `uid` int DEFAULT NULL,
-  `cid` int DEFAULT NULL,
-  `status` varchar(30) DEFAULT NULL,
-  `score` int DEFAULT NULL,
+  `ucid` int NOT NULL AUTO_INCREMENT,
+  `cid` int NOT NULL,
+  `score` int NOT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `uid` bigint DEFAULT NULL,
   PRIMARY KEY (`ucid`),
-  KEY `uid_idx` (`uid`),
-  KEY `cid_idx` (`cid`),
-  CONSTRAINT `courseid` FOREIGN KEY (`cid`) REFERENCES `course` (`cid`),
-  CONSTRAINT `userid` FOREIGN KEY (`uid`) REFERENCES `user` (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `FK9i32hd38k9pm5pjv8lwmvydd1` (`uid`),
+  KEY `FKkm473bp3uhqhpgh7h4uug7x53` (`cid`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -185,8 +252,32 @@ CREATE TABLE `user_course` (
 
 LOCK TABLES `user_course` WRITE;
 /*!40000 ALTER TABLE `user_course` DISABLE KEYS */;
-INSERT INTO `user_course` VALUES (1,1,1,'Enrolled',-1),(2,2,3,'Enrolled',-1),(3,1,4,'Enrolled',-1),(4,1,5,'Enrolled',-1);
+INSERT INTO `user_course` VALUES (1,1,5,'Failed',1),(2,2,-1,'Enrolled',1),(3,5,-1,'Enrolled',1),(4,2,-1,'Enrolled',1),(5,2,-1,'Enrolled',3),(6,1,1,'Failed',3),(7,1,0,'Failed',4);
 /*!40000 ALTER TABLE `user_course` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_roles`
+--
+
+DROP TABLE IF EXISTS `user_roles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user_roles` (
+  `users_id` bigint NOT NULL,
+  `roles_id` bigint NOT NULL,
+  PRIMARY KEY (`users_id`,`roles_id`),
+  KEY `FKj9553ass9uctjrmh0gkqsmv0d` (`roles_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_roles`
+--
+
+LOCK TABLES `user_roles` WRITE;
+/*!40000 ALTER TABLE `user_roles` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -198,4 +289,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-24 19:11:59
+-- Dump completed on 2021-04-27 11:50:14
