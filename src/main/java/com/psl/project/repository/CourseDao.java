@@ -11,10 +11,14 @@ import com.psl.project.model.Course;
 @Repository
 public interface CourseDao extends JpaRepository<Course, Integer> {
 
-	//@Query("from Course where cid=:id")
-	//@Query("from Course c,UserCourse uc,User u where uc.cid=c.cid and uc.uid=u.uid and uid=:id")
+	//Method to find course details by courseid
 	public List<Course> findCourseByCid(int cid);
 	
+	//Method to find enrolled courses details for a specific user
 	@Query(value="select c.* from course c,user_course uc where uc.cid=c.cid and uc.uid=?1",nativeQuery=true)
 	public List<Course> findEnrolledCourses(int uid);
+	
+	//Method to find not enrolled courses details for a specific user
+	@Query(value="select * from course where cid not in (select c.cid from course c,user_course uc where uc.cid=c.cid and uc.uid=?1);",nativeQuery=true)
+	public List<Course> findNotEnrolledCourses(int uid);
 }

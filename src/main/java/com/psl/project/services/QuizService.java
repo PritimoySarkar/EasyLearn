@@ -15,11 +15,13 @@ public class QuizService {
 	@Autowired
 	QuizDao dao;
 	
+	//Method to get quiz details of a course using course id
 	public List<Quiz> getQuiz(int cid) {
 		List<Quiz> quiz = dao.findByCid(cid);
 		return quiz;
 	}
 	
+	//Method to get quiz details of a quiz using quiz id
 	public Optional<Quiz> getQuizById(int id) {
 		Optional<Quiz> q = dao.findById(id);
 		return q;

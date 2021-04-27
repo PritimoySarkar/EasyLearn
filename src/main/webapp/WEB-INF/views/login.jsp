@@ -7,8 +7,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="shortcut icon" type="image/x-icon" href="resources/images/favicon.ico"/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>LMS - Login</title>
+<title>Login | EasyLearn</title>
 <link rel="stylesheet"
 	href="<c:url value="/resources/semantic-ui/semantic.min.css" />">
 <!-- <link rel="stylesheet" href="semantic.min.css" />-->
@@ -20,7 +21,7 @@ var x = document.cookie.split(';').map(cookie => cookie.split('='))
 ({...accumulator, [key.trim()]: decodeURIComponent(value)}),{});
 console.log(x);
 </script>
-<jsp:include page="loggedOutNavbar.jsp" />
+<jsp:include page="navbar/loggedOutNavbar.jsp" />
 	<div class="ui grid container center aligned">
 		<div class="ui segment five wide column " style="margin-top: 60px;">
 		<div class="ui header huge">Login</div>
@@ -37,7 +38,7 @@ console.log(x);
 				</div>
 				<span style="color:#00b5ad;font-weight: bolder">${error}</span><br>
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-				<button class="ui button teal" type="submit">Login</button>
+				<button class="ui button teal" type="submit"><i class="lock open icon"></i>Login</button>
 				<p>New to EasyLearn? <a href="${contextPath}/registration">Register</a></p>
 
 			</form>

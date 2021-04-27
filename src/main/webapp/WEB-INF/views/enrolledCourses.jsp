@@ -7,8 +7,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="shortcut icon" type="image/x-icon" href="resources/images/favicon.ico"/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>EasyLearn | All Courses</title>
+<title>Enrolled Courses | EasyLearn</title>
 <link rel="stylesheet"
 	href="<c:url value="/resources/semantic-ui/semantic.min.css" />">
 	
@@ -34,9 +35,6 @@
 </style>
 </head>
 <body>
-<script>
-console.log("site cookie",document.cookie);
-</script>
 	<!-- Auto submitting form to store userid in cookies -->
 	<form id="AutoForm" method="POST" action="/saveuser">
             <input type="hidden" name="username" value="${pageContext.request.userPrincipal.name}"/>
@@ -50,9 +48,7 @@ console.log("site cookie",document.cookie);
         var x = document.cookie.split(';').map(cookie => cookie.split('='))
         .reduce((accumulator , [key,value]) =>
         ({...accumulator, [key.trim()]: decodeURIComponent(value)}),{});
-        console.log(x);
         if(typeof x.userid === "undefined"){
-        	console.log("no cookie");
         	window.onload = formAutoSubmit;
         }
         </script>
@@ -62,7 +58,16 @@ console.log("site cookie",document.cookie);
 
 		<!-- <h1 id="easy-learn" class="ui header">Easy Learn</h1> -->
 		<jsp:include page="navbar.jsp" />
-		<h2 class="ui header" style="margin-top: 110px">Explore Courses</h2>
+		<!-- Checking if the enrolled course list is not empty to print the enrolled course heading -->
+		<c:choose>
+			<c:when test="${not empty course}">
+				<h2 class="ui header" style="margin-top: 110px">Enrolled Courses</h2>
+			</c:when>
+			<c:otherwise>
+				<h2 class="ui header" style="margin-top: 110px">No enrolled course found</h2>
+			</c:otherwise>
+		</c:choose>
+		
 		<div class="ui divider"></div>
 		<div class="ui grid computer only">
 			<c:forEach var="course" items="${courses}">
@@ -81,7 +86,7 @@ console.log("site cookie",document.cookie);
 							<!-- Button trigger modal -->
 								<button type="button" class="ui button teal"
 									data-toggle="modal"
-									data-target="#exampleModalCenter${course.cid}">Explore</button> 
+									data-target="#exampleModalCenter${course.cid}"><i class="lock open icon"></i>Explore</button> 
 									
 								<!-- Modal -->
 								<div class="modal fade" id="exampleModalCenter${course.cid }"
@@ -114,9 +119,6 @@ console.log("site cookie",document.cookie);
 										</div>
 									</div>
 								</div>
-								
-							<!--  <a href="/lectures/${course.cid}/${course.cname}"
-								class="ui button teal">Explore</a> -->
 						</div>
 					</div>
 				</div>

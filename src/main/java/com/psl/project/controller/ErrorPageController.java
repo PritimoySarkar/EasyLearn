@@ -11,12 +11,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class ErrorPageController implements ErrorController {
-
+	
+	//A controller to handle all error pages
 	@RequestMapping("/error")
     public ModelAndView handleError(HttpServletResponse response)
     {
         ModelAndView modelAndView = new ModelAndView();
- 
+        
+        //returning different error page depending on the error response code
         if (response.getStatus() == HttpStatus.NOT_FOUND.value()) {
             modelAndView.setViewName("errorPage-404");
         }
@@ -36,6 +38,7 @@ public class ErrorPageController implements ErrorController {
         return modelAndView;
     }
  
+	//returning to '/error' whenever an error occurs
     @Override
     public String getErrorPath() {
         return "/error";

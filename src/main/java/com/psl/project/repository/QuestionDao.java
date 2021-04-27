@@ -10,5 +10,6 @@ import com.psl.project.model.Question;
 @Repository
 public interface QuestionDao extends JpaRepository<Question, Long>{
 
-	public List<Question> findByQid(int qid);
+	//Method to find Question details using quiz id in sorted order according to serial no.
+	public List<Question> findByQidOrderBySlnoAsc(int qid);
 }

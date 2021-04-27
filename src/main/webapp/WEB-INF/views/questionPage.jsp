@@ -4,9 +4,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico"/>
 <meta charset="ISO-8859-1">
 
-<title>Assessment</title>
+<title>EasyLearn | Assessment</title>
 <link rel="stylesheet"
 	href="<c:url value="/resources/semantic-ui/semantic.min.css" />" />
 <link
@@ -48,38 +49,60 @@
 						<div class="grouped fields">
 							<label for="${question.qqid}">${question.slno}).&nbsp;
 								${question.question}</label>
+								
+						<!-- For questions having less than 4 options like True/False only not empty options will be shown -->
+						<c:choose>
+    						<c:when test="${not empty question.option1}">
 							<div class="field">
 								<div class="ui radio">
 									<label> <input type="radio" name="${question.qqid}"
-										value="${question.option1}" id="${question.option1}">
+										value="A" id="${question.option1}">
 										&ensp;${question.option1}
 									</label>
 								</div>
 							</div>
+							</c:when>
+							</c:choose>
+							
+							<c:choose>
+							<c:when test="${not empty question.option2}">
 							<div class="field">
 								<div class="ui radio">
 									<label> <input type="radio" name="${question.qqid}"
-										value="${question.option2}" id="${question.option1}">
+										value="B" id="${question.option1}">
 										&ensp;${question.option2}
 									</label>
 								</div>
 							</div>
+							</c:when>
+							</c:choose>
+							
+							<c:choose>
+							<c:when test="${not empty question.option3}">
 							<div class="field">
 								<div class="ui radio">
 									<label> <input type="radio" name="${question.qqid}"
-										value="${question.option3}" id="${question.option1}">
+										value="C" id="${question.option1}">
 										&ensp;${question.option3}
 									</label>
 								</div>
 							</div>
+							</c:when>
+							</c:choose>
+							
+							<c:choose>
+							<c:when test="${not empty question.option4}">
 							<div class="field">
 								<div class="ui radio">
 									<label> <input type="radio" name="${question.qqid}"
-										value="${question.option4}" id="${question.option1}">
+										value="D" id="${question.option1}">
 										&ensp;${question.option4}
 									</label>
 								</div>
 							</div>
+							</c:when>
+							</c:choose>
+							
 						</div>
 						<br />
 					</c:forEach>
@@ -121,6 +144,7 @@
 	</div>
 	<footer>
 		<script>
+			//Code to replace the state of the question page so user can't visit coursepage after submitting the test and by going back to the previous page
 			if (window.history.replaceState) {
 				window.history.replaceState(null, null, window.location.href);
 			}

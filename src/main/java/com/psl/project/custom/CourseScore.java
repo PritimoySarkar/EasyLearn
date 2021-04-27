@@ -1,5 +1,6 @@
 package com.psl.project.custom;
 
+//A custom class created for sending coursename,testscore and test status data  from controller to view wrapped in an object
 public class CourseScore {
 	private int csid;
 	private String cname;

@@ -7,9 +7,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="shortcut icon" type="image/x-icon" href="resources/images/favicon.ico"/>
 <meta charset="ISO-8859-1">
 
-<title>EasyLearn | Dashboard</title>
+<title>Profile | EasyLearn</title>
 <link rel="stylesheet"
 	href="<c:url value="/resources/semantic-ui/semantic.min.css" />" />
 
@@ -53,14 +54,14 @@
 								<tr class="positive">
 									<td>${cs.cname }</td>
 									<td>${cs.status }</td>
-									<td>${cs.score }</td>
+									<td>${cs.score }&nbsp;%</td>
 								</tr>
 							</c:when>
 							<c:when test="${cs.status.equals('Failed') }">
 								<tr class="negative">
 									<td>${cs.cname }</td>
 									<td>${cs.status }</td>
-									<td>${cs.score }</td>
+									<td>${cs.score }&nbsp;%</td>
 								</tr>
 							</c:when>
 							<c:when test="${cs.status.equals('Enrolled') }">

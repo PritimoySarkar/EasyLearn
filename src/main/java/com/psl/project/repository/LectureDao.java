@@ -10,6 +10,6 @@ import com.psl.project.model.Lecture;
 @Repository
 public interface LectureDao extends JpaRepository<Lecture, Long>{
 
-//	@Query("SELECT * FROM lms.lecture where cid=?1")
-	public List<Lecture> findByCid(int cid);
+	//Method to find lectures details using courseid in sorted order according to serial no.
+	public List<Lecture> findByCidOrderBySlnoAsc(int cid);
 }

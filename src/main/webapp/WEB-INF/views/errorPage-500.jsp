@@ -4,9 +4,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico"/>
 <meta charset="ISO-8859-1">
 
-<title>${cname}|EasyLearn</title>
+<title>Internal server error | EasyLearn</title>
 <link rel="stylesheet"
 	href="<c:url value="/resources/semantic-ui/semantic.min.css" />" />
 

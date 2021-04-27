@@ -84,13 +84,13 @@ body>.ui.container {
 				<a href="/allcourses" class="header item easy-learn"
 					style="font-size: 2rem">Easy Learn</a> 
 					<a href="/allcourses"
-					class="item menu-item">All Courses</a> 
-					<a href="/enrolledcourses" class="item menu-item">Enrolled Courses</a>
+					class="item menu-item"><i class="book icon"></i>All Courses</a> 
+					<a href="/enrolledcourses" class="item menu-item"><i class="clipboard icon"></i>Enrolled Courses</a>
 					
 				<div class="right item menu-item ui simple dropdown">
 							Hello, ${pageContext.request.userPrincipal.name} <i class="dropdown icon"></i>
 							<div class="menu">
-								<div onclick="window.location.href='/dashboard'" class="item"><i class="wpforms icon"></i><a style="color:black">Dashboard</a></div>
+								<div onclick="window.location.href='/dashboard'" class="item"><i class="user icon"></i><a style="color:black">Profile</a></div>
 								<div onclick="logOutFunction()" class="item"><i class="power off icon"></i><a style="color:black">Log Out</a></div>
 							</div>
 					

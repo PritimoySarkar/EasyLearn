@@ -5,8 +5,9 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico"/>
 
-<title>Easy Learn | Scorecard</title>
+<title>Scorecard | Easy Learn</title>
 <link rel="stylesheet"
 	href="<c:url value="/resources/semantic-ui/semantic.min.css" />" />
 

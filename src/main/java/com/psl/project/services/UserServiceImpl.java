@@ -21,6 +21,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    //Method to save user in the database
     @Override
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -28,11 +29,13 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    //Method to get user details using username
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
     
+    //Method to get user detail user id
     public Optional<User> findByID(Long id){
     	Optional<User> user = userRepository.findById(id);
     	return user;

@@ -64,7 +64,7 @@ body > .ui.container {
     <!--Start: Desktop Nav-->
     <div class="computer only row">
       <a class="header item easy-learn" style="font-size:2rem">Easy Learn</a>
-      <a class="item menu-item">All Courses</a>
+      <a class="item menu-item"><i class="book icon"></i>All Courses</a>
       
       
       

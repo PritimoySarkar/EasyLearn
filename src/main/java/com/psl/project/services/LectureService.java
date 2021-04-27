@@ -16,9 +16,10 @@ public class LectureService {
 	@Autowired
 	LectureDao lecturedao;
 	
+	//Method to get all lectures details of a course using courseid
 	public List<Lecture> getAllLectures(int cid){
 		List<Lecture> lectures = new ArrayList<Lecture>();
-		for(Lecture lecture: lecturedao.findByCid(cid)) {
+		for(Lecture lecture: lecturedao.findByCidOrderBySlnoAsc(cid)) {
 			lectures.add(lecture);
 		}
 		return lectures;

@@ -9,6 +9,7 @@ import com.psl.project.model.Quiz;
 
 @Repository
 public interface QuizDao extends JpaRepository<Quiz, Integer>{
-	//public List<Quiz> findByCid(int cid);
+
+	//Method to find quiz details using course id
 	public List<Quiz> findByCid(int cid);
 }

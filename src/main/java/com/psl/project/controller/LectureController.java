@@ -22,13 +22,13 @@ public class LectureController {
 	@Autowired
 	QuizService qservice;
 	
+	//Showing the page containing all the lectures of a specific course
 	@PostMapping(value="/lectures/{course}/{cname}")
 	public String showAllLectures(HttpServletRequest request, @PathVariable("course") int cid, @PathVariable("cname") String cname) {
 		request.setAttribute("lectures",service.getAllLectures(cid));
 		request.setAttribute("course",cid);
 		request.setAttribute("cname",cname);
 		request.setAttribute("quiz", qservice.getQuiz(cid).get(0));
-		//System.out.println(service.getAllUsers());
 		return "lectures";
 	}
 	

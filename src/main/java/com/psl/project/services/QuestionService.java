@@ -15,11 +15,13 @@ public class QuestionService {
 	@Autowired
 	QuestionDao questiondao;
 	
+	//Method to insert new question in the database
 	public void insertQuestion(Question q) {
 		questiondao.save(q);
 		System.out.println("Question saved");
 	}
 	
+	//Method to get all questions details
 	public List<Question> getAllQuestions(){
 		List<Question> questions = new ArrayList<Question>();
 		for(Question q: questiondao.findAll()) {
@@ -28,9 +30,10 @@ public class QuestionService {
 		return questions;
 	}
 	
+	//Method to get all questions details of a quiz using quiz id
 	public List<Question> getQuestions(int qid){
 		List<Question> questions = new ArrayList<Question>();
-		for(Question q: questiondao.findByQid(qid)) {
+		for(Question q: questiondao.findByQidOrderBySlnoAsc(qid)) {
 			questions.add(q);
 		}
 		return questions;
