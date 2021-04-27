@@ -21,13 +21,16 @@ public class ErrorPageController implements ErrorController {
             modelAndView.setViewName("errorPage-404");
         }
         else if (response.getStatus() == HttpStatus.FORBIDDEN.value()) {
-            modelAndView.setViewName("error-403");
+            modelAndView.setViewName("errorPage-403");
+        }
+        else if (response.getStatus() == HttpStatus.METHOD_NOT_ALLOWED.value()) {
+            modelAndView.setViewName("errorPage-405");
         }
         else if (response.getStatus() == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-            modelAndView.setViewName("error-500");
+            modelAndView.setViewName("errorPage-500");
         }
         else {
-            modelAndView.setViewName("error");
+            modelAndView.setViewName("errorPage");
         }
  
         return modelAndView;

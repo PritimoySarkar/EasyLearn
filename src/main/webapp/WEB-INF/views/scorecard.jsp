@@ -6,7 +6,7 @@
 <head>
 <meta charset="ISO-8859-1">
 
-<title>Assessment</title>
+<title>Easy Learn | Scorecard</title>
 <link rel="stylesheet"
 	href="<c:url value="/resources/semantic-ui/semantic.min.css" />" />
 
@@ -85,5 +85,10 @@
 			</div>
 		</div>
 	</div>
+	<script>
+    window.onload = function() {
+        history.replaceState("", "", "/the/result/page");
+    }
+</script>
 </body>
 </html>
