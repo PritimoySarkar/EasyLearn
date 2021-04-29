@@ -57,10 +57,6 @@ public class CourseController {
 				//Retrieving enrolled courses by that user using userid got from the cookie
 				List<Course> enrolledCourses = courseservice.getAllEnrolledCourses(Integer.parseInt(c.getValue()));
 				request.setAttribute("courses", enrolledCourses);
-				
-				//Retrieving not enrolled courses by that user using userid got from the cookie
-				List<Course> notEnrolledCourses = courseservice.getAllNotEnrolledCourses(Integer.parseInt(c.getValue()));
-				System.out.println(notEnrolledCourses);
 			}
 		}
 		return "enrolledCourses";

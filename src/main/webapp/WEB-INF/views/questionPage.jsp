@@ -4,7 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico"/>
+<link rel="shortcut icon" type="image/x-icon"
+	href="/resources/images/favicon.ico" />
 <meta charset="ISO-8859-1">
 
 <title>EasyLearn | Assessment</title>
@@ -38,6 +39,9 @@
 	<div class="ui container">
 		<h1 class="ui header centered" style="margin-top: 110px">${cname}
 			Assessment</h1>
+		<h2 style="text-align: right; font-family: fantasy; color: teal;"
+			id="countdown"></h2>
+
 		<div class="ui divider"></div>
 		<div class="ui grid centered">
 			<div class="column fourteen wide">
@@ -49,70 +53,70 @@
 						<div class="grouped fields">
 							<label for="${question.qqid}">${question.slno}).&nbsp;
 								${question.question}</label>
-								
-						<!-- For questions having less than 4 options like True/False only not empty options will be shown -->
-						<c:choose>
-    						<c:when test="${not empty question.option1}">
-							<div class="field">
-								<div class="ui radio">
-									<label> <input type="radio" name="${question.qqid}"
-										value="A" id="${question.option1}">
-										&ensp;${question.option1}
-									</label>
-								</div>
-							</div>
-							</c:when>
-							</c:choose>
-							
+
+							<!-- For questions having less than 4 options like True/False only not empty options will be shown -->
 							<c:choose>
-							<c:when test="${not empty question.option2}">
-							<div class="field">
-								<div class="ui radio">
-									<label> <input type="radio" name="${question.qqid}"
-										value="B" id="${question.option1}">
-										&ensp;${question.option2}
-									</label>
-								</div>
-							</div>
-							</c:when>
+								<c:when test="${not empty question.option1}">
+									<div class="field">
+										<div class="ui radio">
+											<label> <input type="radio" name="${question.qqid}"
+												value="A" id="${question.option1}">
+												&ensp;${question.option1}
+											</label>
+										</div>
+									</div>
+								</c:when>
 							</c:choose>
-							
+
 							<c:choose>
-							<c:when test="${not empty question.option3}">
-							<div class="field">
-								<div class="ui radio">
-									<label> <input type="radio" name="${question.qqid}"
-										value="C" id="${question.option1}">
-										&ensp;${question.option3}
-									</label>
-								</div>
-							</div>
-							</c:when>
+								<c:when test="${not empty question.option2}">
+									<div class="field">
+										<div class="ui radio">
+											<label> <input type="radio" name="${question.qqid}"
+												value="B" id="${question.option1}">
+												&ensp;${question.option2}
+											</label>
+										</div>
+									</div>
+								</c:when>
 							</c:choose>
-							
+
 							<c:choose>
-							<c:when test="${not empty question.option4}">
-							<div class="field">
-								<div class="ui radio">
-									<label> <input type="radio" name="${question.qqid}"
-										value="D" id="${question.option1}">
-										&ensp;${question.option4}
-									</label>
-								</div>
-							</div>
-							</c:when>
+								<c:when test="${not empty question.option3}">
+									<div class="field">
+										<div class="ui radio">
+											<label> <input type="radio" name="${question.qqid}"
+												value="C" id="${question.option1}">
+												&ensp;${question.option3}
+											</label>
+										</div>
+									</div>
+								</c:when>
 							</c:choose>
-							
+
+							<c:choose>
+								<c:when test="${not empty question.option4}">
+									<div class="field">
+										<div class="ui radio">
+											<label> <input type="radio" name="${question.qqid}"
+												value="D" id="${question.option1}">
+												&ensp;${question.option4}
+											</label>
+										</div>
+									</div>
+								</c:when>
+							</c:choose>
+
 						</div>
 						<br />
 					</c:forEach>
 					<!--  <button class="ui button teal" data-toggle="modal" data-target="#testSubmitModal" type="button">Submit</button> -->
-					<!-- Button trigger modal -->
+					<!-- Submit Test Button trigger modal -->
 					<button type="button" class="btn ui button teal"
 						data-bs-toggle="modal" data-bs-target="#staticBackdrop">
 						Submit</button>
 
-					<!-- Modal -->
+					<!--Manually Submit Test Modal -->
 					<div class="modal fade" id="staticBackdrop"
 						data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
 						aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -137,6 +141,55 @@
 							</div>
 						</div>
 					</div>
+
+					<!--Warning for very less time remaining-->
+					<div class="modal fade" id="warningTest" data-bs-keyboard="false"
+						tabindex="-1" aria-labelledby="staticBackdropLabel"
+						aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h1 style="font-family: inherit; color: #108bdc"
+										class="modal-title" id="staticBackdropLabel">Only 2
+										minutes left</h1>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"
+										aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<h2 style="font-family: inherit; color: #108bdc">Hurry up
+										and complete your test</h2>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-primary"
+										data-bs-dismiss="modal">Okay</button>
+									<button type="submit" class="btn btn-secondary">Submit
+										Now</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!--Automatically Submit Test Modal -->
+					<div class="modal fade" id="autoSubmitTest"
+						data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+						aria-labelledby="staticBackdropLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h1 style="font-family: inherit; color: #ca3d3d"
+										class="modal-title" id="staticBackdropLabel">Time's up</h1>
+
+								</div>
+								<div class="modal-body">
+									<h2 style="font-family: inherit; color: #ca3d3d">Your Test
+										will be submitted now</h2>
+								</div>
+								<div class="modal-footer">
+									<button type="submit" class="btn btn-primary">Okay</button>
+								</div>
+							</div>
+						</div>
+					</div>
 				</form>
 
 			</div>
@@ -148,6 +201,56 @@
 			if (window.history.replaceState) {
 				window.history.replaceState(null, null, window.location.href);
 			}
+
+			//A method that can be called only once to restrict time countdown manipulation
+			var onceTimer = (function() {
+			    var executed = false;
+			    return function() {
+			        if (!executed) {
+			            executed = true;
+			            //Code for countdown timer
+			            const start = 2;
+						function timer() {				
+							//if (typeof fired !== 'undefined'){ return;}
+							let secs = start * 60;
+							
+							//Get the element where the timer will be set
+							const countDownElemnt = document.getElementById('countdown');
+
+							function updateCountDown() {
+								//Calculating Reamaining minutes and seconds
+								const minutes = Math.floor(secs / 60);
+								let remainingSecs = secs % 60;
+
+								//If remaining time is less than 2 minutes show warning modal
+								if (minutes == 1 && remainingSecs == 59) {
+									$('#warningTest').modal('show');
+									countDownElemnt.style.color = "red";
+								}
+
+								//If ramining time is 0 mintes and 0 seconds show not dismissable modal submit test
+								if (minutes == 0 && remainingSecs == 0) {
+									$('#autoSubmitTest').modal('show');
+								}
+
+								//Set the timesr element text to remaining time left
+								countDownElemnt.innerHTML = +minutes + " : "
+										+ remainingSecs;
+
+								//Decreasing remaining seconds by 1 everytime the function is called
+								secs--;
+							}
+							//calling the function everysecond
+							setInterval(updateCountDown, 1000);
+						}
+						timer();
+			        }
+			    };
+			})();
+			
+			//Call the onceTimer function
+			onceTimer();
+
 		</script>
 	</footer>
 </body>

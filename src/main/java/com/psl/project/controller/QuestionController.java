@@ -59,7 +59,7 @@ public class QuestionController {
 			//saving all correct answers of all questions from database to a Map 
 			answers.put(String.valueOf(q.getQqid()), q.getAnswer());
 		}
-		//Initializing score and test status valriable
+		//Initializing score and test status variable
 		int score=0;
 		String status="";
 		for(String key: responses.keySet()) {
