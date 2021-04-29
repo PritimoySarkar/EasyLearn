@@ -60,7 +60,7 @@
 		<jsp:include page="navbar.jsp" />
 		<!-- Checking if the enrolled course list is not empty to print the enrolled course heading -->
 		<c:choose>
-			<c:when test="${not empty course}">
+			<c:when test="${not empty courses}">
 				<h2 class="ui header" style="margin-top: 110px">Enrolled Courses</h2>
 			</c:when>
 			<c:otherwise>

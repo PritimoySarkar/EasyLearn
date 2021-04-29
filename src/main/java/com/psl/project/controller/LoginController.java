@@ -39,6 +39,7 @@ public class LoginController {
 		for(Cookie c:cookies) {
 			if(c.getName().equals("userid")) {
 				//If user is logged in redirect to Home page
+				System.out.println("Redirecting to All courses cause userid cookie found");
 				return "redirect:/allcourses";
 			}
 		}
