@@ -35,36 +35,16 @@
 </style>
 </head>
 <body>
-	<!-- Auto submitting form to store userid in cookies -->
-	<form id="AutoForm" method="POST" action="/saveuser">
-            <input type="hidden" name="username" value="${pageContext.request.userPrincipal.name}"/>
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        </form>
-        <script>
-        function formAutoSubmit () {
-        	var frm = document.getElementById("AutoForm");
-        	frm.submit();
-        }
-        var x = document.cookie.split(';').map(cookie => cookie.split('='))
-        .reduce((accumulator , [key,value]) =>
-        ({...accumulator, [key.trim()]: decodeURIComponent(value)}),{});
-        
-        //Check if userid cookie is present or not
-        if(typeof x.userid === "undefined"){
-        	//If no cookie found the the form is submitted to create cookie
-        	window.onload = formAutoSubmit;
-        }
-        </script>
-        
+
 	<img class="home-bg" src="resources/images/home-bg.jpg" alt="" />
 	<div class="ui container">
 
 		<jsp:include page="navbar.jsp" />
 		
-		<!-- Checking if the noenrolledcourse list is not empty to print the not enrolled course heading -->
+		<!-- Checking if the not enrolled course list is not empty to print the not enrolled course heading -->
 		<c:choose>
 			<c:when test="${not empty notEnrolledCourses}">
-				<h2 class="ui header" style="margin-top: 110px">Not enrolled courses</h2>
+				<h2 class="ui header">Not enrolled courses</h2>
 			</c:when>
 		</c:choose>
 		<!-- All Remaining Not Enrolled Courses -->
@@ -131,7 +111,7 @@
 		<!-- Checking if the enrolled course list is not empty to print the enrolled course heading -->
 		<c:choose>
 			<c:when test="${not empty enrolledCourses}">
-				<h2 class="ui header" style="margin-top: 110px">Enrolled Courses</h2>
+				<h2 class="ui header">Enrolled Courses</h2>
 			</c:when>
 		</c:choose>
 		<div class="ui divider"></div>

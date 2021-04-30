@@ -35,28 +35,10 @@
 </style>
 </head>
 <body>
-	<!-- Auto submitting form to store userid in cookies -->
-	<form id="AutoForm" method="POST" action="/saveuser">
-            <input type="hidden" name="username" value="${pageContext.request.userPrincipal.name}"/>
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        </form>
-        <script>
-        function formAutoSubmit () {
-        	var frm = document.getElementById("AutoForm");
-        	frm.submit();
-        }
-        var x = document.cookie.split(';').map(cookie => cookie.split('='))
-        .reduce((accumulator , [key,value]) =>
-        ({...accumulator, [key.trim()]: decodeURIComponent(value)}),{});
-        if(typeof x.userid === "undefined"){
-        	window.onload = formAutoSubmit;
-        }
-        </script>
         
 	<img class="home-bg" src="resources/images/home-bg.jpg" alt="" />
 	<div class="ui container">
 
-		<!-- <h1 id="easy-learn" class="ui header">Easy Learn</h1> -->
 		<jsp:include page="navbar.jsp" />
 		<!-- Checking if the enrolled course list is not empty to print the enrolled course heading -->
 		<c:choose>

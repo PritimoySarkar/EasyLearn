@@ -1,18 +1,16 @@
 package com.psl.project.controller;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.psl.project.model.User;
 import com.psl.project.services.SecurityService;
@@ -34,16 +32,12 @@ public class LoginController {
     //Opening User Registration Page
     @GetMapping("/registration")
     public String registration(Model model,HttpServletRequest request) {
-    	//Accessing cookies to check if user logged in already
-    	Cookie[] cookies = request.getCookies();
-		for(Cookie c:cookies) {
-			if(c.getName().equals("userid")) {
-				//If user is logged in redirect to Home page
-				System.out.println("Redirecting to All courses cause userid cookie found");
-				return "redirect:/allcourses";
-			}
-		}
-		
+    	//Getting username by getcontext to check if user is logged in or not
+    	Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	if (principal instanceof UserDetails) {
+    		//Redirecting to allCourses if user is logged in
+    		return "redirect:/allcourses";
+    	}		
         model.addAttribute("userForm", new User());
 
         return "registration";
@@ -72,15 +66,14 @@ public class LoginController {
     //Opening User Login page
     @GetMapping("/login")
     public String login(Model model, String error, String logout,HttpServletRequest request) {
-    	//Accessing cookies to check if user logged in already
-    	Cookie[] cookies = request.getCookies();
-		for(Cookie c:cookies) {
-			if(c.getName().equals("userid")) {
-				//If user inputs contain any error get back to registration page
-				return "redirect:/allcourses";
-				
-			}
-		}
+    	
+    	//Getting username by getcontext to check if user is logged in or not
+    	Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	if (principal instanceof UserDetails) {
+    		//Redirecting to allCourses if user is logged in 
+    		return "redirect:/allcourses";
+    	}
+    	
         if (error != null)
             model.addAttribute("error", "Your username and password is invalid.");
 

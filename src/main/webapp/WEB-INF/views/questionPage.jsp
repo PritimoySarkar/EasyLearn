@@ -209,7 +209,7 @@
 			        if (!executed) {
 			            executed = true;
 			            //Code for countdown timer
-			            const start = 2;
+			            const start = 20;
 						function timer() {				
 							//if (typeof fired !== 'undefined'){ return;}
 							let secs = start * 60;

@@ -2,8 +2,6 @@ package com.psl.project.model;
 
 import javax.persistence.*;
 
-import org.hibernate.annotations.Proxy;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;

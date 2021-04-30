@@ -7,10 +7,7 @@ import com.psl.project.model.User;
 import com.psl.project.model.UserCourse;
 import com.psl.project.services.CourseService;
 import com.psl.project.services.QuizService;
-import com.psl.project.services.SecurityService;
 import com.psl.project.services.UserService;
-import com.psl.project.services.UserServiceImpl;
-import com.psl.project.validator.UserValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +18,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.filters.ExpiresFilter.XHttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -38,6 +34,22 @@ public class UserController {
     
     @Autowired
     QuizService quizService;
+    
+    
+    @GetMapping("/loggedUsers")
+    public String getLoggedUsers() {
+    	Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	if (principal instanceof UserDetails) {
+    	  String username = ((UserDetails)principal).getUsername();
+    	  //String uid = ((UserDetails)principal).getAuthorities();
+    	  System.out.println(username);
+    	  //System.out.println();
+    	} else {
+    	  String username = principal.toString();
+    	  System.out.println(username);
+    	}
+        return "users";
+    }
     
     //Show user Dashbaord
     @GetMapping("/dashboard")
@@ -75,21 +87,4 @@ public class UserController {
 		request.setAttribute("coursescore", cs);
         return "dashboard";
     }
-    
-    //Save user details to cookies for further uses
-    @PostMapping("/saveuser")
-    public String saveUserId(HttpServletResponse serResponse,HttpServletRequest request,@RequestParam Map<String,String> response) {
-        //Get the user details using username retrieved from auto-submitted form
-    	User user = userService.findByUsername(response.get("username"));
-        
-    	//Creating new cookie to hold the user id of logged in user 
-    	Cookie cookie = new Cookie("userid",String.valueOf(user.getId()));
-        cookie.setMaxAge(-1);
-        
-        //Save Cookie
-        serResponse.addCookie(cookie);
-        return "redirect:/";
-    }
-
-
 }
