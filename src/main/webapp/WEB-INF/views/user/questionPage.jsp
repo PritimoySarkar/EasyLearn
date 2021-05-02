@@ -35,7 +35,7 @@
 
 </head>
 <body>
-	<jsp:include page="navbar/qPageNavbar.jsp" />
+	<jsp:include page="../navbar/qPageNavbar.jsp" />
 	<div class="ui container">
 		<h1 class="ui header centered" style="margin-top: 110px">${cname}
 			Assessment</h1>
@@ -45,7 +45,7 @@
 		<div class="ui divider"></div>
 		<div class="ui grid centered">
 			<div class="column fourteen wide">
-				<form class="ui form" action="/quiz/scorecard" method="post">
+				<form class="ui form" action="course/quiz/scorecard" method="post">
 					<input type="hidden" name="${_csrf.parameterName}"
 						value="${_csrf.token}" />
 					<c:forEach var="question" items="${questions}">

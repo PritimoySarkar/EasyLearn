@@ -3,7 +3,6 @@ package com.psl.project.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -43,15 +42,8 @@ public class CourseController {
 
 			// Storing userid to Session
 			session.setAttribute("userid", user.getId().toString());
-
-			// Creating new cookie to hold the user id of logged in user
-			Cookie cookie = new Cookie("userid", String.valueOf(user.getId()));
-			cookie.setMaxAge(-1);
-
-			// Save Cookie
-			response.addCookie(cookie);
-
-			// Retrieving enrolled courses by that user using userid got from the cookie
+			
+			// Retrieving enrolled courses by that user using userid from user object
 			List<Course> enrolledCourses = courseservice.getAllEnrolledCourses(user.getId().intValue());
 
 			// Adding enrolled courses details to request
@@ -63,7 +55,7 @@ public class CourseController {
 			// Adding not enrolled courses details to request
 			request.setAttribute("notEnrolledCourses", notEnrolledCourses);
 		}
-		return "allCourses";
+		return "user/allCourses";
 	}
 
 	// To show only enrolled courses by the user
@@ -78,8 +70,23 @@ public class CourseController {
 					.getAllEnrolledCourses(Integer.parseInt(session.getAttribute("userid").toString()));
 			request.setAttribute("courses", enrolledCourses);
 		}
-		return "enrolledCourses";
+		return "user/enrolledCourses";
 	}
+	
+	// To show only enrolled courses by the user
+		@GetMapping(value = "user/enrolledcourses")
+		public String showEnrolledCourseUser(HttpServletRequest request, HttpSession session) {
+			// Checking if userid session is expired or not
+			if (session.getAttribute("userid") == null) {
+				return "redirect:/";
+			} else {
+				// Retrieving enrolled courses by that user using userid got from session
+				List<Course> enrolledCourses = courseservice
+						.getAllEnrolledCourses(Integer.parseInt(session.getAttribute("userid").toString()));
+				request.setAttribute("courses", enrolledCourses);
+			}
+			return "user/enrolledCourses";
+		}
 
 	// To enroll a course by the user
 	@PostMapping(value = "/enroll")

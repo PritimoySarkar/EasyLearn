@@ -9,7 +9,7 @@
 <head>
 <link rel="shortcut icon" type="image/x-icon" href="resources/images/favicon.ico"/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Enrolled Courses | EasyLearn</title>
+<title> All Courses | EasyLearn</title>
 <link rel="stylesheet"
 	href="<c:url value="/resources/semantic-ui/semantic.min.css" />">
 	
@@ -35,77 +35,21 @@
 </style>
 </head>
 <body>
-        
+
 	<img class="home-bg" src="resources/images/home-bg.jpg" alt="" />
 	<div class="ui container">
 
-		<jsp:include page="navbar.jsp" />
-		<!-- Checking if the enrolled course list is not empty to print the enrolled course heading -->
-		<c:choose>
-			<c:when test="${not empty courses}">
-				<h2 class="ui header" style="margin-top: 110px">Enrolled Courses</h2>
-			</c:when>
-			<c:otherwise>
-				<h2 class="ui header" style="margin-top: 110px">No enrolled course found</h2>
-			</c:otherwise>
-		</c:choose>
+		<jsp:include page="../navbar/adminNavbar.jsp" />
 		
+		<!-- Checking if the not enrolled course list is not empty to print the not enrolled course heading -->
+		<h1 class="ui header">Admin Home</h1>
+		<!-- All Remaining Not Enrolled Courses -->
 		<div class="ui divider"></div>
 		<div class="ui grid computer only">
-			<c:forEach var="course" items="${courses}">
-				<div class="column five wide">
-					<div class="ui card">
-						<div class="image">
-							<img
-								src="https://cdn.pixabay.com/photo/2016/03/26/13/09/workspace-1280538_1280.jpg"
-								alt="course image">
-						</div>
-						<div class="content">
-							<div class="header">${course.cname}</div>
-							<div class="description">${course.description}</div>
-						</div>
-						<div class="extra content">
-							<!-- Button trigger modal -->
-								<button type="button" class="ui button teal"
-									data-toggle="modal"
-									data-target="#exampleModalCenter${course.cid}"><i class="lock open icon"></i>Explore</button> 
-									
-								<!-- Modal -->
-								<div class="modal fade" id="exampleModalCenter${course.cid }"
-									tabindex="-1" role="dialog"
-									aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-									<div class="modal-dialog modal-dialog-centered"
-										role="document">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h1 class="modal-title" id="exampleModalLongTitle">Are you ready?</h1>
-												<button type="button" class="close" data-dismiss="modal"
-													aria-label="Close">
-													<span aria-hidden="true">&times;</span>
-												</button>
-											</div>
-											<div class="modal-body">
-												<h3>Do you want to explore ${course.cname} Course?</h3>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-secondary"
-													data-dismiss="modal">No, Not Now</button>
-												
-												<form id="dashboardForm" method="POST" action="/lectures/${course.cid}/${course.cname}">
-										            <input type="hidden" name="username" value="${pageContext.request.userPrincipal.name}"/>
-										            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-										        	<button type="submit" class="btn btn-primary">Yes</button>
-										        </form>	
-												
-											</div>
-										</div>
-									</div>
-								</div>
-						</div>
-					</div>
-				</div>
-			</c:forEach>
+
 		</div>
+
+		
 		<div class="ui grid mobile only">
 			<c:forEach var="course" items="${courses}">
 				<div class="column eight wide">
@@ -121,7 +65,7 @@
 						</div>
 						<div class="extra content">
 							<a href="/lectures/${course.cid}/${course.cname}"
-								class="ui button teal">Explore</a>
+								class="ui button teal">Enroll</a>
 						</div>
 					</div>
 				</div>
@@ -142,7 +86,7 @@
 						</div>
 						<div class="extra content">
 							<a href="/lectures/${course.cid}/${course.cname}"
-								class="ui button teal">Explore</a>
+								class="ui button teal">Enroll</a>
 						</div>
 					</div>
 				</div>

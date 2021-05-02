@@ -19,19 +19,19 @@ public class ErrorPageController implements ErrorController {
         
         //returning different error page depending on the error response code
         if (response.getStatus() == HttpStatus.NOT_FOUND.value()) {
-            modelAndView.setViewName("errorPage-404");
+            modelAndView.setViewName("error/errorPage-404");
         }
         else if (response.getStatus() == HttpStatus.FORBIDDEN.value()) {
-            modelAndView.setViewName("errorPage-403");
+            modelAndView.setViewName("error/errorPage-403");
         }
         else if (response.getStatus() == HttpStatus.METHOD_NOT_ALLOWED.value()) {
-            modelAndView.setViewName("errorPage-405");
+            modelAndView.setViewName("error/errorPage-405");
         }
         else if (response.getStatus() == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-            modelAndView.setViewName("errorPage-500");
+            modelAndView.setViewName("error/errorPage-500");
         }
         else {
-            modelAndView.setViewName("errorPage");
+            modelAndView.setViewName("error/errorPage");
         }
  
         return modelAndView;

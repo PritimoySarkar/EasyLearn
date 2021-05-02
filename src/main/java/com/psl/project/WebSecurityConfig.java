@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.psl.project.config.CustomLoginSuccesHandler;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -19,6 +21,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    CustomLoginSuccesHandler successHandler;
+    
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -28,11 +33,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/resources/**", "/registration").permitAll()
-                .anyRequest().authenticated()
+            	.antMatchers("/dashboard","/allcourses","/enrolledcourses","course/**").hasAuthority("USER")
+            	.antMatchers("/admin", "/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/resources/**", "/registration", "/admin").permitAll()
+                //.anyRequest().authenticated()
                 .and()
             .formLogin()
                 .loginPage("/login")
+                .failureForwardUrl("/login?error=true")
+                .successHandler(successHandler)
                 .permitAll()
                 .and()
             .logout()

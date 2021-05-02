@@ -37,11 +37,11 @@ public class QuestionController {
 	@PostMapping(value = "/course/{qid}/quiz")
 	public String showQuestion(HttpServletRequest request, @PathVariable("qid") int qid) {
 		request.setAttribute("questions", service.getQuestions(qid));
-		return "questionPage";
+		return "user/questionPage";
 	}
 
 	// Get Score after attempting a test
-	@PostMapping(value = "/quiz/scorecard")
+	@PostMapping(value = "course/quiz/scorecard")
 	public String submitQuestion(@RequestParam Map<String, String> responses, HttpServletRequest request,
 			HttpSession session) {
 		// Get all question details using quiz id
@@ -105,6 +105,6 @@ public class QuestionController {
 			// staus will be saved in the database
 			courseService.insertUserCourse(uc);
 		}
-		return "scorecard";
+		return "user/scorecard";
 	}
 }

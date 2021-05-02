@@ -86,6 +86,6 @@ public class UserController {
 		}
 		// Passing the coursescore list through request to show it on profile page
 		request.setAttribute("coursescore", cs);
-		return "dashboard";
+		return "user/dashboard";
 	}
 }
