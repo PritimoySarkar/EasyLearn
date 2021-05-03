@@ -7,7 +7,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="shortcut icon" type="image/x-icon" href="resources/images/favicon.ico"/>
+<link rel="shortcut icon" type="image/x-icon" href="/resources/images/favicon.ico"/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title> All Courses | EasyLearn</title>
 <link rel="stylesheet"
@@ -36,7 +36,7 @@
 </head>
 <body>
 
-	<img class="home-bg" src="resources/images/home-bg.jpg" alt="" />
+	<img class="home-bg" src="/resources/images/home-bg.jpg" alt="" />
 	<div class="ui container">
 
 		<jsp:include page="../navbar/adminNavbar.jsp" />

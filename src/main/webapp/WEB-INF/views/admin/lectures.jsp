@@ -38,24 +38,6 @@
 <body>
 	<jsp:include page="../navbar/adminNavbar.jsp" />
 	<div class="ui container">
-		<h1 class="ui header centered" style="margin-top: 110px">Add new Course</h1>
-		
-		<form:form class="ui form" modelAttribute="newCourse" method="POST">
-			<div class="field">
-				<spring:bind path="cname">
-				<label>Course Name</label> <form:input type="text" path="cname"
-					placeholder="Course Name"></form:input>
-				</spring:bind>
-			</div>
-			<div class="field">
-				<spring:bind path="description">
-				<label>Course description</label> <form:input type="text" path="description"
-					placeholder="Description"></form:input>
-				</spring:bind>
-			</div>
-			<button class="ui teal button" type="submit">Add Course</button>
-		</form:form>
-		
 		<div class="ui divider"></div>
 		<h1 class="ui header centered" style="margin-top: 110px">All
 			available courses</h1>
@@ -79,17 +61,17 @@
 							<td>${cs.cname }</td>
 							<td>${cs.description }</td>
 							<td>
-							<form id="form${cs.cid}" method="POST" action="/admin/course/delete/${cs.cid }">
+							<form id="form${cs.cid}" method="POST" action="/admin/lectures/${cs.cid }">
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 							<input type="hidden" name="cid" value="${cs.cid }">
-							<button type="submit" class="ui button red">Delete</button>
+							<button type="submit" class="ui button teal">Add Lecture</button>
 							</form>
 							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
-			<br /> <br /> <a class="ui button teal" href="/admin" style="margin-bottom:20px;">
+			<br /> <br /> <a class="ui button teal" href="/admin">
 				<i class="angle left icon"></i>Home
 			</a>
 		</div>

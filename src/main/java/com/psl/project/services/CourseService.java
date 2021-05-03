@@ -30,7 +30,11 @@ public class CourseService {
 	//Method to insert new Course in the database
 	public void insertCourse(Course c) {
 		coursedao.save(c);
-		System.out.println("Course Saved");
+	}
+	
+	//Method to delete a COurse in the database
+	public void deleteCourse(int cid) {
+		coursedao.deleteById(cid);
 	}
 	
 	//Method to get Course from the database using courseid

@@ -28,7 +28,7 @@ public class ErrorPageController implements ErrorController {
             modelAndView.setViewName("error/errorPage-405");
         }
         else if (response.getStatus() == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-            modelAndView.setViewName("error/errorPage-500");
+            //modelAndView.setViewName("error/errorPage-500");
         }
         else {
             modelAndView.setViewName("error/errorPage");

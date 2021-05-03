@@ -23,11 +23,11 @@ DROP TABLE IF EXISTS `course`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `course` (
-  `cid` int NOT NULL,
-  `cname` varchar(45) DEFAULT NULL,
-  `description` varchar(100) DEFAULT NULL,
+  `cid` int NOT NULL AUTO_INCREMENT,
+  `cname` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`cid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,57 +36,8 @@ CREATE TABLE `course` (
 
 LOCK TABLES `course` WRITE;
 /*!40000 ALTER TABLE `course` DISABLE KEYS */;
-INSERT INTO `course` VALUES (1,'C++','C++ Beginner Course'),(2,'Java','Core Java Course'),(3,'Python','Python Beginner COurse'),(4,'PHP','Raw PHP course'),(5,'C','C course for beginner');
+INSERT INTO `course` VALUES (1,'C++','C++ Beginner Course'),(2,'Java','Core Java Course'),(3,'Python','Python Beginner Course'),(4,'PHP','Raw PHP Course'),(5,'C','C course for beginner'),(9,'Soft Skills','Essential Soft Skills Training');
 /*!40000 ALTER TABLE `course` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `course_score`
---
-
-DROP TABLE IF EXISTS `course_score`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `course_score` (
-  `csid` int NOT NULL,
-  `cname` varchar(255) DEFAULT NULL,
-  `score` varchar(255) DEFAULT NULL,
-  `status` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`csid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `course_score`
---
-
-LOCK TABLES `course_score` WRITE;
-/*!40000 ALTER TABLE `course_score` DISABLE KEYS */;
-/*!40000 ALTER TABLE `course_score` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `course_usercourses`
---
-
-DROP TABLE IF EXISTS `course_usercourses`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `course_usercourses` (
-  `course_cid` int NOT NULL,
-  `usercourses_ucid` int NOT NULL,
-  KEY `FK4a5gw6tvu4xvi5o55hbjog8ps` (`usercourses_ucid`),
-  KEY `FK267sy2g7kdwxkuf4hi3obm126` (`course_cid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `course_usercourses`
---
-
-LOCK TABLES `course_usercourses` WRITE;
-/*!40000 ALTER TABLE `course_usercourses` DISABLE KEYS */;
-/*!40000 ALTER TABLE `course_usercourses` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -97,15 +48,14 @@ DROP TABLE IF EXISTS `lecture`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `lecture` (
-  `lid` int NOT NULL,
+  `lid` int NOT NULL AUTO_INCREMENT,
   `lname` varchar(200) DEFAULT NULL,
   `url` varchar(200) DEFAULT NULL,
   `slno` int DEFAULT NULL,
   `cid` int DEFAULT NULL,
   PRIMARY KEY (`lid`),
-  KEY `cid_idx` (`cid`),
-  CONSTRAINT `course` FOREIGN KEY (`cid`) REFERENCES `course` (`cid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `courseid_idx` (`cid`)
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -114,7 +64,7 @@ CREATE TABLE `lecture` (
 
 LOCK TABLES `lecture` WRITE;
 /*!40000 ALTER TABLE `lecture` DISABLE KEYS */;
-INSERT INTO `lecture` VALUES (1,'ADVANCED CALCULATOR || C++ || IF ELSE STATEMENTS || EASY','-OAYgEhgIO4',1,1),(2,'Adding Colours To Text (C++ FULL TUTORIAL)','AfVbMG828AA',2,1),(3,'The For Loop ( C++ Easy Tutorial )','eBm55hqQ_AE',3,1),(4,'Calculate the area of a rectangle || C++','PhWEZOwdmgE',4,1),(5,'Calculate area of a square ||| C++','m0pcZpvikls',5,1),(6,'Calculate area of a square ||| C++','9wQHmyZSsCs',6,1),(7,'Currency Converter || C++||DOLLAR & RUPEE','FG91yVjtpSk',7,1),(8,'Java Tutorial for Beginners | Full Course','https://www.youtube.com/watch?v=8cm1x4bC610&list=PLsyeobzWxl7pSqMzPF_SlvQ0IdcGA-XI2&index=1',1,2),(9,'Servlet & JSP Tutorial | Full Course','https://www.youtube.com/watch?v=OuBUUkQfBYM&list=PLsyeobzWxl7pSqMzPF_SlvQ0IdcGA-XI2&index=2',2,2),(10,'Hibernate Tutorial | Full Course','https://www.youtube.com/watch?v=JR7-EdxDSf0&list=PLsyeobzWxl7pSqMzPF_SlvQ0IdcGA-XI2&index=3',3,2),(11,'Spring Framework Tutorial | Full Course','https://www.youtube.com/watch?v=If1Lw4pLLEo&list=PLsyeobzWxl7pSqMzPF_SlvQ0IdcGA-XI2&index=4',4,2),(12,'Spring MVC Tutorial | Full Course','https://www.youtube.com/watch?v=g2b-NbR48Jo&list=PLsyeobzWxl7pSqMzPF_SlvQ0IdcGA-XI2&index=5',5,2),(13,'Spring Boot Tutorials | Full Course','https://www.youtube.com/watch?v=35EQXmHKZYs&list=PLsyeobzWxl7pSqMzPF_SlvQ0IdcGA-XI2&index=6',6,2),(14,'Spring Security Tutorial','https://www.youtube.com/watch?v=fjkelzWNSuA&list=PLsyeobzWxl7pSqMzPF_SlvQ0IdcGA-XI2&index=7',7,2),(15,'Python Tutorial for Absolute Beginners #1 - What Are Variables?','https://www.youtube.com/watch?v=Z1Yd7upQsXY&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=1',1,3),(16,'Python Tutorial for Absolute Beginners #1 - What Are Variables?','https://www.youtube.com/watch?v=AWek49wXGzI&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=2',2,3),(17,'How To Use Functions In Python (Python Tutorial #3)','https://www.youtube.com/watch?v=NSbOtYzIQI0&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=3',3,3),(18,'How To Use Functions In Python (Python Tutorial #3)','https://www.youtube.com/watch?v=tw7ror9x32s&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=4',4,3),(19,'Introduction to For Loops in Python (Python Tutorial #5)','https://www.youtube.com/watch?v=OnDr4J2UXSA&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=5',5,3),(20,'While Loops and The Break Statement in Python (Python Tutorial #6)','https://www.youtube.com/watch?v=6TEGxJXLAWQ&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=6',6,3),(21,'More About For Loops in Python & Solutions to the Last 2 Problems (Python Tutorial #7)','https://www.youtube.com/watch?v=iVyWLmQ0QYA&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=7',7,3),(22,'How To Use Dictionaries In Python (Python Tutorial #8)','https://www.youtube.com/watch?v=ZEZdys-fHDw&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=8',8,3),(23,'Classes and Objects with Python - Part 1 (Python Tutorial #9)','https://www.youtube.com/watch?v=wfcWRAxRVBA&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=9',9,3),(24,'Classes and Objects with Python - Part 2 (Python Tutorial #10)','https://www.youtube.com/watch?v=WOwi0h_-dfA&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=10',10,3),(25,'Using Boolean in Python (Python Tutorial #11)','https://www.youtube.com/watch?v=r526yum0EYQ&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=11',11,3),(26,'List Comprehension Basics with Python (Python Tutorial #12)','https://www.youtube.com/watch?v=5K08WcjGV6c&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=12',12,3),(27,'How To Use Sets in Python (Python Tutorial #13)','https://www.youtube.com/watch?v=2u_ZExcNBzA&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=13',13,3),(28,'6 Python Exercise Problems for Beginners - from CodingBat (Python Tutorial #14)','https://www.youtube.com/watch?v=lx7oqZ7Nl3k&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=14',14,3),(29,'How To Create A Twitter Bot With Python | Build a Startup #4','https://www.youtube.com/watch?v=W0wWwglE1Vc&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=15',15,3),(30,'I Created a New Q&A Website for Coders with Python | Devlog #1','https://www.youtube.com/watch?v=RwOC7onT48Y&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=16',16,3),(31,'Introduction To PHP | What Is PHP Programming | PHP Tutorial For Beginners','https://www.youtube.com/watch?v=KBT2gmAfav4&list=PLEiEAq2VkUUIjP-QLfvICa1TvqTLFvn1b&index=1',1,4),(32,'Hello World In PHP | How To Run PHP Hello World Program | PHP Tutorial For Beginners','https://www.youtube.com/watch?v=wxzyZzEvS58&list=PLEiEAq2VkUUIjP-QLfvICa1TvqTLFvn1b&index=2',2,4),(33,'OOP In PHP | Object Oriented Programming In PHP | PHP Tutorial For Beginners','https://www.youtube.com/watch?v=JSX0HMYgtvc&list=PLEiEAq2VkUUIjP-QLfvICa1TvqTLFvn1b&index=3',3,4),(34,'PHP With MySQL Tutorial For Beginners | PHP And MySQL Database Tutorial | PHP Tutorial','https://www.youtube.com/watch?v=nP-MvFoDVZE&list=PLEiEAq2VkUUIjP-QLfvICa1TvqTLFvn1b&index=4',4,4),(35,'PHP Form Validation Tutorial | Form Validation In PHP | PHP Tutorial For Beginners','https://www.youtube.com/watch?v=xqI2hdDn47k&list=PLEiEAq2VkUUIjP-QLfvICa1TvqTLFvn1b&index=5',5,4),(36,'PHP Get And Post Methods | Get And Post Method In PHP With Example | PHP Tutorial','https://www.youtube.com/watch?v=hgFD7O058cw&list=PLEiEAq2VkUUIjP-QLfvICa1TvqTLFvn1b&index=6',6,4),(37,'PHP Crud Operations - Select, Insert, Update, Delete | PHP Tutorial For Beginners','https://www.youtube.com/watch?v=whvDzJFiyi4&list=PLEiEAq2VkUUIjP-QLfvICa1TvqTLFvn1b&index=7',7,4),(38,'PHP Form Login | How To Make Login Form In PHP | PHP Tutorial For Beginners','https://www.youtube.com/watch?v=scd8YKiuS7I&list=PLEiEAq2VkUUIjP-QLfvICa1TvqTLFvn1b&index=8',8,4),(39,' C Language Tutorial For Beginners || Programming Basics || Start Coding For Beginners In Hindi','https://www.youtube.com/watch?v=zgE_3dadBQo&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=1',1,5),(40,'Turbo C++ IDE | C Language Tutorial, Compile & Execute C Programs using Code block By Arvind','https://www.youtube.com/watch?v=T8WiCQAkpvE&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=2',2,5),(41,'C Programming Language || C Language Tutorial For Beginners || C language का परिचय By Arvind','https://www.youtube.com/watch?v=fXlYy9gSKWc&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=3',3,5),(42,'C Programming Language || C Language Tutorial For Beginners || C language Variables By Arvind','https://www.youtube.com/watch?v=Nds9lnGqkE4&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=4',4,5),(43,'C Programming Language || C Language Tutorial For Beginners || C language Constants By Arvind','https://www.youtube.com/watch?v=H1MiK0z19us&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=5',5,5),(44,'C Programming Language || C Language Tutorial For Beginners || C language Operators By Arvind','https://www.youtube.com/watch?v=FQqYT_9Az2E&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=6',6,5),(45,'C language Conditional Statement || C Programming || C Language Tutorial For Beginners By Arvind','https://www.youtube.com/watch?v=F61i7gYCg3E&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=7',7,5),(46,'C language Array, Types of Array || C Programming || C Language Tutorial For Beginners By Arvind','https://www.youtube.com/watch?v=R-VU5plP3LU&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=8',8,5),(47,'C language Debugging & Testing || C Programming || C Language Tutorial For Beginners By Arvind','https://www.youtube.com/watch?v=NA0R4DHSV2w&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=9',9,5),(48,'C language Input/Output Function || C Programming || C Language Tutorial For Beginners By Arvind','https://www.youtube.com/watch?v=K1qbd5yomd0&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=10',10,5),(49,'C language Programming Approach || C Programming || C Language Tutorial For Beginners By Arvind','https://www.youtube.com/watch?v=EVW9RPbyWvg&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=11',11,5),(50,'C language Programming Function || C Programming || C Language Tutorial For Beginners By Arvind','https://www.youtube.com/watch?v=y4xGzZuq7T4&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=12',12,5),(51,'C language Programming Function || C Programming || C Language Tutorial For Beginners By Arvind','https://www.youtube.com/watch?v=FAmbbuQN5pQ&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=13',13,5),(52,'C Language Tutorial For Beginners In Hindi (With PDF) -Learn C Programming-Complete Course By Arvind','https://www.youtube.com/watch?v=yvDh5KQ-mEk&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=14',14,5);
+INSERT INTO `lecture` VALUES (1,'ADVANCED CALCULATOR || C++ || IF ELSE STATEMENTS || EASY','-OAYgEhgIO4',1,1),(2,'Adding Colours To Text (C++ FULL TUTORIAL)','AfVbMG828AA',2,1),(3,'The For Loop ( C++ Easy Tutorial )','eBm55hqQ_AE',3,1),(4,'Calculate the area of a rectangle || C++','PhWEZOwdmgE',4,1),(5,'Calculate area of a square ||| C++','m0pcZpvikls',5,1),(6,'Calculate area of a square ||| C++','9wQHmyZSsCs',6,1),(7,'Currency Converter || C++||DOLLAR & RUPEE','FG91yVjtpSk',7,1),(8,'Java Tutorial for Beginners | Full Course','https://www.youtube.com/watch?v=8cm1x4bC610&list=PLsyeobzWxl7pSqMzPF_SlvQ0IdcGA-XI2&index=1',1,2),(9,'Servlet & JSP Tutorial | Full Course','https://www.youtube.com/watch?v=OuBUUkQfBYM&list=PLsyeobzWxl7pSqMzPF_SlvQ0IdcGA-XI2&index=2',2,2),(10,'Hibernate Tutorial | Full Course','https://www.youtube.com/watch?v=JR7-EdxDSf0&list=PLsyeobzWxl7pSqMzPF_SlvQ0IdcGA-XI2&index=3',3,2),(11,'Spring Framework Tutorial | Full Course','https://www.youtube.com/watch?v=If1Lw4pLLEo&list=PLsyeobzWxl7pSqMzPF_SlvQ0IdcGA-XI2&index=4',4,2),(12,'Spring MVC Tutorial | Full Course','https://www.youtube.com/watch?v=g2b-NbR48Jo&list=PLsyeobzWxl7pSqMzPF_SlvQ0IdcGA-XI2&index=5',5,2),(13,'Spring Boot Tutorials | Full Course','https://www.youtube.com/watch?v=35EQXmHKZYs&list=PLsyeobzWxl7pSqMzPF_SlvQ0IdcGA-XI2&index=6',6,2),(14,'Spring Security Tutorial','https://www.youtube.com/watch?v=fjkelzWNSuA&list=PLsyeobzWxl7pSqMzPF_SlvQ0IdcGA-XI2&index=7',7,2),(15,'Python Tutorial for Absolute Beginners #1 - What Are Variables?','https://www.youtube.com/watch?v=Z1Yd7upQsXY&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=1',1,3),(16,'Python Tutorial for Absolute Beginners #1 - What Are Variables?','https://www.youtube.com/watch?v=AWek49wXGzI&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=2',2,3),(17,'How To Use Functions In Python (Python Tutorial #3)','https://www.youtube.com/watch?v=NSbOtYzIQI0&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=3',3,3),(18,'How To Use Functions In Python (Python Tutorial #3)','https://www.youtube.com/watch?v=tw7ror9x32s&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=4',4,3),(19,'Introduction to For Loops in Python (Python Tutorial #5)','https://www.youtube.com/watch?v=OnDr4J2UXSA&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=5',5,3),(20,'While Loops and The Break Statement in Python (Python Tutorial #6)','https://www.youtube.com/watch?v=6TEGxJXLAWQ&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=6',6,3),(21,'More About For Loops in Python & Solutions to the Last 2 Problems (Python Tutorial #7)','https://www.youtube.com/watch?v=iVyWLmQ0QYA&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=7',7,3),(22,'How To Use Dictionaries In Python (Python Tutorial #8)','https://www.youtube.com/watch?v=ZEZdys-fHDw&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=8',8,3),(23,'Classes and Objects with Python - Part 1 (Python Tutorial #9)','https://www.youtube.com/watch?v=wfcWRAxRVBA&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=9',9,3),(24,'Classes and Objects with Python - Part 2 (Python Tutorial #10)','https://www.youtube.com/watch?v=WOwi0h_-dfA&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=10',10,3),(25,'Using Boolean in Python (Python Tutorial #11)','https://www.youtube.com/watch?v=r526yum0EYQ&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=11',11,3),(26,'List Comprehension Basics with Python (Python Tutorial #12)','https://www.youtube.com/watch?v=5K08WcjGV6c&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=12',12,3),(27,'How To Use Sets in Python (Python Tutorial #13)','https://www.youtube.com/watch?v=2u_ZExcNBzA&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=13',13,3),(28,'6 Python Exercise Problems for Beginners - from CodingBat (Python Tutorial #14)','https://www.youtube.com/watch?v=lx7oqZ7Nl3k&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=14',14,3),(29,'How To Create A Twitter Bot With Python | Build a Startup #4','https://www.youtube.com/watch?v=W0wWwglE1Vc&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=15',15,3),(30,'I Created a New Q&A Website for Coders with Python | Devlog #1','https://www.youtube.com/watch?v=RwOC7onT48Y&list=PLBZBJbE_rGRWeh5mIBhD-hhDwSEDxogDg&index=16',16,3),(31,'Introduction To PHP | What Is PHP Programming | PHP Tutorial For Beginners','https://www.youtube.com/watch?v=KBT2gmAfav4&list=PLEiEAq2VkUUIjP-QLfvICa1TvqTLFvn1b&index=1',1,4),(32,'Hello World In PHP | How To Run PHP Hello World Program | PHP Tutorial For Beginners','https://www.youtube.com/watch?v=wxzyZzEvS58&list=PLEiEAq2VkUUIjP-QLfvICa1TvqTLFvn1b&index=2',2,4),(33,'OOP In PHP | Object Oriented Programming In PHP | PHP Tutorial For Beginners','https://www.youtube.com/watch?v=JSX0HMYgtvc&list=PLEiEAq2VkUUIjP-QLfvICa1TvqTLFvn1b&index=3',3,4),(34,'PHP With MySQL Tutorial For Beginners | PHP And MySQL Database Tutorial | PHP Tutorial','https://www.youtube.com/watch?v=nP-MvFoDVZE&list=PLEiEAq2VkUUIjP-QLfvICa1TvqTLFvn1b&index=4',4,4),(35,'PHP Form Validation Tutorial | Form Validation In PHP | PHP Tutorial For Beginners','https://www.youtube.com/watch?v=xqI2hdDn47k&list=PLEiEAq2VkUUIjP-QLfvICa1TvqTLFvn1b&index=5',5,4),(36,'PHP Get And Post Methods | Get And Post Method In PHP With Example | PHP Tutorial','https://www.youtube.com/watch?v=hgFD7O058cw&list=PLEiEAq2VkUUIjP-QLfvICa1TvqTLFvn1b&index=6',6,4),(37,'PHP Crud Operations - Select, Insert, Update, Delete | PHP Tutorial For Beginners','https://www.youtube.com/watch?v=whvDzJFiyi4&list=PLEiEAq2VkUUIjP-QLfvICa1TvqTLFvn1b&index=7',7,4),(38,'PHP Form Login | How To Make Login Form In PHP | PHP Tutorial For Beginners','https://www.youtube.com/watch?v=scd8YKiuS7I&list=PLEiEAq2VkUUIjP-QLfvICa1TvqTLFvn1b&index=8',8,4),(39,' C Language Tutorial For Beginners || Programming Basics || Start Coding For Beginners In Hindi','https://www.youtube.com/watch?v=zgE_3dadBQo&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=1',1,5),(40,'Turbo C++ IDE | C Language Tutorial, Compile & Execute C Programs using Code block By Arvind','https://www.youtube.com/watch?v=T8WiCQAkpvE&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=2',2,5),(41,'C Programming Language || C Language Tutorial For Beginners || C language का परिचय By Arvind','https://www.youtube.com/watch?v=fXlYy9gSKWc&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=3',3,5),(42,'C Programming Language || C Language Tutorial For Beginners || C language Variables By Arvind','https://www.youtube.com/watch?v=Nds9lnGqkE4&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=4',4,5),(43,'C Programming Language || C Language Tutorial For Beginners || C language Constants By Arvind','https://www.youtube.com/watch?v=H1MiK0z19us&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=5',5,5),(44,'C Programming Language || C Language Tutorial For Beginners || C language Operators By Arvind','https://www.youtube.com/watch?v=FQqYT_9Az2E&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=6',6,5),(45,'C language Conditional Statement || C Programming || C Language Tutorial For Beginners By Arvind','https://www.youtube.com/watch?v=F61i7gYCg3E&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=7',7,5),(46,'C language Array, Types of Array || C Programming || C Language Tutorial For Beginners By Arvind','https://www.youtube.com/watch?v=R-VU5plP3LU&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=8',8,5),(47,'C language Debugging & Testing || C Programming || C Language Tutorial For Beginners By Arvind','https://www.youtube.com/watch?v=NA0R4DHSV2w&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=9',9,5),(48,'C language Input/Output Function || C Programming || C Language Tutorial For Beginners By Arvind','https://www.youtube.com/watch?v=K1qbd5yomd0&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=10',10,5),(49,'C language Programming Approach || C Programming || C Language Tutorial For Beginners By Arvind','https://www.youtube.com/watch?v=EVW9RPbyWvg&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=11',11,5),(50,'C language Programming Function || C Programming || C Language Tutorial For Beginners By Arvind','https://www.youtube.com/watch?v=y4xGzZuq7T4&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=12',12,5),(51,'C language Programming Function || C Programming || C Language Tutorial For Beginners By Arvind','https://www.youtube.com/watch?v=FAmbbuQN5pQ&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=13',13,5),(52,'C Language Tutorial For Beginners In Hindi (With PDF) -Learn C Programming-Complete Course By Arvind','https://www.youtube.com/watch?v=yvDh5KQ-mEk&list=PLOd2apPiwn-afd-ugTdHUQb2cBJw2-Z3V&index=14',14,5),(53,'Soft Skills  Enthusiasm And Attitude','https://youtu.be/-vk-99seC_I',1,9),(54,'Critical Thinking And Problem Solving','https://www.youtube.com/watch?v=hPiI44XEKgs&list=PLG0im2-n6wDL16gAXtoFpi6yh3mPijeQp&index=2',2,9),(55,'Soft Skills--Professionalism','https://www.youtube.com/watch?v=7dPWVjQSad4&list=PLG0im2-n6wDL16gAXtoFpi6yh3mPijeQp&index=3',3,9),(56,'Synopsis','https://www.youtube.com/watch?v=OwPArMTI9i8&list=PLG0im2-n6wDL16gAXtoFpi6yh3mPijeQp&index=4',4,9),(57,'Hard Facts Soft Skills','https://www.youtube.com/watch?v=yKzQYQNtYts&list=PLG0im2-n6wDL16gAXtoFpi6yh3mPijeQp&index=5',5,9),(58,'How to Break the Ice','https://www.youtube.com/watch?v=v6WAsBiAgUU&list=PLG0im2-n6wDL16gAXtoFpi6yh3mPijeQp&index=6',6,9),(59,'Career Gates','https://www.youtube.com/watch?v=YSLNcUtZiuA&list=PLG0im2-n6wDL16gAXtoFpi6yh3mPijeQp&index=7',7,9),(60,'What is critical thinking?','https://www.youtube.com/watch?v=9oAf3g5_138&list=PLG0im2-n6wDL16gAXtoFpi6yh3mPijeQp&index=8',8,9),(61,'How to Stop Caring What People Think','https://www.youtube.com/watch?v=IGtoJlVptow&list=PLG0im2-n6wDL16gAXtoFpi6yh3mPijeQp&index=9',9,9),(62,'How To Overcome Any Fear','https://www.youtube.com/watch?v=3V9xpe6GKXU&list=PLG0im2-n6wDL16gAXtoFpi6yh3mPijeQp&index=10',10,9),(63,'How to Deal With Difficult People','https://www.youtube.com/watch?v=zKlJ73UOhAY&list=PLG0im2-n6wDL16gAXtoFpi6yh3mPijeQp&index=11',11,9),(64,'Communication','https://www.youtube.com/watch?v=X0voPlW2pSs&list=PLG0im2-n6wDL16gAXtoFpi6yh3mPijeQp&index=12',12,9),(65,'Being Professional At Work','https://www.youtube.com/watch?v=QphclWBVzGQ&list=PLG0im2-n6wDL16gAXtoFpi6yh3mPijeQp&index=13',13,9);
 /*!40000 ALTER TABLE `lecture` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -136,8 +86,8 @@ CREATE TABLE `questions` (
   `option4` varchar(300) DEFAULT NULL,
   `answer` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`qqid`),
-  KEY `quizid_idx` (`qid`),
-  CONSTRAINT `quizid` FOREIGN KEY (`qid`) REFERENCES `quiz` (`qid`)
+  KEY `quiz_id_idx` (`qid`),
+  CONSTRAINT `quiz_id` FOREIGN KEY (`qid`) REFERENCES `quiz` (`qid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -159,14 +109,15 @@ DROP TABLE IF EXISTS `quiz`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `quiz` (
-  `qid` int NOT NULL,
+  `qid` int NOT NULL AUTO_INCREMENT,
   `qname` varchar(45) DEFAULT NULL,
   `total_score` int DEFAULT NULL,
-  `cid` int DEFAULT NULL,
+  `cid` int NOT NULL,
   PRIMARY KEY (`qid`),
-  KEY `cid_idx` (`cid`),
-  CONSTRAINT `cid` FOREIGN KEY (`cid`) REFERENCES `course` (`cid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='			';
+  KEY `avcd_idx` (`cid`),
+  KEY `course_id` (`cid`),
+  CONSTRAINT `FK7tajbm5d24xo2vxemy6ascrmo` FOREIGN KEY (`cid`) REFERENCES `course` (`cid`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='			';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -175,7 +126,7 @@ CREATE TABLE `quiz` (
 
 LOCK TABLES `quiz` WRITE;
 /*!40000 ALTER TABLE `quiz` DISABLE KEYS */;
-INSERT INTO `quiz` VALUES (1,'C++',20,1),(2,'Java',20,2),(3,'Python',20,3),(4,'PHP',20,4),(5,'C',20,5);
+INSERT INTO `quiz` VALUES (1,'C++',20,1),(2,'Java',20,2),(3,'Python',20,3),(4,'PHP',20,4),(5,'C',20,5),(6,'Soft Skills',0,9);
 /*!40000 ALTER TABLE `quiz` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -190,7 +141,7 @@ CREATE TABLE `role` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -199,6 +150,7 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
+INSERT INTO `role` VALUES (1,'USER'),(2,'ADMIN');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -214,7 +166,7 @@ CREATE TABLE `user` (
   `password` varchar(255) DEFAULT NULL,
   `username` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -223,7 +175,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'$2a$10$XORtncmW/xhfFaV4j3u0f.0LOg/I3peDzor2z0RUPbVnRrqtBxbYC','Pritimoy'),(2,'$2a$10$CGyuSQCHauTheexXopfehukWmD3vv6gXDPRq6pZRqoucfelnGpaQ6','abcdxyz'),(3,'$2a$10$D/TLFeNDH46mJ93vGc8An.K0CmrK/kIJLBgXGVmwbym1QiABO9zNy','Ashutosh'),(4,'$2a$10$b8/nCf5dAUPQRON2sWUxPesQRBm//TsnJulooTWDg4CMgbGlmGJG.','Prerak'),(5,'$2a$10$SodDlTS3tJW9g0UKQNXfXewpzPJQkfDzbj.XHjRdFnZLVGkdUKU4e','Sachin');
+INSERT INTO `user` VALUES (1,'$2a$10$XORtncmW/xhfFaV4j3u0f.0LOg/I3peDzor2z0RUPbVnRrqtBxbYC','Pritimoy'),(2,'$2a$10$CGyuSQCHauTheexXopfehukWmD3vv6gXDPRq6pZRqoucfelnGpaQ6','abcdxyz'),(3,'$2a$10$D/TLFeNDH46mJ93vGc8An.K0CmrK/kIJLBgXGVmwbym1QiABO9zNy','Ashutosh'),(4,'$2a$10$b8/nCf5dAUPQRON2sWUxPesQRBm//TsnJulooTWDg4CMgbGlmGJG.','Prerak'),(5,'$2a$10$SodDlTS3tJW9g0UKQNXfXewpzPJQkfDzbj.XHjRdFnZLVGkdUKU4e','Sachin'),(6,'$2a$10$ovAO2n0IqRL3QgB657dc2.4rT0MCoxvQ9SUlMa7rhH4j2gTT1lvU6','Sristy'),(7,'$2a$10$pEh7xupU.cOJEUS4/ysv0.TB5MlLo5hiPEsAzHsi5XYidYPOb2gkC','abcdefgh'),(8,'$2a$10$eNcPSsagxTK.Dows5PcJau4Zm8wQc.sXyL0mS3ftYFsWrEiyr2Fqm','Testuser'),(9,'$2a$10$tinLVD9LIeZT59DnT2KzTe.egkGcvRWb.hsb52IEsnpnVvSQMaK5u','Admin1');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -242,8 +194,10 @@ CREATE TABLE `user_course` (
   `uid` bigint DEFAULT NULL,
   PRIMARY KEY (`ucid`),
   KEY `FK9i32hd38k9pm5pjv8lwmvydd1` (`uid`),
-  KEY `FKkm473bp3uhqhpgh7h4uug7x53` (`cid`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `FKkm473bp3uhqhpgh7h4uug7x53` (`cid`),
+  CONSTRAINT `FK9i32hd38k9pm5pjv8lwmvydd1` FOREIGN KEY (`uid`) REFERENCES `user` (`id`),
+  CONSTRAINT `FKkm473bp3uhqhpgh7h4uug7x53` FOREIGN KEY (`cid`) REFERENCES `course` (`cid`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -252,7 +206,7 @@ CREATE TABLE `user_course` (
 
 LOCK TABLES `user_course` WRITE;
 /*!40000 ALTER TABLE `user_course` DISABLE KEYS */;
-INSERT INTO `user_course` VALUES (1,1,4,'Failed',1),(2,2,-1,'Enrolled',1),(3,5,-1,'Enrolled',1),(5,2,-1,'Enrolled',3),(6,1,1,'Failed',3),(7,1,1,'Failed',4),(8,5,-1,'Enrolled',4),(9,3,-1,'Enrolled',4),(10,4,-1,'Enrolled',4),(11,2,-1,'Enrolled',5),(12,3,-1,'Enrolled',5);
+INSERT INTO `user_course` VALUES (1,1,4,'Failed',1),(2,2,-1,'Enrolled',1),(3,5,3,'Failed',1),(5,2,-1,'Enrolled',3),(6,1,1,'Failed',3),(7,1,1,'Failed',4),(8,5,-1,'Enrolled',4),(9,3,-1,'Enrolled',4),(10,4,-1,'Enrolled',4),(11,2,-1,'Enrolled',5),(12,3,-1,'Enrolled',5),(13,3,18,'Passed',6),(14,4,-1,'Enrolled',6),(15,3,-1,'Enrolled',1),(16,4,6,'Failed',1),(17,2,-1,'Enrolled',6),(18,1,2,'Failed',7),(19,1,-1,'Enrolled',6),(20,1,-1,'Enrolled',8),(21,9,-1,'Enrolled',8);
 /*!40000 ALTER TABLE `user_course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -267,8 +221,10 @@ CREATE TABLE `user_roles` (
   `users_id` bigint NOT NULL,
   `roles_id` bigint NOT NULL,
   PRIMARY KEY (`users_id`,`roles_id`),
-  KEY `FKj9553ass9uctjrmh0gkqsmv0d` (`roles_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `FKj9553ass9uctjrmh0gkqsmv0d` (`roles_id`),
+  CONSTRAINT `FK7ecyobaa59vxkxckg6t355l86` FOREIGN KEY (`users_id`) REFERENCES `user` (`id`),
+  CONSTRAINT `FKj9553ass9uctjrmh0gkqsmv0d` FOREIGN KEY (`roles_id`) REFERENCES `role` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -277,6 +233,7 @@ CREATE TABLE `user_roles` (
 
 LOCK TABLES `user_roles` WRITE;
 /*!40000 ALTER TABLE `user_roles` DISABLE KEYS */;
+INSERT INTO `user_roles` VALUES (1,1),(2,1),(3,1),(4,1),(5,1),(6,1),(7,1),(8,1),(9,2);
 /*!40000 ALTER TABLE `user_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -289,4 +246,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-28  0:06:26
+-- Dump completed on 2021-05-03 23:51:51

@@ -24,4 +24,8 @@ public class LectureService {
 		}
 		return lectures;
 	}
+	
+	public void insertLecture(Lecture lecture) {
+		lecturedao.save(lecture);
+	}
 }

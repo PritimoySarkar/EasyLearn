@@ -91,7 +91,7 @@
 												<button type="button" class="btn btn-secondary"
 													data-dismiss="modal">No, Not Now</button>
 												
-												<form id="dashboardForm" method="POST" action="course/lectures/${course.cid}/${course.cname}">
+												<form id="dashboardForm" method="POST" action="course/lectures/${course.cid}">
 										            <input type="hidden" name="username" value="${pageContext.request.userPrincipal.name}"/>
 										            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 										        	<button type="submit" class="btn btn-primary">Yes</button>
@@ -120,7 +120,7 @@
 							<div class="description">${course.description}</div>
 						</div>
 						<div class="extra content">
-							<a href="course/lectures/${course.cid}/${course.cname}"
+							<a href="course/lectures/${course.cid}"
 								class="ui button teal">Explore</a>
 						</div>
 					</div>
@@ -141,7 +141,7 @@
 							<div class="description">${course.description}</div>
 						</div>
 						<div class="extra content">
-							<a href="course/lectures/${course.cid}/${course.cname}"
+							<a href="course/lectures/${course.cid}"
 								class="ui button teal">Explore</a>
 						</div>
 					</div>

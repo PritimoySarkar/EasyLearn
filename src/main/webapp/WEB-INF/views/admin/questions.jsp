@@ -38,58 +38,70 @@
 <body>
 	<jsp:include page="../navbar/adminNavbar.jsp" />
 	<div class="ui container">
-		<h1 class="ui header centered" style="margin-top: 110px">Add new Course</h1>
-		
-		<form:form class="ui form" modelAttribute="newCourse" method="POST">
+		<h1 class="ui header centered" style="margin-top: 110px">Add new Question</h1>
+	
+		<form:form class="ui form" modelAttribute="newQuestion" method="POST">
 			<div class="field">
-				<spring:bind path="cname">
-				<label>Course Name</label> <form:input type="text" path="cname"
-					placeholder="Course Name"></form:input>
+				<spring:bind path="question">
+				<label>Question</label> <form:input type="text" path="question"
+					placeholder="Question"></form:input>
 				</spring:bind>
 			</div>
 			<div class="field">
-				<spring:bind path="description">
-				<label>Course description</label> <form:input type="text" path="description"
-					placeholder="Description"></form:input>
+				<spring:bind path="option1">
+				<label>First Option</label> <form:input type="text" path="option1"
+					placeholder="Option 1"></form:input>
+				</spring:bind>
+				
+				<spring:bind path="option2">
+				<label>Second Option</label> <form:input type="text" path="option2"
+					placeholder="Option 2"></form:input>
+				</spring:bind>
+				
+				<spring:bind path="option3">
+				<label>Third Option</label> <form:input type="text" path="option3"
+					placeholder="Option 3"></form:input>
+				</spring:bind>
+				
+				<spring:bind path="option4">
+				<label>Fourth Option</label> <form:input type="text" path="option4"
+					placeholder="Option 4"></form:input>
 				</spring:bind>
 			</div>
 			<button class="ui teal button" type="submit">Add Course</button>
 		</form:form>
-		
+	
 		<div class="ui divider"></div>
 		<h1 class="ui header centered" style="margin-top: 110px">All
-			available courses</h1>
+			Question of ${quizName} Quiz</h1>
 		<div class="ui grid centered">
 			<div class="column ten wide computer only"></div>
-
 
 			<table class="ui teal table" style="font-size: 16pt;text-align:center">
 				<thead>
 					<tr>
-						<th>Course ID</th>
-						<th>Course Name</th>
-						<th>Description</th>
-						<th>Delete</th>
+						<th>Question serial Number</th>
+						<th>Question</th>
+						<th>Edit</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="cs" items="${courses}">
+					<c:forEach var="question" items="${questions}">
 						<tr>
-							<td>${cs.cid }</td>
-							<td>${cs.cname }</td>
-							<td>${cs.description }</td>
+							<td>${question.slno }</td>
+							<td>${question.question }</td>
 							<td>
-							<form id="form${cs.cid}" method="POST" action="/admin/course/delete/${cs.cid }">
+							<form id="form${cs.cid}" method="POST" action="/">
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-							<input type="hidden" name="cid" value="${cs.cid }">
-							<button type="submit" class="ui button red">Delete</button>
+							<input type="hidden" name="cid" value="${lec.lid }">
+							<button type="submit" class="ui button teal">Edit Lecture</button>
 							</form>
 							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
-			<br /> <br /> <a class="ui button teal" href="/admin" style="margin-bottom:20px;">
+			<br /> <br /> <a class="ui button teal" href="/admin">
 				<i class="angle left icon"></i>Home
 			</a>
 		</div>

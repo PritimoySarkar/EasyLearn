@@ -38,58 +38,58 @@
 <body>
 	<jsp:include page="../navbar/adminNavbar.jsp" />
 	<div class="ui container">
-		<h1 class="ui header centered" style="margin-top: 110px">Add new Course</h1>
+		<h1 class="ui header centered" style="margin-top: 110px">Add new lecture</h1>
 		
-		<form:form class="ui form" modelAttribute="newCourse" method="POST">
+		<form:form class="ui form" modelAttribute="newLecture" method="POST" action="/admin/add/lecture">
 			<div class="field">
-				<spring:bind path="cname">
-				<label>Course Name</label> <form:input type="text" path="cname"
-					placeholder="Course Name"></form:input>
+				<spring:bind path="cid">
+				<form:input type="hidden" path="cid" value="${cid}"></form:input>
+				</spring:bind>
+				<spring:bind path="lname">
+				<label>Lecture Name</label> <form:input type="text" path="lname"
+					placeholder="Name of the Lecture"></form:input>
 				</spring:bind>
 			</div>
 			<div class="field">
-				<spring:bind path="description">
-				<label>Course description</label> <form:input type="text" path="description"
-					placeholder="Description"></form:input>
+				<spring:bind path="url">
+				<label>Lecture URL</label> <form:input type="text" path="url"
+					placeholder="URL of the video"></form:input>
 				</spring:bind>
 			</div>
 			<button class="ui teal button" type="submit">Add Course</button>
 		</form:form>
-		
+	
 		<div class="ui divider"></div>
 		<h1 class="ui header centered" style="margin-top: 110px">All
-			available courses</h1>
+			lectures of ${courseName} Course</h1>
 		<div class="ui grid centered">
 			<div class="column ten wide computer only"></div>
-
 
 			<table class="ui teal table" style="font-size: 16pt;text-align:center">
 				<thead>
 					<tr>
-						<th>Course ID</th>
-						<th>Course Name</th>
-						<th>Description</th>
-						<th>Delete</th>
+						<th>Lecture serial Number</th>
+						<th>Lecture Name</th>
+						<th>Edit</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="cs" items="${courses}">
+					<c:forEach var="lec" items="${lectures}">
 						<tr>
-							<td>${cs.cid }</td>
-							<td>${cs.cname }</td>
-							<td>${cs.description }</td>
+							<td>${lec.slno }</td>
+							<td>${lec.lname }</td>
 							<td>
-							<form id="form${cs.cid}" method="POST" action="/admin/course/delete/${cs.cid }">
+							<form id="form${cs.cid}" method="POST" action="/">
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-							<input type="hidden" name="cid" value="${cs.cid }">
-							<button type="submit" class="ui button red">Delete</button>
+							<input type="hidden" name="cid" value="${lec.lid }">
+							<button type="submit" class="ui button teal">Edit Lecture</button>
 							</form>
 							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
-			<br /> <br /> <a class="ui button teal" href="/admin" style="margin-bottom:20px;">
+			<br /> <br /> <a class="ui button teal" href="/admin">
 				<i class="angle left icon"></i>Home
 			</a>
 		</div>

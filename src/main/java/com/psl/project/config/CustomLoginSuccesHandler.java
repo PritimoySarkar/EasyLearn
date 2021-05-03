@@ -42,7 +42,7 @@ public class CustomLoginSuccesHandler extends SimpleUrlAuthenticationSuccessHand
 			url="/";
 		}
 		else if(roles.contains("ADMIN")) {
-			url="/admin/home";
+			url="/admin";
 		}
 		return url;
 	}

@@ -26,4 +26,9 @@ public class QuizService {
 		Optional<Quiz> q = dao.findById(id);
 		return q;
 	}
+	
+	//Method to insert new Quiz
+	public void insertQuiz(Quiz quiz) {
+		dao.save(quiz);
+	}
 }
