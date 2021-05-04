@@ -4,7 +4,6 @@ import javax.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -27,7 +26,7 @@ public class User {
     				joinColumns = { @JoinColumn(name = "users_id") }, 
     		        inverseJoinColumns = { @JoinColumn(name = "roles_id") }
     		)
-    private Set<Role> roles;
+    private List<Role> roles;
 
     @ManyToMany(mappedBy = "users")
     private List<Course> courses = new ArrayList<Course>(); 
@@ -36,7 +35,7 @@ public class User {
 		super();
 	}
 
-	public User(Long id, String username, String password, String passwordConfirm, Set<Role> roles,
+	public User(Long id, String username, String password, String passwordConfirm, List<Role> roles,
 			List<Course> courses) {
 		super();
 		this.id = id;
@@ -87,11 +86,11 @@ public class User {
         this.passwordConfirm = passwordConfirm;
     }
 
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 }

@@ -35,7 +35,6 @@
 </style>
 </head>
 <body>
-
 	<img class="home-bg" src="resources/images/home-bg.jpg" alt="" />
 	<div class="ui container">
 

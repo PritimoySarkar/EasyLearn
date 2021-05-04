@@ -45,11 +45,26 @@
 					<i class="frown outline icon"></i><h1 style="font-size:30pt"> Some internal server error took place</h1>
 				</div>
 				<div class="actions">
+					<c:if test="${empty userRole}">
 					<div onclick="location.href='/dashboard'" class="ui basic inverted button"><h1 style="font-size:20pt">Dashboard</h1></div>
 					<div class="ui teal ok inverted button"
 						onclick="location.href='/'">
 						<h1 style="font-size:20pt">Home<i class="angle right icon"></i></h1>
 					</div>
+					</c:if>
+					<c:if test="${userRole == 'ADMIN'}">
+						<div onclick="location.href='/admin/dashboard'" class="ui basic inverted button"><h1 style="font-size:20pt">Dashboard</h1></div>
+						<div class="ui teal ok inverted button" onclick="location.href='/admin'">
+						<h1 style="font-size:20pt">Home<i class="angle right icon"></i></h1>
+						</div>
+					</c:if>
+					<c:if test="${userRole == 'USER'}">
+					<div onclick="location.href='/dashboard'" class="ui basic inverted button"><h1 style="font-size:20pt">Dashboard</h1></div>
+					<div class="ui teal ok inverted button"
+						onclick="location.href='/'">
+						<h1 style="font-size:20pt">Home<i class="angle right icon"></i></h1>
+					</div>
+					</c:if>
 				</div>
 			</div>
 			

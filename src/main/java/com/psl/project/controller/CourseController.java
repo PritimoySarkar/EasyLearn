@@ -54,6 +54,9 @@ public class CourseController {
 
 			// Adding not enrolled courses details to request
 			request.setAttribute("notEnrolledCourses", notEnrolledCourses);
+			
+			//Adding user role to request
+			request.setAttribute("userRole", user.getRoles().get(0).getName());
 		}
 		return "user/allCourses";
 	}

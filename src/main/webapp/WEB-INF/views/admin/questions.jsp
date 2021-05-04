@@ -38,51 +38,91 @@
 <body>
 	<jsp:include page="../navbar/adminNavbar.jsp" />
 	<div class="ui container">
-		<h1 class="ui header centered" style="margin-top: 110px">Add new Question</h1>
-	
-		<form:form class="ui form" modelAttribute="newQuestion" method="POST">
+		<h1 class="ui header centered" style="margin-top: 110px">Add new
+			Question</h1>
+
+		<form:form class="ui form" modelAttribute="newQuestion" method="POST"
+			action="/admin/add/question/${cid}/${qid}">
+			<spring:bind path="qid"><form:input type="hidden" path="qid" value="${qid}"></form:input></spring:bind>
 			<div class="field">
 				<spring:bind path="question">
-				<label>Question</label> <form:input type="text" path="question"
-					placeholder="Question"></form:input>
+					<label>Question</label>
+					<form:input type="text" path="question" placeholder="Question" required="true"></form:input>
 				</spring:bind>
 			</div>
-			<div class="field">
-				<spring:bind path="option1">
-				<label>First Option</label> <form:input type="text" path="option1"
-					placeholder="Option 1"></form:input>
-				</spring:bind>
-				
-				<spring:bind path="option2">
-				<label>Second Option</label> <form:input type="text" path="option2"
-					placeholder="Option 2"></form:input>
-				</spring:bind>
-				
-				<spring:bind path="option3">
-				<label>Third Option</label> <form:input type="text" path="option3"
-					placeholder="Option 3"></form:input>
-				</spring:bind>
-				
-				<spring:bind path="option4">
-				<label>Fourth Option</label> <form:input type="text" path="option4"
-					placeholder="Option 4"></form:input>
-				</spring:bind>
+
+			<div class="two fields">
+				<div class="field">
+					<spring:bind path="option1">
+						<label>First Option</label>
+						<form:input type="text" path="option1" placeholder="Option 1" required="true"/>
+					</spring:bind>
+				</div>
+				<div class="field">
+					<spring:bind path="option2">
+						<label>Second Option</label>
+						<form:input type="text" path="option2" placeholder="Option 2" required="true"/>
+					</spring:bind>
+				</div>
 			</div>
-			<button class="ui teal button" type="submit">Add Course</button>
+			<div class="two fields">
+				<div class="field">
+					<spring:bind path="option3">
+						<label>Third Option</label>
+						<form:input type="text" path="option3" placeholder="Option 3" />
+					</spring:bind>
+				</div>
+				<div class="field">
+					<spring:bind path="option4">
+						<label>Fourth Option</label>
+						<form:input type="text" path="option4" placeholder="Option 4" />
+					</spring:bind>
+				</div>
+			</div>
+			<div class="inline fields">
+				<label>Select the correct option?</label>
+				<div class="field">
+					<div class="ui radio checkbox">
+						<form:radiobutton path="answer" value="A" tabindex="0" required="true"/>
+						<label>Option 1</label>
+					</div>
+				</div>
+				<div class="field">
+					<div class="ui radio checkbox">
+						<form:radiobutton path="answer" value="B" tabindex="0" />
+						<label>Option 2</label>
+					</div>
+				</div>
+				<div class="field">
+					<div class="ui radio checkbox">
+						<form:radiobutton path="answer" value="C" tabindex="0"/>
+						<label>Option 3</label>
+					</div>
+				</div>
+				<div class="field">
+					<div class="ui radio checkbox">
+						<form:radiobutton path="answer" value="D" tabindex="0" />
+						<label>Option 4</label>
+					</div>
+				</div>
+			</div>
+			<button class="ui teal button" type="submit">Add Question</button>
 		</form:form>
-	
+
 		<div class="ui divider"></div>
 		<h1 class="ui header centered" style="margin-top: 110px">All
 			Question of ${quizName} Quiz</h1>
 		<div class="ui grid centered">
 			<div class="column ten wide computer only"></div>
 
-			<table class="ui teal table" style="font-size: 16pt;text-align:center">
+			<table class="ui teal table"
+				style="font-size: 12pt; text-align: center">
 				<thead>
 					<tr>
 						<th>Question serial Number</th>
 						<th>Question</th>
 						<th>Edit</th>
+						<th>Delete</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -91,20 +131,36 @@
 							<td>${question.slno }</td>
 							<td>${question.question }</td>
 							<td>
-							<form id="form${cs.cid}" method="POST" action="/">
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-							<input type="hidden" name="cid" value="${lec.lid }">
-							<button type="submit" class="ui button teal">Edit Lecture</button>
-							</form>
+								<form id="form${cs.cid}" method="POST" action="/">
+									<input type="hidden" name="${_csrf.parameterName}"
+										value="${_csrf.token}" /> <input type="hidden" name="cid"
+										value="${question.qqid }">
+									<button type="submit" class="ui button teal">Edit
+										Question</button>
+								</form>
+							</td>
+							<td>
+								<form id="form${cs.cid}" method="POST" action="/admin/remove/question/${cid}/${qid}">
+									<input type="hidden" name="${_csrf.parameterName}"
+										value="${_csrf.token}" /> <input type="hidden" name="qqid"
+										value="${question.qqid }">
+									<button type="submit" class="ui button red">Delete Question</button>
+								</form>
 							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
-			<br /> <br /> <a class="ui button teal" href="/admin">
-				<i class="angle left icon"></i>Home
+			<br /> <br /> <a class="ui button teal" href="/admin"> <i
+				class="angle left icon"></i>Home
 			</a>
 		</div>
 	</div>
+	<script>
+	//Code to replace the state of the questions page so user can't refresh the page and resubmit the form so there will be no duplicate entry
+	if (window.history.replaceState) {
+		window.history.replaceState(null, null, window.location.href);
+	}
+	</script>
 </body>
 </html>

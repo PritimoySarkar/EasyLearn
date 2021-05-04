@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Optional;
@@ -39,7 +40,7 @@ public class UserServiceImplTest{
 	@Test
 	public void saveTest() {
 		
-		User u = new User(1L,"TestUserName","TestPassword","TestPasswordConfirm",new HashSet<Role>(),new LinkedList<Course>());
+		User u = new User(1L,"TestUserName","TestPassword","TestPasswordConfirm",new ArrayList<Role>(),new LinkedList<Course>());
 		Mockito.when(userRepository.save(u)).thenReturn(u);
 		userServiceImpl.save(u);
 		
@@ -51,7 +52,7 @@ public class UserServiceImplTest{
 	@Test
 	public void findByUsernameTest() {
 		
-		User u = new User(1L,"TestUserName","TestPassword","TestPasswordConfirm",new HashSet<Role>(),new LinkedList<Course>());
+		User u = new User(1L,"TestUserName","TestPassword","TestPasswordConfirm",new ArrayList<Role>(),new LinkedList<Course>());
 		Mockito.when(userRepository.findByUsername("TestUserName")).thenReturn(u);
 		
 		assertEquals(userServiceImpl.findByUsername("TestUserName"),u);

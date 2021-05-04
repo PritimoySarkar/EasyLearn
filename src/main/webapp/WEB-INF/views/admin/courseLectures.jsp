@@ -70,7 +70,7 @@
 					<tr>
 						<th>Lecture serial Number</th>
 						<th>Lecture Name</th>
-						<th>Edit</th>
+						<th>Delete</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -79,10 +79,10 @@
 							<td>${lec.slno }</td>
 							<td>${lec.lname }</td>
 							<td>
-							<form id="form${cs.cid}" method="POST" action="/">
+							<form id="form${cs.cid}" method="POST" action="/admin/remove/lecture/${cid}/${lec.lid}">
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-							<input type="hidden" name="cid" value="${lec.lid }">
-							<button type="submit" class="ui button teal">Edit Lecture</button>
+							<input type="hidden" name="lid" value="${lec.lid }">
+							<button type="submit" class="ui button red">Delete Lecture</button>
 							</form>
 							</td>
 						</tr>

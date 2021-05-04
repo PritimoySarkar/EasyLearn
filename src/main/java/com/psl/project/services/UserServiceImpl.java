@@ -8,7 +8,7 @@ import com.psl.project.model.User;
 import com.psl.project.repository.RoleRepository;
 import com.psl.project.repository.UserRepository;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRoles(new HashSet<>(roleRepository.findByName("USER")));
+        user.setRoles(new ArrayList<>(roleRepository.findByName("USER")));
         userRepository.save(user);
     }
 

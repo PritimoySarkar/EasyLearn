@@ -70,8 +70,15 @@ public class LoginController {
     	//Getting username by getcontext to check if user is logged in or not
     	Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     	if (principal instanceof UserDetails) {
-    		//Redirecting to allCourses if user is logged in 
-    		return "redirect:/allcourses";
+    		String userRole = userService.findByUsername(((UserDetails) principal).getUsername()).getRoles().get(0).getName();
+    		if(userRole.equals("ADMIN")) {
+    			//Redirecting to allCourses if user is logged in 
+        		return "redirect:/admin";
+    		}
+    		else {
+    			//Redirecting to allCourses if user is logged in 
+        		return "redirect:/allcourses";
+    		}
     	}
     	
         if (error != null)

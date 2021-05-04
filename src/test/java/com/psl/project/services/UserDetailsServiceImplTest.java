@@ -19,6 +19,8 @@ import com.psl.project.repository.UserRepository;
 import com.psl.project.model.User;
 import com.psl.project.model.Role;
 import com.psl.project.model.Course;
+
+import java.util.ArrayList;
 import java.util.HashSet;
 //import java.util.LinkedList;
 
@@ -36,7 +38,7 @@ public class UserDetailsServiceImplTest{
 	
 	@Test
 	public void loadUserByUsernameTest() {
-		User u = new User(1L,"TestUserName","TestPassword","TestPasswordConfirm",new HashSet<Role>(),new LinkedList<Course>());
+		User u = new User(1L,"TestUserName","TestPassword","TestPasswordConfirm",new ArrayList<Role>(),new LinkedList<Course>());
 		Mockito.when(userRepository.findByUsername("TestUserName")).thenReturn(u);
 		
 		UserDetails ud = new org.springframework.security.core.userdetails.User("TestUserName", "TestPassword", new HashSet<GrantedAuthority>());

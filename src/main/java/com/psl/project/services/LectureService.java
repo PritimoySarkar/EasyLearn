@@ -25,7 +25,18 @@ public class LectureService {
 		return lectures;
 	}
 	
+	//Insert New Lecture
 	public void insertLecture(Lecture lecture) {
 		lecturedao.save(lecture);
+	}
+	
+	//Method to increase serial number of all next lectures
+	public void syncLecturesUp(int slno,int cid) {
+		lecturedao.increaseAllNextLectures(slno, cid);
+	}
+	
+	//Method to decrease serial number of all next lectures
+	public void syncLecturesDown(int slno,int cid) {
+		lecturedao.decreaseAllNextLectures(slno, cid);
 	}
 }
