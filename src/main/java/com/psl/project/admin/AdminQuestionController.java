@@ -34,21 +34,41 @@ public class AdminQuestionController {
 	
 	@PostMapping(value="/quiz/add/{cid}")
 	public String addAdminQuizzes(Model model,HttpServletRequest request,@PathVariable("cid") int cid) {
-		//model.addAttribute("newLecture",new Quiz());
-		model.addAttribute("newQuestion",new Question());
+		
 		List<Quiz> quiz = quizService.getQuiz(cid);
 		String qname=courseService.getCourse(cid).get().getCname();
 		int qid;
+		
+		//Check if Quiz already exist
+		//If Quiz doesn't exist
 		if(quiz.size()==0) {
+			//Create Quiz object
 			Quiz tempQuiz = new Quiz();
+			
+			//Set attributes into quiz object
 			tempQuiz.setCid(cid);
 			tempQuiz.setQname(qname);
 			tempQuiz.setTotal_score(0);
+			
+			//Insert the customized QUiz object into the database
 			quizService.insertQuiz(tempQuiz);
+			
+			//Taking backup of Quiz object
 			qid = quizService.getQuiz(cid).get(0).getQid();
+			
+			//Adding quiz Name to request
 			request.setAttribute("quizName", quizService.getQuiz(cid).get(0).getQname());
 		}
-		else {qid=quiz.get(0).getQid();request.setAttribute("quizName", quiz.get(0).getQname());}
+		//If Quiz exist
+		else {
+			//Get the QUiz
+			qid=quiz.get(0).getQid();
+			
+			//Set the Quiz Name to request
+			request.setAttribute("quizName", quiz.get(0).getQname());
+		}
+		//Adding all attributes in model and request to render the page with proper details
+		model.addAttribute("newQuestion",new Question());
 		request.setAttribute("questions", questionService.getQuestions(qid));
 		request.setAttribute("cid", cid);
 		request.setAttribute("qid", qid);
@@ -57,15 +77,21 @@ public class AdminQuestionController {
 	
 	@PostMapping(value="/add/question/{cid}/{qid}")
 	public String addAdminQuestion(Model model,HttpServletRequest request,@ModelAttribute("newQuestion") Question question,@PathVariable("qid") int qid,@PathVariable("cid") int cid) {
-		//System.out.println("Question: "+question.getQuestion()+" "+question.getOption3()+" "+question.getAnswer()+" "+question.getQid());
 		int totalQuestions = questionService.getQuestions(qid).size();
-		question.setSlno(totalQuestions+1);
+		//question.setSlno(totalQuestions+1);
+		
+		//Increasing all next lecture's serial number by 1
+		questionService.syncQuestionsUp(question.getSlno(), question.getQid());
+		
+		//Inserting the question into the database
 		questionService.insertQuestion(question);
 		
+		//Adding 1 score with total score 
 		Quiz quiz = quizService.getQuizById(qid).get();
 		quiz.setTotal_score(totalQuestions+1);
 		quizService.insertQuiz(quiz);
 		
+		//Adding all attributes in model and request to render the page with proper details
 		model.addAttribute("newQuestion",new Question());
 		request.setAttribute("quizName", quizService.getQuizById(qid).get().getQname());
 		request.setAttribute("questions", questionService.getQuestions(qid));
@@ -76,8 +102,6 @@ public class AdminQuestionController {
 	
 	@PostMapping(value="/remove/question/{cid}/{qid}")
 	public String removeAdminQuestion(Model model,@RequestParam Map<String, String> response,HttpServletRequest request,@PathVariable("qid") int qid,@PathVariable("cid") int cid) {
-		System.out.println(response.get("qqid"));
-
 		//Taking backup of the serial number of the question to bea deleted
 		int slno = questionService.getQuestionsByQqid(Integer.parseInt(response.get("qqid"))).get().getSlno();
 		
@@ -85,8 +109,9 @@ public class AdminQuestionController {
 		questionService.removeQuestion(Integer.parseInt(response.get("qqid")));
 		
 		//Decrease serial number of all next question
-		questionService.syncQuestions(slno, qid);
+		questionService.syncQuestionsDown(slno, qid);
 		
+		//Adding all attributes in model and request to render the page with proper details
 		model.addAttribute("newQuestion",new Question());
 		request.setAttribute("quizName", quizService.getQuizById(qid).get().getQname());
 		request.setAttribute("questions", questionService.getQuestions(qid));

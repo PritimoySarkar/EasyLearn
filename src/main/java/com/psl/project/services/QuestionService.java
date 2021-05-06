@@ -51,7 +51,12 @@ public class QuestionService {
 	}
 	
 	//Decrease all next questions serial number by 1
-	public void syncQuestions(int slno,int qid) {
+	public void syncQuestionsDown(int slno,int qid) {
 		questiondao.decreaseAllNextQuestions(slno, qid);
+	}
+	
+	//Decrease all next questions serial number by 1
+	public void syncQuestionsUp(int slno,int qid) {
+		questiondao.increaseAllNextQuestions(slno, qid);
 	}
 }

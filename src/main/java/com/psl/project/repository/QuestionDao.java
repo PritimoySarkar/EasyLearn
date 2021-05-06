@@ -22,4 +22,10 @@ public interface QuestionDao extends JpaRepository<Question, Integer>{
 	@Modifying
 	@Query(value="update questions set slno = slno-1 where slno>=?1 and qid=?2",nativeQuery = true)
 	public void decreaseAllNextQuestions(int slno,int qid);
+	
+	//Method to decrease serial number of all questions after a specific serial number
+	@Transactional
+	@Modifying
+	@Query(value="update questions set slno = slno+1 where slno>=?1 and qid=?2",nativeQuery = true)
+	public void increaseAllNextQuestions(int slno,int qid);
 }

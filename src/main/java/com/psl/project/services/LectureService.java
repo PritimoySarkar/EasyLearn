@@ -2,6 +2,7 @@ package com.psl.project.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,9 +26,20 @@ public class LectureService {
 		return lectures;
 	}
 	
+	//Method to get all lectures details of a course using courseid
+		public Optional<Lecture> getLectures(int lid){
+			Optional<Lecture> lecture = lecturedao.findById(lid);
+			return lecture;
+		}
+	
 	//Insert New Lecture
 	public void insertLecture(Lecture lecture) {
 		lecturedao.save(lecture);
+	}
+	
+	//Remove Lecture
+	public void removeLecture(int lid) {
+		lecturedao.deleteById(lid);
 	}
 	
 	//Method to increase serial number of all next lectures
