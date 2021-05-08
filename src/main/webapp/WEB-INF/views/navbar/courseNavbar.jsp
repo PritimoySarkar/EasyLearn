@@ -83,6 +83,16 @@ body>.ui.container {
 					class="clipboard icon"></i>Enrolled Courses</a>
 			
 			<div class="right menu">
+				<div class="item">
+				<form id="searchForm">
+					<div class="ui icon input">
+						
+						<input id="search" name="search" type="text" placeholder="Search Courses"> <i
+							class="search link icon"></i>
+							
+					</div>
+					</form>
+				</div>
 				<div class="item menu-item ui simple dropdown"
 					style="margin-left: 10px;">
 					Hello, ${pageContext.request.userPrincipal.name} <i

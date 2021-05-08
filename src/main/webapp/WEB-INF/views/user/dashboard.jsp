@@ -7,7 +7,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="shortcut icon" type="image/x-icon" href="resources/images/favicon.ico"/>
+<link rel="shortcut icon" type="image/x-icon"
+	href="resources/images/favicon.ico" />
 <meta charset="ISO-8859-1">
 
 <title>Profile | EasyLearn</title>
@@ -21,25 +22,37 @@
 
 </head>
 <body>
-	<jsp:include page="../navbar.jsp" />
+	<jsp:include page="../navbar/navbar.jsp" />
+
 	<div class="ui container">
 		<h1 class="ui header centered" style="margin-top: 110px">Dashboard</h1>
 		<div class="ui divider"></div>
 		<div class="ui grid centered">
-			<div class="column ten wide computer only">
-				<div class="ui centered card">
-					<div class="image">
+			<div class="column two wide computer only" style="text-align: center;">
+				
+					<div class="ui rotate left reveal">
+						<div class="visible content">
+							<img src="/resources/images/profile.png"
+								class="ui small bordered circular image">
+						</div>
+						<div class="hidden content">
+							<img src="/resources/images/profile.png"
+								class="ui small bordered circular image">
+						</div>
+					
+					
+					<!-- 
+					
 						<img src="resources/images/profile.png">
 					</div>
-					<div class="content">
-						<a class="header">${pageContext.request.userPrincipal.name}</a>
-					</div>
+					 -->
+						<h2 class="header">${pageContext.request.userPrincipal.name}</h2>
 				</div>
 
-				
+
 			</div>
 
-			<table class="ui celled table" style="font-size:16pt;">
+			<table class="ui celled table" style="font-size: 16pt;">
 				<thead>
 					<tr>
 						<th>Course</th>
@@ -77,8 +90,8 @@
 				</tbody>
 			</table>
 			<br /> <br /> <a class="ui button teal" href="/enrolledcourses">
-					<i class="angle left icon"></i>Enrolled Courses
-				</a>
+				<i class="angle left icon"></i>Enrolled Courses
+			</a>
 		</div>
 	</div>
 </body>

@@ -39,7 +39,7 @@
 	<img class="home-bg" src="resources/images/home-bg.jpg" alt="" />
 	<div class="ui container">
 
-		<jsp:include page="../navbar.jsp" />
+		<jsp:include page="../navbar/courseNavbar.jsp" />
 		<!-- Checking if the enrolled course list is not empty to print the enrolled course heading -->
 		<c:choose>
 			<c:when test="${not empty courses}">
@@ -53,7 +53,7 @@
 		<div class="ui divider"></div>
 		<div class="ui grid computer only">
 			<c:forEach var="course" items="${courses}">
-				<div class="column five wide">
+				<div id="card-${course.cid}" class="column five wide">
 					<div class="ui card">
 						<div class="image">
 							<img
@@ -61,8 +61,9 @@
 								alt="course image">
 						</div>
 						<div class="content">
-							<div class="header">${course.cname}</div>
-							<div class="description">${course.description}</div>
+							<div class="header courseIdDiv" style="display:none">${course.cid}</div>
+							<div class="header courseNameDiv">${course.cname}</div>
+							<div class="description courseDescDiv">${course.description}</div>
 						</div>
 						<div class="extra content">
 							<!-- Button trigger modal -->
@@ -149,5 +150,21 @@
 			</c:forEach>
 		</div>
 	</div>
+	<script>
+	//Showing course depending on search result
+	var ids = document.getElementsByClassName("courseIdDiv");
+	var names = document.getElementsByClassName("courseNameDiv");	
+		$('#search').on("input", function(){
+			var search = $('#search').val();			
+			for (let i = 0; i < names.length; i++) {
+		        if(names[i].innerHTML.toLowerCase().includes(search.toLowerCase())){
+		        	$('#card-'+ids[i].innerHTML).css("display","block");
+		        }
+		        else{
+		        	$('#card-'+ids[i].innerHTML).css("display","none");
+		        }
+		    }
+		});
+	</script>
 </body>
 </html>

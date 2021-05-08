@@ -40,15 +40,14 @@ public class AdminLectureController {
 	//Edit Lecture
 	@PostMapping(value="/edit/lecture/{cid}")
 	public String editAdminCourseLectures(@RequestParam Map<String, String> responses,Model model,HttpServletRequest request,HttpServletResponse response,@PathVariable("cid") int cid) {
-		System.out.println("Edit Response: "+responses);
 		Lecture lecture = lectureService.getLectures(Integer.parseInt(responses.get("editLid"))).get();
-		if(lecture.getSlno()==Integer.parseInt(responses.get("editSlno"))) {
-			System.out.println("Serial No not changed");
-			lecture.setLname(responses.get("editName"));
-			lecture.setUrl(responses.get("editUrl"));
-		}
-		else {
-			System.out.println("Serial Number changed");
+		
+		//Set updated value from response to lecture object 
+		lecture.setLname(responses.get("editName"));
+		lecture.setUrl(responses.get("editUrl"));
+		
+		//Checking if Serial number was changed
+		if(lecture.getSlno()!=Integer.parseInt(responses.get("editSlno"))) {
 			int oldSlno = lecture.getSlno();
 			
 			//Decreasing all next lecture's serial number by 1

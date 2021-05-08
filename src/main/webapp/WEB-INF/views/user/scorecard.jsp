@@ -22,7 +22,7 @@
 </script>
 </head>
 <body>
-	<jsp:include page="../navbar.jsp" />
+	<jsp:include page="../navbar/navbar.jsp" />
 	<div class="ui container">
 		<h1 class="ui header centered" style="margin-top: 110px">Scorecard</h1>
 		<div class="ui divider"></div>

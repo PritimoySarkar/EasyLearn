@@ -119,5 +119,48 @@ public class AdminQuestionController {
 		request.setAttribute("qid", qid);
 		return "admin/questions";
 	}
+	
+	@PostMapping(value="/edit/question/{cid}/{qid}")
+	public String editAdminQuestion(Model model,@RequestParam Map<String, String> response,HttpServletRequest request,@PathVariable("qid") int qid,@PathVariable("cid") int cid) {
+		for(String key:response.keySet()) {
+			System.out.println(key+" "+response.get(key));
+		}
+		System.out.println("Quiz Id: "+qid);
+		//Fetching question object from database for the corresponding question ID 
+		Question question = questionService.getQuestionsByQqid(Integer.parseInt(response.get("editQid"))).get();
+		
+		if(Integer.parseInt(response.get("editSlno"))!=question.getSlno()) {
+			System.out.println("Serial no. changed");
+			int oldSlno = question.getSlno();
+			
+			//Decreasing all next questions's serial number by 1
+			questionService.syncQuestionsDown(oldSlno, qid);
+			
+			//Decreasing all next questions's serial number by 1
+			questionService.syncQuestionsUp(Integer.parseInt(response.get("editSlno")), qid);
+			
+			//Changing the serial number of the question object
+			question.setSlno(Integer.parseInt(response.get("editSlno")));
+		}
+		
+		//setting changed values of question's object's attribute into the question object
+		question.setQuestion(response.get("editQuestion"));
+		question.setOption1(response.get("editO1"));
+		question.setOption2(response.get("editO2"));
+		question.setOption3(response.get("editO3"));
+		question.setOption4(response.get("editO4"));
+		question.setAnswer(response.get("answer"));
+		
+		//Inserting customized question object in the database
+		questionService.insertQuestion(question);
+		
+		//Adding all attributes in model and request to render the page with proper details
+		model.addAttribute("newQuestion",new Question());
+		request.setAttribute("quizName", quizService.getQuizById(qid).get().getQname());
+		request.setAttribute("questions", questionService.getQuestions(qid));
+		request.setAttribute("cid", cid);
+		request.setAttribute("qid", qid);
+		return "admin/questions";
+	}
 
 }

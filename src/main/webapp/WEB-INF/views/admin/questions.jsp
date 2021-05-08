@@ -13,9 +13,12 @@
 
 <title>Profile | EasyLearn</title>
 <!-- Sweet Alert CDN -->
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="/resources/sweetalert.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="sweetalert2.all.min.js"></script>
+
+<!-- Edit Swal CSS -->
+<link rel="stylesheet" href="<c:url value="/resources/editSwal.css" />" />
 
 <!-- Semantic UI -->
 <link rel="stylesheet" href="<c:url value="/resources/semantic-ui/semantic.min.css" />" />
@@ -133,7 +136,6 @@
 				</div>
 			</div>
 			<div class="ui segment">
-			<div class="three fields">
 			<div class="field">
 			<label>Question's Serial number type</label>
 				<div class="checkbox">
@@ -141,18 +143,13 @@
 					<label><span class="slText">Add Lecture at the end of the list</span></label>
 					<label><span class="slText" style="display:none">Set custom serial number</span></label>
 				</div>
-				</div>
 				<div class="customSlno" style="display:none">
 				<div class="field">
 				<spring:bind path="slno">
-					<label>Question's Serial No:</label>
-					<!-- <form:input type="text" path="slno" placeholder="serial number" required="true"></form:input> -->
-					<form:select id="slnoSelect" path="slno" class="ui search dropdown">
-						<c:forEach var = "i" begin = "1" end = "${questions.size()}">
-         					<form:option value="${i}">${i}</form:option>
-      					</c:forEach>
-      					<form:option value="${questions.size()+1}" selected="true">At the End (${questions.size()+1})</form:option>
-					</form:select>
+					<label for="vol">Question's Serial No:&nbsp;
+					 <span style="color: #099a35;font-weight: bold;" id="range-add-val"></span>
+		  			</label>
+					<form:input style="margin-top:0px;" type="range" path="slno" id="addSlno" min="1"></form:input>
 				</spring:bind>		
 				</div>
 			</div>
@@ -183,16 +180,12 @@
 							<td>${question.slno }</td>
 							<td>${question.question }</td>
 							<td>
-								<form id="form${cs.cid}" method="POST" action="/">
-									<input type="hidden" name="${_csrf.parameterName}"
-										value="${_csrf.token}" /> <input type="hidden" name="cid"
-										value="${question.qqid }">
-									<button type="submit" class="ui button teal">Edit
-										Question</button>
-								</form>
+								<button 
+								onClick="editQuestion(${question.slno},${question.qqid},${questions.size()},'${question.question}','${question.option1}','${question.option2}','${question.option3}','${question.option4}','${question.answer}')"
+								 type="button" class="ui button teal">Edit Question</button>
 							</td>
 							<td>
-								<form id="form${cs.cid}" method="POST" action="/admin/remove/question/${cid}/${qid}">
+								<form id="form${question.qqid}" method="POST" action="/admin/remove/question/${cid}/${qid}">
 									<input type="hidden" name="${_csrf.parameterName}"
 										value="${_csrf.token}" /> <input type="hidden" name="qqid"
 										value="${question.qqid }">
@@ -224,8 +217,8 @@
 			   $('#hidden_status').val('Active');
 			   $('.slText').toggle();
 			   $('.customSlno').toggle();
-			   $('.ui.search.dropdown');
-			   $('#slnoSelect').val(defSl);
+			   $('#addSlno').val(${questions.size()+1});
+			   $('#range-add-val').html(${questions.size()+1});
 			   console.log("checked");
 			  }
 			  else
@@ -233,7 +226,8 @@
 			   $('#hidden_status').val('Deactive');
 			   $('.slText').toggle();
 			   $('.customSlno').toggle();
-			   $('#slnoSelect').val(defSl);
+			   $('#addSlno').val(${questions.size()+1});
+			   $('#range-add-val').html(${questions.size()+1});
 			   console.log("Un-checked");
 			  }
 			 });
@@ -246,7 +240,7 @@
 	
 	//Open Add Question Modal
 	function addQuestion(){
-		swal({
+		swal1({
 			  title: "Are you sure?",
 			  text: "Do you want to add this Question",
 			  icon: "info",
@@ -271,14 +265,14 @@
 			  if (willDelete) {
 				  document.getElementById("addQuestionSubmitButton").click();
 			  } else {
-			    swal("Question not added","","error");
+			    swal1("Question not added","","error");
 			  }
 			});
 	}
 	
 	//Open Remove Lecture Modal
 	function removeQuestion(qid){
-		swal({
+		swal1({
 			  title: "Are you sure?",
 			  text: "Do you want to remove this lecture",
 			  icon: "error",
@@ -304,34 +298,102 @@
 				  console.log(qid);
 				  document.getElementById("removeQuestionSubmitButton"+qid).click();
 			  } else {
-			    swal("Question not deleted","","info");
+			    swal1("Question not deleted","","info");
 			  }
 			});
 	}
 	
 	//Edit Question
-	function editQuestion(qid){
+	function editQuestion(slno,qqid,total,question,o1,o2,o3,o4,ans){
+		console.log(slno);
+		console.log(qqid);
+		console.log(total);
+		console.log(question);
+		console.log(o1);
+		console.log(o2);
+		console.log(o3);
+		console.log(o4);
+		console.log(ans);
 	Swal.fire({
-		  title: 'Login Form',
-		  html: `<input type="text" id="login" class="swal2-input" placeholder="Username">
-		  <input type="password" id="password" class="swal2-input" placeholder="Password">`,
-		  confirmButtonText: 'Sign in',
-		  focusConfirm: false,
-		  preConfirm: () => {
-		    const login = Swal.getPopup().querySelector('#login').value
-		    const password = Swal.getPopup().querySelector('#password').value
-		    if (!login || !password) {
-		      Swal.showValidationMessage(`Please enter login and password`)
-		    }
-		    return { login: login, password: password }
-		  }
-		}).then((result) => {
-		  Swal.fire(`
-		    Login: ${result.value.login}
-		    Password: ${result.value.password}
-		  `.trim())
-		})
+		  title: 'Edit Question',
+		  html: `<form id="editQuestionForm" method="POST" action="/admin/edit/question/${cid}/${qid}">
+			  <input type="hidden" id="editQid" name="editQid" value="${qqid}" />
+			  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			  
+			  <label><span style="font-size:16pt;font-color:red;color: #5170c0;font-weight: bold;">Question<span></label>
+			  <input type="text" name="editQuestion" id="editQuestion" value="${question}" class="swal2-input" placeholder="Enter the Question here" required="true">
+			  
+			  <label><span style="font-size:16pt;font-color:red;color: #5170c0;font-weight: bold;">Option 1</span></label>
+			  <input type="text" name="editO1" id="editO1" class="swal2-input" placeholder="Option 1">
+			  <label><span style="font-size:16pt;font-color:red;color: #5170c0;font-weight: bold;">Option 2</span></label>
+			  <input type="text" name="editO2" id="editO2" class="swal2-input" placeholder="Option 2">
+			  <label><span style="font-size:16pt;font-color:red;color: #5170c0;font-weight: bold;">Option 3</span></label>
+			  <input type="text" name="editO3" id="editO3" class="swal2-input" placeholder="Option 3">
+			  <label><span style="font-size:16pt;font-color:red;color: #5170c0;font-weight: bold;">Option 4</span></label>
+			  <input type="text" name="editO4" id="editO4" class="swal2-input" placeholder="Option 4">
+			  
+			  <label><span style="font-size:16pt;font-color:red;color: #5170c0;font-weight: bold;">Answer</span></label>
+			  <br>
+			  <div class="ui radio checkbox"><input style="margin-left:4px;margin-top:3px;" type="radio" id="A" name="answer" value="A"><label><span style="margin-right:40px;">Option 1</span></label></div>
+			  <div class="ui radio checkbox"><input style="margin-left:1px;margin-top:3px;" type="radio" id="B" name="answer" value="B"><label><span style="margin-right:40px;">Option 2</span></label></div>
+			  <div class="ui radio checkbox"><input style="margin-left:1px;margin-top:3px;" type="radio" id="C" name="answer" value="C"><label><span style="margin-right:40px;">Option 3</span></label></div>
+			  <div class="ui radio checkbox"><input style="margin-left:1px;margin-top:3px;" type="radio" id="D" name="answer" value="D"><label><span style="margin-right:40px;">Option 4</span></label></div>
+			  <br>
+			  	  
+			  </select>
+			  
+			  <label><span style="font-size:16pt;font-color:red;color: #5170c0;font-weight: bold;">Serial Number:&nbsp;</span></label>
+			  <label for="vol"><span style="font-size:16pt;color: #099a35;font-weight: bold;"><</span>
+			  <span style="font-size:16pt;color: #099a35;font-weight: bold;" id="range-val"></span>
+			  <span style="font-size:16pt;color: #099a35;font-weight: bold;">></span></label>
+			  <br><br>
+			  <input type="range" id="vol" name="editSlno" min="1" max="${total}">
+			
+			  </form>`,
+			  confirmButtonText: 'Edit',
+			  focusConfirm: false,
+			  preConfirm: () => {
+			    const editQ = Swal.getPopup().querySelector('#editQuestion').value
+			    const editO = Swal.getPopup().querySelector('#editO1').value
+			    if (!editQ || !editO) {
+			      Swal.showValidationMessage(`Please enter Lecture Name and Url`)
+			    }
+			    else{
+				    document.getElementById("editQuestionForm").submit();
+				    Swal.fire("Question edited","","success");
+			    }	    
+			    //return { login: login, password: password }
+			  }
+			}).then((result) => {
+			  Swal.fire("Question editing canceled","","error");
+			})
+			document.getElementById("editQuestion").value = question;
+			document.getElementById("editO1").value = o1;
+			document.getElementById("editO2").value = o2;
+			document.getElementById("editO3").value = o3;
+			document.getElementById("editO4").value = o4;
+			document.getElementById(ans).checked = true;
+			
+			document.getElementById("editQid").value = qqid;
+			document.getElementById("vol").max = total;
+			document.getElementById("vol").value = slno;
+			document.getElementById("range-val").innerHTML = slno;
+			let slider = document.getElementById("vol");
+			slider.addEventListener("change", function(v) {
+				document.getElementById("range-val").innerHTML = slider.value;
+			}, true);
 	}
+	
+	//Add Question Slider
+	let addQuestionSlider = document.getElementById("addSlno");
+	addQuestionSlider.max=${questions.size()+1};
+	addQuestionSlider.value=${questions.size()+1};
+	
+	document.getElementById("range-add-val").innerHTML = ${questions.size()+1};
+		addQuestionSlider.addEventListener("change", function(v) {
+			document.getElementById("range-add-val").innerHTML = addQuestionSlider.value;
+		}, true);
+	
 	</script>
 </body>
 </html>

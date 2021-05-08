@@ -35,10 +35,16 @@
 </style>
 </head>
 <body>
+	<%
+		String val = request.getParameter("search");
+	%>
+		<h2>The Key is: </h2><%=val%>
+	
+
 	<img class="home-bg" src="resources/images/home-bg.jpg" alt="" />
 	<div class="ui container">
 
-		<jsp:include page="../navbar.jsp" />
+		<jsp:include page="../navbar/courseNavbar.jsp" />
 		
 		<!-- Checking if the not enrolled course list is not empty to print the not enrolled course heading -->
 		<c:choose>
@@ -50,7 +56,7 @@
 		<div class="ui divider"></div>
 		<div class="ui grid computer only">
 			<c:forEach var="course" items="${notEnrolledCourses}">
-				<div class="column five wide">
+				<div id="card-${course.cid}" class="column five wide">
 					<div class="ui card">
 						<div class="image">
 							<img
@@ -58,8 +64,9 @@
 								alt="course image">
 						</div>
 						<div class="content">
-							<div class="header">${course.cname}</div>
-							<div class="description">${course.description}</div>
+							<div class="header courseIdDiv" style="display:none">${course.cid}</div>
+							<div class="header courseNameDiv">${course.cname}</div>
+							<div class="description courseDescDiv">${course.description}</div>
 						</div>
 						<div class="extra content">
 							<!-- Button trigger modal -->
@@ -116,7 +123,7 @@
 		<div class="ui divider"></div>
 		<div class="ui grid computer only">
 			<c:forEach var="course" items="${enrolledCourses}">
-				<div class="column five wide">
+				<div id="card-${course.cid}" class="column five wide">
 					<div class="ui card">
 						<div class="image">
 							<img
@@ -124,8 +131,9 @@
 								alt="course image">
 						</div>
 						<div class="content">
-							<div class="header">${course.cname}</div>
-							<div class="description">${course.description}</div>
+							<div class="header courseIdDiv" style="display:none">${course.cid}</div>
+							<div class="header courseNameDiv">${course.cname}</div>
+							<div class="description courseDescDiv">${course.description}</div>
 						</div>
 						<div class="extra content">
 							<!-- Button trigger modal -->
@@ -154,7 +162,7 @@
 												<button type="button" class="btn btn-secondary"
 													data-dismiss="modal">No, Not Now</button>
 												
-												<form id="dashboardForm" method="POST" action="course/lectures/${course.cid}">
+												<form id="dashboardForm${course.cid}" method="POST" action="course/lectures/${course.cid}">
 										            <input type="hidden" name="username" value="${pageContext.request.userPrincipal.name}"/>
 										            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 										        	<button type="submit" class="btn btn-primary">Yes</button>
@@ -213,5 +221,22 @@
 			</c:forEach>
 		</div>
 	</div>
+	
+	<script>
+	//Showing course depending on search result
+	var ids = document.getElementsByClassName("courseIdDiv");
+	var names = document.getElementsByClassName("courseNameDiv");	
+		$('#search').on("input", function(){
+			var search = $('#search').val();			
+			for (let i = 0; i < names.length; i++) {
+		        if(names[i].innerHTML.toLowerCase().includes(search.toLowerCase())){
+		        	$('#card-'+ids[i].innerHTML).css("display","block");
+		        }
+		        else{
+		        	$('#card-'+ids[i].innerHTML).css("display","none");
+		        }
+		    }
+		});
+	</script>
 </body>
 </html>

@@ -24,7 +24,6 @@ public class CourseService {
 	//Method to insert new userCourse in the database
 	public void insertUserCourse(UserCourse uc) {
 		userCourse.save(uc);
-		System.out.println("Course enrolled for the user");
 	}
 	
 	//Method to insert new Course in the database

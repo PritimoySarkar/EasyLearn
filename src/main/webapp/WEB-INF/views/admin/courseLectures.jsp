@@ -24,10 +24,12 @@
   <link rel="stylesheet" href="<c:url value="/resources/bootstrapToggle.css" />" />
 
 <!-- Sweet Alert CDN -->
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="/resources/sweetalert.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="sweetalert2.all.min.js"></script>
 
+<!-- Edit Swal CSS -->
+<link rel="stylesheet" href="<c:url value="/resources/editSwal.css" />" />
 <style>
 .home-bg {
 	opacity: 0.1;
@@ -80,7 +82,6 @@
 				</spring:bind>
 			</div>
 			<div class="ui segment">
-			<div class="three fields">
 			<div class="field">
 			<label>Lecture's Serial number type</label>
 				<div class="checkbox">
@@ -92,17 +93,12 @@
 				<div class="customSlno" style="display:none">
 				<div class="field">
 				<spring:bind path="slno">
-					<label>Lecture's Serial No:</label>
-					<!-- <form:input type="text" path="slno" placeholder="serial number" required="true"></form:input> -->
-					<form:select id="slnoSelect" path="slno" class="ui search dropdown">
-						<c:forEach var = "i" begin = "1" end = "${lectures.size()}">
-         					<form:option value="${i}">${i}</form:option>
-      					</c:forEach>
-      					<form:option value="${lectures.size()+1}" selected="true">At the End (${lectures.size()+1})</form:option>
-					</form:select>
+					<label for="addSlno">Lecture's Serial No:&nbsp;					
+		  			<span style="color: #099a35;font-weight: bold;" id="range-add-val"></span>
+		  			</label>
+					<form:input style="margin-top:0px;" type="range" path="slno" id="addSlno" min="1"></form:input>
 				</spring:bind>		
 				</div>
-			</div>
 			</div>
 			</div>
 			<button class="ui teal button" type="button" onClick="addLecture()">Add Course</button>
@@ -131,11 +127,7 @@
 							<td>${lec.slno }</td>
 							<td>${lec.lname }</td>
 							<td>
-								<form id="editForm${lec.lid}" method="POST"
-									action="/admin/edit/lecture/${cid}/${lec.lid}">
-									<input type="hidden" name="slno" value="${lec.slno }">
-									<button id="editLectureButton${lec.lid}" onClick="editLecture(${lec.slno},${lec.lid},${lectures.size()},'${lec.lname}','${lec.url}')" type="button" class="ui button teal">Edit Lecture </button>
-								</form>
+								<button id="editLectureButton${lec.lid}" onClick="editLecture(${lec.slno},${lec.lid},${lectures.size()},'${lec.lname}','${lec.url}')" type="button" class="ui button teal">Edit Lecture </button>
 							</td>
 							<td>
 								<form id="deleteForm${lec.lid}" method="POST"
@@ -175,8 +167,8 @@
 			   $('#hidden_status').val('Active');
 			   $('.slText').toggle();
 			   $('.customSlno').toggle();
-			   $('.ui.search.dropdown');
-			   $('#slnoSelect').val(defSl);
+			   $('#addSlno').val(${lectures.size()+1});
+			   $('#range-add-val').html(${lectures.size()+1});
 			   console.log("checked");
 			  }
 			  else
@@ -184,7 +176,8 @@
 			   $('#hidden_status').val('Deactive');
 			   $('.slText').toggle();
 			   $('.customSlno').toggle();
-			   $('#slnoSelect').val(defSl);
+			   $('#addSlno').val(${lectures.size()+1});
+			   $('#range-add-val').html(${lectures.size()+1});
 			   console.log("Un-checked");
 			  }
 			 });
@@ -197,7 +190,7 @@
 	
 	//Open Add Lecture Modal
 	function addLecture(){
-		swal({
+		swal1({
 			  title: "Are you sure?",
 			  text: "Do you want to add this lecture",
 			  icon: "info",
@@ -222,14 +215,14 @@
 			  if (willDelete) {
 				  document.getElementById("addLectureSubmitButton").click();
 			  } else {
-			    swal("Lecture not added","","error");
+			    swal1("Lecture not added","","error");
 			  }
 			});
 	}
 	
 	//Open Remove Lecture Modal
 	function removeLecture(lid){
-		swal({
+		swal1({
 			  title: "Are you sure?",
 			  text: "Do you want to remove this lecture",
 			  icon: "error",
@@ -255,7 +248,7 @@
 				  console.log(lid);
 				  document.getElementById("removeLectureSubmitButton"+lid).click();
 			  } else {
-			    swal("Lecture not deleted","","info");
+			    swal1("Lecture not deleted","","info");
 			  }
 			});
 	}
@@ -267,15 +260,19 @@
 		  html: `<form id="editLectureForm" method="POST" action="/admin/edit/lecture/${cid}">
 		  <input type="hidden" id="editLid" name="editLid" value="${lid}" />
 		  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-		  <label>Lecture\'s Name</label>
+		  
+		  <label><span style="font-size:16pt;font-color:red;color: #5170c0;font-weight: bold;">Lecture\'s Name<span></label>
 		  <input type="text" name="editName" id="editName" value='${lname}' class="swal2-input" placeholder="Your Lecture's Name" required="true">
-		  <label>Lecture\'s URL</label>
+		  
+		  <label><span style="font-size:16pt;font-color:red;color: #5170c0;font-weight: bold;">Lecture\'s URL</span></label>
 		  <input type="text" name="editUrl" id="editUrl" class="swal2-input" placeholder="your Lecture's URL">
-		  <label><span>Serial Number:&nbsp;</span></label>
-		  <label for="vol"><span><</span><span id="range-val"></span><span>></span></label>
+		  
+		  <label><span style="font-size:16pt;font-color:red;color: #5170c0;font-weight: bold;">Serial Number:&nbsp;</span></label>
+		  <label for="vol"><span style="font-size:16pt;color: #099a35;font-weight: bold;"><</span>
+		  <span style="font-size:16pt;color: #099a35;font-weight: bold;" id="range-val"></span>
+		  <span style="font-size:16pt;color: #099a35;font-weight: bold;">></span></label>
 		  <br><br>
 		  <input type="range" id="vol" name="editSlno" min="1" max="${total}">
-		  
 		  
 		  </form>`,
 		  confirmButtonText: 'Edit',
@@ -293,7 +290,7 @@
 		    //return { login: login, password: password }
 		  }
 		}).then((result) => {
-		  Swal.fire("Lecture edit canceled","","error");
+		  Swal.fire("Lecture editing canceled","","error");
 		})
 		document.getElementById("editLid").value = lid;
 		document.getElementById("vol").max = total;
@@ -306,6 +303,15 @@
 			document.getElementById("range-val").innerHTML = slider.value;
 		}, true);
 	}
+	
+	//Add Lecture Slider
+	let addCourseSlider = document.getElementById("addSlno");
+	addCourseSlider.max=${lectures.size()+1}
+	addCourseSlider.value=${lectures.size()+1}
+	document.getElementById("range-add-val").innerHTML = ${lectures.size()+1};
+		addCourseSlider.addEventListener("change", function(v) {
+			document.getElementById("range-add-val").innerHTML = addCourseSlider.value;
+		}, true);
 
 		</script>
 </body>

@@ -50,7 +50,7 @@
 </style>
 </head>
 <body>
-	<jsp:include page="../navbar.jsp" />
+	<jsp:include page="../navbar/navbar.jsp" />
 	<div style="position: initial; margin: auto auto"
 		class="ui basic modal" id="quiz-prompt">
 		<div class="ui icon header">
