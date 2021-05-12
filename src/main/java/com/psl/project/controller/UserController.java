@@ -59,7 +59,7 @@ public class UserController {
 			return "redirect:/";
 		} else {
 			// Getting user details of the user using userid from cookie
-			Optional<User> user = userService.findByID(Long.parseLong(session.getAttribute("userid").toString()));
+			User user = userService.findByID(Long.parseLong(session.getAttribute("userid").toString())).get();
 
 			// Set user details to request
 			request.setAttribute("user", user);
@@ -67,6 +67,7 @@ public class UserController {
 			// Getting details of the course user have enrolled
 			List<UserCourse> userCourses = courseService
 					.getAllEnrolledUserCourses(Long.parseLong(session.getAttribute("userid").toString()));
+			request.setAttribute("userCourses", userCourses);
 			for (UserCourse uc : userCourses) {
 				// Getting course details for each course user has enrolled
 				Optional<Course> course = courseService.getCourse(uc.getCid());
@@ -77,8 +78,7 @@ public class UserController {
 
 				// Creating coursescore object to wrap show course name quiz score and test
 				// result status
-				CourseScore courseScore = new CourseScore(course.get().getCname(), uc.getStatus(),
-						String.valueOf(uc.getScore() * 100 / totalMarks));
+				CourseScore courseScore = new CourseScore(uc.getUcid(),course.get().getCname(), uc.getStatus());
 
 				// Adding the coursecore objects to a coursescore list
 				cs.add(courseScore);

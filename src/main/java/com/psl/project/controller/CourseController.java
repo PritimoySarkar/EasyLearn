@@ -103,8 +103,7 @@ public class CourseController {
 			if (userCourses.isEmpty()) {
 				// Enrolling the course for that user only if the course was not enrolled by
 				// that user before
-				UserCourse uc = new UserCourse(Long.parseLong(session.getAttribute("userid").toString()), Integer.parseInt(response.get("cid")),
-						"Enrolled", -1);
+				UserCourse uc = new UserCourse(Long.parseLong(session.getAttribute("userid").toString()), Integer.parseInt(response.get("cid")),"Enrolled",5);
 				courseservice.insertUserCourse(uc);
 			}
 		}

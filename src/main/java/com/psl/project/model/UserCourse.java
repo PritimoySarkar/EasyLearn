@@ -1,9 +1,13 @@
 package com.psl.project.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -16,27 +20,51 @@ public class UserCourse {
 	private Long uid;
 	private int cid;
 	private String status;
-	private int score;
+	private int attemptsLeft;
+	@OneToMany
+	@JoinColumn(name="ucid")
+	private List<Attempt> attempts;
 	
 	public UserCourse() {
 		super();
 	}
 	
-	public UserCourse(Long uid, int cid, String status, int score) {
+	public UserCourse(Long uid, int cid, String status, int attemptsLeft) {
 		super();
 		this.uid = uid;
 		this.cid = cid;
 		this.status = status;
-		this.score = score;
+		this.attemptsLeft = attemptsLeft;
 	}
 
-	public UserCourse(int ucid, Long uid, int cid, String status, int score) {
+	public UserCourse(int ucid, Long uid, int cid, String status, int attemptsLeft, List<Attempt> attempts) {
 		super();
 		this.ucid = ucid;
 		this.uid = uid;
 		this.cid = cid;
 		this.status = status;
-		this.score = score;
+		this.attemptsLeft = attemptsLeft;
+		this.attempts = attempts;
+	}
+	public UserCourse(Long uid, int cid, String status, int attemptsLeft, List<Attempt> attempts) {
+		super();
+		this.uid = uid;
+		this.cid = cid;
+		this.status = status;
+		this.attemptsLeft = attemptsLeft;
+		this.attempts = attempts;
+	}
+	public int getAttemptsLeft() {
+		return attemptsLeft;
+	}
+	public void setAttemptsLeft(int attemptsLeft) {
+		this.attemptsLeft = attemptsLeft;
+	}
+	public List<Attempt> getAttempts() {
+		return attempts;
+	}
+	public void setAttempts(List<Attempt> attempts) {
+		this.attempts = attempts;
 	}
 	public int getUcid() {
 		return ucid;
@@ -61,12 +89,6 @@ public class UserCourse {
 	}
 	public void setStatus(String status) {
 		this.status = status;
-	}
-	public int getScore() {
-		return score;
-	}
-	public void setScore(int score) {
-		this.score = score;
 	}
 		
 }

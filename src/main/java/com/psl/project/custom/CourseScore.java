@@ -3,25 +3,30 @@ package com.psl.project.custom;
 //A custom class created for sending coursename,testscore and test status data  from controller to view wrapped in an object
 public class CourseScore {
 	private int csid;
+	private int ucid;
 	private String cname;
 	private String status;
-	private String score;
 	public CourseScore() {
 		super();
 	}
-	public CourseScore(String cname, String status, String score) {
+	public CourseScore(String cname, String status) {
 		super();
 		this.cname = cname;
 		this.status = status;
-		this.score = score;
 	}
 	
-	public CourseScore(int csid, String cname, String status, String score) {
+	public int getUcid() {
+		return ucid;
+	}
+	public void setUcid(int ucid) {
+		this.ucid = ucid;
+	}
+	
+	public CourseScore(int ucid, String cname, String status) {
 		super();
-		this.csid = csid;
+		this.ucid = ucid;
 		this.cname = cname;
 		this.status = status;
-		this.score = score;
 	}
 	public int getCsid() {
 		return csid;
@@ -40,11 +45,5 @@ public class CourseScore {
 	}
 	public void setStatus(String status) {
 		this.status = status;
-	}
-	public String getScore() {
-		return score;
-	}
-	public void setScore(String score) {
-		this.score = score;
 	}
 }

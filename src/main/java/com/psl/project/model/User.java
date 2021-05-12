@@ -14,8 +14,8 @@ public class User {
     private Long id;
 
     private String username;
-
     private String password;
+    private String profilePicture;
 
     @Transient
     private String passwordConfirm;
@@ -44,6 +44,26 @@ public class User {
 		this.passwordConfirm = passwordConfirm;
 		this.roles = roles;
 		this.courses = courses;
+	}
+
+	public User(Long id, String username, String password, String profilePicture, String passwordConfirm,
+			List<Role> roles, List<Course> courses) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.profilePicture = profilePicture;
+		this.passwordConfirm = passwordConfirm;
+		this.roles = roles;
+		this.courses = courses;
+	}
+
+	public String getProfilePicture() {
+		return profilePicture;
+	}
+
+	public void setProfilePicture(String profilePicture) {
+		this.profilePicture = profilePicture;
 	}
 
 	public List<Course> getCourses() {

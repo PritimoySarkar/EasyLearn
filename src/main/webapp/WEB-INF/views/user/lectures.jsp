@@ -8,7 +8,7 @@
 	href="/resources/images/favicon.ico" />
 <meta charset="ISO-8859-1">
 
-<title>${cname} | EasyLearn</title>
+<title>${cname}| EasyLearn</title>
 <link rel="stylesheet"
 	href="<c:url value="/resources/semantic-ui/semantic.min.css" />" />
 <link rel="stylesheet"
@@ -63,8 +63,8 @@
 				onclick="document.getElementById('startTestForm').submit();">
 				<form id="startTestForm" method="POST"
 					action="/course/${quiz.qid}/quiz">
-					<input type="hidden" name="${_csrf.parameterName}"
-						value="${_csrf.token}" />
+					<input type="hidden" name="cid" value="${cid}" /> <input
+						type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<div class="ui">
 						Start<i class="angle right icon"></i>
 					</div>
@@ -142,9 +142,18 @@
 				<div class="ui grid">
 					<div class="column nine wide"></div>
 					<div class="column seven wide">
-						<button class="ui button fluid teal" onclick="openQuizPrompt()">
-							Assessment <i class="arrow right icon"></i>
-						</button>
+						<c:choose>
+							<c:when test="${attemptLeft>0}">
+								<button class="ui button fluid teal" onclick="openQuizPrompt()">
+									Assessment <i class="arrow right icon"></i>
+								</button>
+							</c:when>
+							<c:when test="${attemptLeft==0}">
+								<button class="ui button fluid red">
+									No Attempt left
+								</button>
+							</c:when>
+						</c:choose>
 					</div>
 				</div>
 			</div>
@@ -152,9 +161,18 @@
 				<div class="ui grid">
 					<div class="column eleven wide"></div>
 					<div class="column five wide">
-						<button class="ui button fluid teal" onclick="openQuizPrompt()">
-							Assessment <i class="arrow right icon"></i>
-						</button>
+						<c:choose>
+							<c:when test="${attemptLeft>0}">
+								<button class="ui button fluid teal" onclick="openQuizPrompt()">
+									Assessment <i class="arrow right icon"></i>
+								</button>
+							</c:when>
+							<c:when test="${attemptLeft==0}">
+								<button class="ui button fluid red">
+									No Attempt left
+								</button>
+							</c:when>
+						</c:choose>
 					</div>
 				</div>
 			</div>
@@ -162,9 +180,18 @@
 				<div class="ui grid">
 					<div class="column eleven wide"></div>
 					<div class="column five wide">
-						<button class="ui button fluid teal" onclick="openQuizPrompt()">
-							Assessment <i class="arrow right icon"></i>
-						</button>
+						<c:choose>
+							<c:when test="${attemptLeft>0}">
+								<button class="ui button fluid teal" onclick="openQuizPrompt()">
+									Assessment <i class="arrow right icon"></i>
+								</button>
+							</c:when>
+							<c:when test="${attemptLeft==0}">
+								<button class="ui button fluid red">
+									No Attempt left
+								</button>
+							</c:when>
+						</c:choose>
 					</div>
 				</div>
 			</div>
