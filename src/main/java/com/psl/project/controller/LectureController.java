@@ -41,5 +41,4 @@ public class LectureController {
 		request.setAttribute("quiz", qservice.getQuiz(cid).get(0));
 		return "user/lectures";
 	}
-	
 }

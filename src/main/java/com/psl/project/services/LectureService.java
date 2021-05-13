@@ -26,6 +26,26 @@ public class LectureService {
 		return lectures;
 	}
 	
+	//Method to get total count of lectures in a course
+	public int getLectureCount(int cid) {
+		return lecturedao.getLectureCountByCid(cid);
+	}
+	
+	//Method to get total count of In progress lectures in a course of a user
+	public int getInProgressLectureCount(Long uid,int cid) {
+		return lecturedao.getProgressLectureCountByCid(uid, cid);
+	}
+	
+	//Method to get total count of completed lectures in a course of a user
+	public int getCompletedLectureCount(Long uid,int cid) {
+		return lecturedao.getCompletedLectureCountByCid(uid, cid);
+	}
+		
+	//Method to get total count of review lectures in a course of a user
+	public int getReviewLectureCount(Long uid,int cid) {
+		return lecturedao.getReviewLectureCountByCid(uid, cid);
+	}
+	
 	//Method to get all lectures details of a course using courseid
 		public Optional<Lecture> getLectures(int lid){
 			Optional<Lecture> lecture = lecturedao.findById(lid);

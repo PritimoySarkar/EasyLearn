@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.psl.project.model.UserCourse;
 
 @Repository
-public interface UserCourseDao extends JpaRepository<UserCourse, Long>{
+public interface UserCourseDao extends JpaRepository<UserCourse, Integer>{
 	public List<UserCourse> findByUid(Long uid);
 	
 	//Method to find usercours details using userid and courseid

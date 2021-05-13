@@ -48,6 +48,37 @@
 	color: teal !important;
 }
 </style>
+<script>
+function determineStatus(lid,status){
+	console.log(lid+" "+status);
+	if(status=="Progress"){
+		$('#title_'+lid).css("background-color","#6ad85a40");
+		$('#unfold_'+lid).css("background-color","#6ad85a40");
+		$('#play_'+lid).attr("onClick","");
+		$('#review_'+lid).css("display","block");
+		$('#complete_'+lid).css("display","block");
+	}
+	else if(status=="Completed"){
+		$('#title_'+lid).css("background-color","rgb(109 104 230 / 21%)");
+		$('#unfold_'+lid).css("background-color","rgb(109 104 230 / 21%)");
+		$('#complete_'+lid).attr("onClick","");
+		$('#complete_'+lid).prop("value","Completed");
+		$('#complete_'+lid).css("display","none");
+		$('#review_'+lid).css("display","block");
+		$('#play_'+lid).attr("onClick","");
+	}
+	else if(status == "Review"){
+		$('#title_'+lid).css("background-color","rgb(231 239 58 / 50%)");
+		$('#unfold_'+lid).css("background-color","rgb(231 239 58 / 50%)");
+		$('#complete_'+lid).attr("onClick","");
+		$('#review_'+lid).html("Unmark for Review");
+		$('#review_'+lid).attr("onClick","unReview("+lid+")");
+		$('#review_'+lid).css("display","block");
+		$('#complete_'+lid).css("display","block");
+		$('#play_'+lid).attr("onClick","");
+	}
+}
+</script>
 </head>
 <body>
 	<jsp:include page="../navbar/navbar.jsp" />
@@ -86,21 +117,37 @@
 							<div class="ui header">${lecture.lname}</div>
 							<div class="content"></div>
 						</div>
-						<div class="title">
+						<div id="title_${lecture.lid}" class="title">
 							<i class="dropdown icon"></i> Module${lecture.slno}:
 							${lecture.lname}
 						</div>
 
 						<div class="content">
-							<div class="transition hidden ui grid">
-								<div class="column thirteen wide">${lecture.lname}</div>
+							<div id="unfold_${lecture.lid}" class="transition hidden ui grid">
+								<div class="column thirteen wide">${lecture.lname}</div><br>
+								<!-- Button for marking lecture for review -->
+								<div class="column six wide">
+									<button type="button" id="review_${lecture.lid}"
+										class="ui basic button small"
+										onClick="review(${lecture.lid})" style="font-weight: bolder;font-family: cursive;background: #f5ba156e none!important;display:none">
+										Mark for review
+									</button>
+								</div>
+								<!-- Button for marking lecture as completed -->
+								<div class="column seven wide">
+									<button type="button" id="complete_${lecture.lid}"
+										class="ui basic button small"
+										onClick="completed(${lecture.lid})" style="font-weight: bolder;font-family: cursive;background: #2dda1775 none!important;display:none">
+										Mark as Completed
+									</button>
+								</div>
+								<!-- Button for playing lecture video -->
 								<div class="column three wide">
-
 									<!-- Button trigger modal -->
-									<button type="button"
-										class="ui basic button tiny sub-module-arrow"
-										data-toggle="modal"
-										data-target="#exampleModalCenter${lecture.slno}">
+									<button type="button" id="play_${lecture.lid}"
+										class="ui basic button small sub-module-arrow"
+										data-toggle="modal" onClick="inProgress(${lecture.lid})"
+										data-target="#exampleModalCenter${lecture.slno}" style="background: #179bda8a none!important;">
 										<i class="arrow right icon " style="margin-right: 4px;"></i>
 									</button>
 									<!-- Modal -->
@@ -133,6 +180,22 @@
 								</div>
 							</div>
 						</div>
+						<script>
+						//Lecture status check
+						function statusCheck(lid){
+							console.log("checking");
+							const toSend = {"${_csrf.parameterName}" : "${_csrf.token}", "lid" : lid};
+							$.ajax({url:"http://localhost:8080/user/lecture/check", data: toSend, method: "POST"})
+							.done(function(response){
+								console.log("checked");
+								determineStatus(lid,response);
+							})
+							.fail(function(){
+								console.log("checking failed");
+							});
+						}
+						statusCheck(${lecture.lid});
+						</script>
 					</c:forEach>
 
 				</div>
@@ -211,6 +274,59 @@
 		//Code to replace the state of the question page so user can't visit come back to lecture page from questionpage using back button to access previous page
 		if (window.history.replaceState) {
 			window.history.replaceState(null, null, window.location.href);
+		}
+		
+		//Lecture is in progress
+		function inProgress(lid){
+			console.log("clicked");
+			const toSend = {"${_csrf.parameterName}" : "${_csrf.token}", "lid" : lid,"status" : "Progress"};
+			$.ajax({url:"http://localhost:8080/user/lecture", data: toSend, method: "POST"})
+			.done(function(){
+				console.log("set as viewed");
+				determineStatus(lid,"Progress");
+			})
+			.fail(function(){
+				console.log("operation failed");
+			});
+		}
+		//Lecture completed
+		function completed(lid){
+			console.log("completed");
+			const toSend = {"${_csrf.parameterName}" : "${_csrf.token}", "lid" : lid,"status" : "Completed"};
+			$.ajax({url:"http://localhost:8080/user/lecture", data: toSend, method: "POST"})
+			.done(function(){
+				console.log("set as completed");
+				determineStatus(lid,"Completed");
+			})
+			.fail(function(){
+				console.log("operation failed");
+			});
+		}
+		//Lecture marked for revirew
+		function review(lid){
+			console.log("review");
+			const toSend = {"${_csrf.parameterName}" : "${_csrf.token}", "lid" : lid,"status" : "Review"};
+			$.ajax({url:"http://localhost:8080/user/lecture", data: toSend, method: "POST"})
+			.done(function(){
+				console.log("set as viewed");
+				determineStatus(lid,"Review");
+			})
+			.fail(function(){
+				console.log("operation failed");
+			});
+		}
+		//Lecture unmark for revirew
+		function unReview(lid){
+			console.log("review");
+			const toSend = {"${_csrf.parameterName}" : "${_csrf.token}", "lid" : lid,"status" : "Completed"};
+			$.ajax({url:"http://localhost:8080/user/lecture", data: toSend, method: "POST"})
+			.done(function(){
+				console.log("set as viewed");
+				determineStatus(lid,"Completed");
+			})
+			.fail(function(){
+				console.log("operation failed");
+			});
 		}
 	</script>
 </body>

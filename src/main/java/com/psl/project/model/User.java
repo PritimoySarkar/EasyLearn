@@ -27,6 +27,14 @@ public class User {
     		        inverseJoinColumns = { @JoinColumn(name = "roles_id") }
     		)
     private List<Role> roles;
+    
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+    		name="progress",
+    				joinColumns = { @JoinColumn(name = "uid") }, 
+    		        inverseJoinColumns = { @JoinColumn(name = "lid") }
+    		)
+    private List<Lecture> lectures;
 
     @ManyToMany(mappedBy = "users")
     private List<Course> courses = new ArrayList<Course>(); 

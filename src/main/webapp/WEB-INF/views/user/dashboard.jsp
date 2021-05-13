@@ -44,6 +44,30 @@
 <!-- Canvas JS -->
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"> </script>
 <script>
+function loadProgress(cname,ucid,count){
+	var dataPts=[];
+	if(count.Completed>0) dataPts.push({y:count.Completed,label:"Completed"});
+	if(count.Progress>0) dataPts.push({y:count.Progress,label:"In Progress"});
+	if(count.Review>0) dataPts.push({y:count.Review,label:"Marked for Review"});
+	if(count.Unexplored>0) dataPts.push({y:count.Unexplored,label:"Unexplored"});
+	var chart = new CanvasJS.Chart("chartContainer_"+ucid, {
+		animationEnabled: true,
+		title:{
+			text: cname+" course progress"
+		},
+		data: [{
+			type: "doughnut",
+			startAngle: 60,
+			//innerRadius: 60,
+			indexLabelFontSize: 17,
+			indexLabel: "{label} - #percent%",
+			toolTipContent: "<b>{label}:</b> {y} (#percent%)",
+			dataPoints: dataPts
+		}]
+	});
+	chart.render();
+}
+
 //Canvas JS Plot
 function loadChart(cname,ucid,ats) {
 	console.log("loadCahrt called")
@@ -53,7 +77,7 @@ function loadChart(cname,ucid,ats) {
 		console.log(ats[i]);
 		var tempObj = {x:i+1,y:parseInt(ats[i].score)};
 		dataPts.push(tempObj);
-		}
+	}
 	var chart = new CanvasJS.Chart("courseScoreChart"+ucid, {
 		animationEnabled: true,
 		theme: "light2",
@@ -130,9 +154,28 @@ function loadChart(cname,ucid,ats) {
 					<h2 class="header">${pageContext.request.userPrincipal.name}</h2>
 				</div>
 			</div>
+			<div class="column sixteen wide">
 			<c:forEach var="cs" items="${coursescore}">
+				<h4 class="ui horizontal divider header"><i class="bar chart icon"></i>Performance Analysis</h4>
+				<div id="chartContainer_${cs.ucid}" style="height: 370px; width: 100%;"></div>
 				<div id="courseScoreChart${cs.ucid}" style="height: 370px; width: 100%;"></div>
 				<script>
+				function getProgress(){
+					$.ajax({method:"GET", url:"http://localhost:8080/user/progress/"+${cs.ucid}})
+						.done(function(responseJson){
+							console.log(responseJson)
+							loadProgress("${cs.cname}",${cs.ucid},responseJson);
+						})
+						.fail(function(){
+							console.log("failed");
+						})
+						.always(function(){
+							console.log("always");
+							
+						});
+					}
+					getProgress();
+					
 					function getAttempts(){
 					$.ajax({method:"GET", url:"http://localhost:8080/user/attempts/"+${cs.ucid}})
 						.done(function(responseJson){
@@ -153,7 +196,7 @@ function loadChart(cname,ucid,ats) {
 					getAttempts();
 				</script>
 			</c:forEach>
-
+			</div>
 			<table class="ui celled table" style="font-size: 16pt;">
 				<thead>
 					<tr>

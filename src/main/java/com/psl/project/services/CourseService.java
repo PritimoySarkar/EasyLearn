@@ -19,11 +19,11 @@ public class CourseService {
 	CourseDao coursedao;
 	
 	@Autowired
-	UserCourseDao userCourse;
+	UserCourseDao userCourseDao;
 	
 	//Method to insert new userCourse in the database
 	public void insertUserCourse(UserCourse uc) {
-		userCourse.save(uc);
+		userCourseDao.save(uc);
 	}
 	
 	//Method to insert new Course in the database
@@ -42,6 +42,12 @@ public class CourseService {
 		return course;
 	}
 	
+	//Method to get Course from the database using courseid
+		public Optional<UserCourse> getUserCourse(int ucid) {
+			Optional<UserCourse> userCourse = userCourseDao.findById(ucid);
+			return userCourse;
+		}
+	
 	//Method to get all the course details
 	public List<Course> getAllCourses(){
 		List<Course> courses = new ArrayList<Course>();
@@ -53,7 +59,7 @@ public class CourseService {
 	
 	//Method to get userCourse from userid and courseid
 	public List<UserCourse> getUserCourses(int uid,int cid){
-		List<UserCourse> userCourses = userCourse.findByUserAndCourse(uid, cid);
+		List<UserCourse> userCourses = userCourseDao.findByUserAndCourse(uid, cid);
 		return userCourses;
 	}
 	
@@ -77,7 +83,7 @@ public class CourseService {
 	
 	//Method to get enrolled usercourse details using userid 
 	public List<UserCourse> getAllEnrolledUserCourses(Long uid){
-		List<UserCourse> userCourses = userCourse.findByUid(uid);
+		List<UserCourse> userCourses = userCourseDao.findByUid(uid);
 		return userCourses;
 	}
 }
