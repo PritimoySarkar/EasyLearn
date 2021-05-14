@@ -35,7 +35,7 @@
 	opacity: 0.2;
 	position: absolute;
 	width: 100%;
-	background-size: cover;
+	height: fit-content;
 }
 
 #easy-learn {
@@ -110,7 +110,7 @@
 					</div>
 				</div>
 				<div class="col-sm-4" style="margin-top:20px;margin-bottom:20px;">
-					<div class="card text-white bg-danger mb-3"
+					<div onclick="location.href='/admin/users';" class="card text-white bg-danger mb-3"
 						style="max-width: 18rem;">
 						<div class="card-header" style="cursor:pointer;">User Performance</div>
 						<div class="card-body" style="cursor:pointer;">

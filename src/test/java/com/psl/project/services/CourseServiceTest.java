@@ -45,7 +45,7 @@ public class CourseServiceTest{
 		uc.setCid(99);
 		uc.setUcid(1);
 		uc.setUid(1L);;
-		uc.setScore(12);
+		//uc.setScore(12);
 		uc.setStatus("Test");
 		
 		Mockito.when(userCourseDao.save(uc)).thenReturn(uc);

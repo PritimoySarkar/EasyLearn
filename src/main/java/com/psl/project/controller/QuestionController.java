@@ -136,7 +136,12 @@ public class QuestionController {
 			attemptService.insertAttempt(attempt);
 
 			// Update the score and test status in the usercourse object
-			uc.setStatus(status);
+			if(status.equals("Passed")) {
+				uc.setStatus(status);
+			}
+			else {
+				if(uc.getStatus().equals("Enrolled")) uc.setStatus(status);
+			}
 
 			// adding the usercourse back into the database so the updated score and test
 			// staus will be saved in the database

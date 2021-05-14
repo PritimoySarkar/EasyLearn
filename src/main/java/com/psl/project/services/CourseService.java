@@ -86,4 +86,14 @@ public class CourseService {
 		List<UserCourse> userCourses = userCourseDao.findByUid(uid);
 		return userCourses;
 	}
+	
+	//Method to get count of total passed Quizzes of a user
+	public int getPassedQuizzes(Long uid) {
+		return userCourseDao.findPassedQuizzesByUser(uid);
+	}
+	
+	//Method to get count of total failed Quizzes of a user
+	public int getFailedQuizzes(Long uid) {
+		return userCourseDao.findFailedQuizzesByUser(uid);
+	}
 }

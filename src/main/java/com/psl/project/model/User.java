@@ -43,6 +43,14 @@ public class User {
 		super();
 	}
 
+	public List<Lecture> getLectures() {
+		return lectures;
+	}
+
+	public void setLectures(List<Lecture> lectures) {
+		this.lectures = lectures;
+	}
+
 	public User(Long id, String username, String password, String passwordConfirm, List<Role> roles,
 			List<Course> courses) {
 		super();

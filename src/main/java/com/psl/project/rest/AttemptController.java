@@ -100,4 +100,16 @@ public class AttemptController {
 		}
 		
 	}
+	
+	//Handle ajax call to count passed tests by the user
+	@GetMapping(value="/admin/users/passcount/{uid}")
+	public int getPassCount(@PathVariable("uid") Long uid) {
+		return courseService.getPassedQuizzes(uid);
+	}
+	
+	//Handle ajax call to count failed tests by the user
+	@GetMapping(value="/admin/users/failcount/{uid}")
+	public int getFailCount(@PathVariable("uid") Long uid) {
+		return courseService.getFailedQuizzes(uid);
+	}
 }

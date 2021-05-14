@@ -23,7 +23,7 @@
 	opacity: 0.2;
 	position: absolute;
 	width: 100%;
-	background-size: cover;
+	height: fit-content;
 }
 
 #easy-learn {

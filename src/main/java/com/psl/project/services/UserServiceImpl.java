@@ -9,6 +9,7 @@ import com.psl.project.repository.RoleRepository;
 import com.psl.project.repository.UserRepository;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,6 +27,12 @@ public class UserServiceImpl implements UserService {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setRoles(new ArrayList<>(roleRepository.findByName("USER")));
         userRepository.save(user);
+    }
+    
+    //Method to get all users from the database
+    @Override
+    public List<User> getAllUsers(){
+    	return userRepository.findAll();
     }
 
     //Method to get user details using username

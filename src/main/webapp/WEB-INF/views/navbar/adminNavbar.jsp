@@ -87,6 +87,7 @@ body>.ui.container {
 					class="item menu-item"><i class="book icon"></i>Courses</a> 
 					<a href="/admin/quizzes" class="item menu-item"><i class="clipboard icon"></i>Quizzes</a>
 					<a href="/admin/lectures" class="item menu-item"><i class="clipboard icon"></i>Lectures</a>
+					<a href="/admin/users" class="item menu-item"><i class="bar chart icon"></i>User Performance</a>
 					
 				<div class="right item menu-item ui simple dropdown">
 							Hello, ${pageContext.request.userPrincipal.name} <i class="dropdown icon"></i>

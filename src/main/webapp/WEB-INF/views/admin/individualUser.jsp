@@ -8,7 +8,7 @@
 <html>
 <head>
 <link rel="shortcut icon" type="image/x-icon"
-	href="resources/images/favicon.ico" />
+	href="/resources/images/favicon.ico" />
 <meta charset="ISO-8859-1">
 
 <title>Profile | EasyLearn</title>
@@ -127,15 +127,15 @@ function loadChart(cname,ucid,ats) {
 </style>
 </head>
 <body>
-	<jsp:include page="../navbar/courseNavbar.jsp" />
+	<jsp:include page="../navbar/adminNavbar.jsp" />
 	<div class="ui container">
-		<h1 class="ui header centered" style="margin-top: 110px">Dashboard</h1>
+		<h1 class="ui header centered" style="margin-top: 110px">Profile</h1>
 		<div class="ui divider"></div>
 		<div class="ui grid centered">
 			<div class="column two wide computer only"
 				style="text-align: center;">
 
-				<div class="ui move up masked instant reveal">
+				<div>
 					<div class="visible content">
 						<c:choose>
 							<c:when test="${empty user.profilePicture}">
@@ -148,11 +148,7 @@ function loadChart(cname,ucid,ats) {
 							</c:otherwise>
 						</c:choose>
 					</div>
-					<div class="hidden content">
-						<img onClick="editPicture(${user.id})"
-							src="/resources/images/edit.png"
-							class="ui small bordered circular image">
-					</div>
+					
 					<h2 class="header">${pageContext.request.userPrincipal.name}</h2>
 				</div>
 			</div>
@@ -211,10 +207,8 @@ function loadChart(cname,ucid,ats) {
 								</table>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary"
+								<button type="button" class="btn btn-primary"
 									data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary">Save
-									changes</button>
 							</div>
 						</div>
 					</div>
@@ -271,64 +265,10 @@ function loadChart(cname,ucid,ats) {
 				</div>
 			</c:forEach>
 			
-			<br /> <br /> <a style="margin-bottom: 20px;" class="ui button teal" href="/enrolledcourses">
-				<i class="angle left icon"></i>Enrolled Courses
-			</a>
+			<br /> <br />
 		</div>
 	</div>
-	<script>
-	//Edit Question
-	function editPicture(uid){
-		console.log(uid);
-	Swal.fire({
-		  title: 'Edit Profile Picture',
-		  html: `<br><form enctype="multipart/form-data" id="editProfilePicForm" method="POST" action="user/uploadProfilePicture">
-		  <input type="hidden" id="editUid" name="editUid"/>
-		  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-		  
-		  <div class="input-group mb-3">
-		  <div class="input-group-prepend">
-		    <span class="input-group-text">Upload</span>
-		  </div>
-		  <div class="custom-file">
-		  <label id="changePPLabel" class="custom-file-label" for="filePP">Choose Picture</label>
-		    <input accept=".png,.jpg,.jpeg,.PNG,.JPG,.JPEG" onchange="loadFile(event)" name="file" type="file" class="custom-file-input" id="filePP">
-		    
-		  </div>
-		</div>
-
-		  </form>`,
-		  confirmButtonText: 'Edit',
-		  focusConfirm: false,
-		  preConfirm: () => {
-		    const editName = Swal.getPopup().querySelector('#filePP').value
-		    if (!editName) {
-		      Swal.showValidationMessage(`Please enter Lecture Name and Url`)
-		    }
-		    else{
-			    document.getElementById("editProfilePicForm").submit();
-			    Swal.fire("Profile picture changed","","success");
-		    }	    
-		    //return { login: login, password: password }
-		  }
-		}).then((result) => {
-		  Swal.fire("Profile picture not changed","","error");
-		})
-		document.getElementById('editUid').value=uid;
-	}
-	
-	var loadFile = function(event) {
-		var x = document.getElementById('filePP').value;
-		x = x.substring(x.lastIndexOf("\\") + 1, x.length);
-		document.getElementById('changePPLabel').innerHTML=x;
-		console.log(x);
-	};
-	
-	//Code to replace the state of the question page so user can't visit coursepage after submitting the test and by going back to the previous page
-	if (window.history.replaceState) {
-		window.history.replaceState(null, null, window.location.href);
-	}
-	
+	<script>	
 	//Showing course depending on search result
 	var ids = document.getElementsByClassName("ucid_div");
 	var names = document.getElementsByClassName("cname_div");	
