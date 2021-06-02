@@ -114,7 +114,26 @@
 			<type>pom</type>
 		</dependency>
 
-
+		<!-- https://mvnrepository.com/artifact/de.adorsys.sts/secure-token-service -->
+		<dependency>
+			<groupId>de.adorsys.sts</groupId>
+			<artifactId>secure-token-service</artifactId>
+			<version>0.8.1</version>
+			<type>pom</type>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/commons-validator/commons-validator -->
+		<dependency>
+		    <groupId>commons-validator</groupId>
+		    <artifactId>commons-validator</artifactId>
+		    <version>1.7</version>
+		</dependency>
 
 
 	</dependencies>

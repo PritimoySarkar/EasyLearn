@@ -40,6 +40,7 @@ console.log(x);
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 				<button class="ui button teal" type="submit"><i class="lock open icon"></i>Login</button>
 				<p>New to EasyLearn? <a href="${contextPath}/registration">Register</a></p>
+				<p>Forget Password? Have to reset? <a href="${contextPath}/reset">Forget Password</a></p>
 
 			</form>
 		</div>

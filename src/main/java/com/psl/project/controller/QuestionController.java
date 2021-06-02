@@ -107,6 +107,7 @@ public class QuestionController {
 		// Setting test score and test status to request
 		request.setAttribute("score", score);
 		request.setAttribute("status", status);
+		request.setAttribute("total", answers.size());
 		// Code for score calculation ends here
 
 		// Code for saving score to Database starts here

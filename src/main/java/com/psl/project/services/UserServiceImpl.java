@@ -46,4 +46,21 @@ public class UserServiceImpl implements UserService {
     	Optional<User> user = userRepository.findById(id);
     	return user;
     }
+
+	@Override
+	public void forgotPassword(String username) {
+		// TODO Auto-generated method stub
+		User user = userRepository.findByUsername(username);
+		sendResetPasswordEmail(user);
+	}
+
+	@Override
+	public void updatePassword(String password, String token) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	protected void sendResetPasswordEmail(User user) {
+		
+	}
 }

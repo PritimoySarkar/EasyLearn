@@ -13,4 +13,8 @@ public interface UserService {
     public Optional<User> findByID(Long id);
     
     public List<User> getAllUsers();
+    
+    public void forgotPassword(String username);
+    
+    public void updatePassword(String password, String token);
 }

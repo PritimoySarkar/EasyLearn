@@ -9,7 +9,7 @@
 <head>
 <link rel="shortcut icon" type="image/x-icon" href="resources/images/favicon.ico"/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Registration | EasyLearn</title>
+<title>Reset Password | EasyLearn</title>
 <link rel="stylesheet"
 	href="<c:url value="/resources/semantic-ui/semantic.min.css" />">
 <!-- <link rel="stylesheet" href="semantic.min.css" />-->
@@ -18,40 +18,29 @@
 	<jsp:include page="navbar/loggedOutNavbar.jsp" />
 	<div class="ui grid container center aligned">
 		<div class="ui segment five wide column " style="margin-top: 60px;">
-			<div class="ui header huge">Register</div>
+			<div class="ui header huge">Reset Password</div>
 			<div class="ui divider"></div>
-			<form:form method="POST" modelAttribute="userForm"
+			<form:form method="POST" modelAttribute="userForm" action="/changepassword"
 				class="form-signin ui form">
 				
-				<spring:bind path="firstname">
+				<spring:bind path="username">
 					<div class="field form-group ${status.error ? 'has-error' : ''}">
-						<label>First Name</label> 
-						<form:input type="text" path="firstname" class="form-control" placeholder="Username"
-                                autofocus="true" required="true"></form:input>
-                    <form:errors path="firstname" style="color:#00b5ad;font-weight: bolder"></form:errors>
+						<label style="display:none;">Encoded Username</label> 
+						<form:input value="${encodedUsername}" type="hidden" path="encodedUsername" class="form-control" placeholder="Username"></form:input>
 					</div>
 				</spring:bind>
 				
-				<spring:bind path="lastname">
-					<div class="field form-group ${status.error ? 'has-error' : ''}">
-						<label>Last Name</label> 
-						<form:input type="text" path="lastname" class="form-control" placeholder="First Name"></form:input>
-                    <form:errors path="lastname" style="color:#00b5ad;font-weight: bolder"></form:errors>
-					</div>
-				</spring:bind>
-
 				<spring:bind path="username">
 					<div class="field form-group ${status.error ? 'has-error' : ''}">
-						<label>Email</label> 
-						<form:input type="text" path="username" class="form-control" placeholder="Username"></form:input>
-                    <form:errors path="username" style="color:#00b5ad;font-weight: bolder"></form:errors>
+						<label style="display:none;">Username</label> 
+						<form:input value="${username}" type="hidden" path="username" class="form-control" placeholder="Username"></form:input>
 					</div>
 				</spring:bind>
 
 				<spring:bind path="password">
 					<div class="field form-group ${status.error ? 'has-error' : ''}">
 						<label for="email">Password</label> 
-						<form:input type="password" path="password" class="form-control" placeholder="Password"></form:input>
+						<form:input autofocus="true" type="password" path="password" class="form-control" placeholder="Password"></form:input>
 						<form:errors path="password" style="color:#00b5ad;font-weight: bolder"></form:errors>
 					</div>
 				</spring:bind>
@@ -64,7 +53,7 @@
                                 <form:errors path="passwordConfirm" style="color:#00b5ad;font-weight: bolder"></form:errors>
 					</div>
 				</spring:bind>
-				<button class="ui button teal" type="submit"><i class="sign-in icon"></i>Register</button>
+				<button class="ui button teal" type="submit"><i class="sign-in icon"></i>Reset Password</button>
 				<p>
 					Already have an account? <a href="login">Login</a>
 				</p>

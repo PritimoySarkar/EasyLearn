@@ -5,10 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,12 +23,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.psl.project.model.Attempt;
 import com.psl.project.model.Progress;
 import com.psl.project.model.Quiz;
+import com.psl.project.model.User;
 import com.psl.project.model.UserCourse;
 import com.psl.project.services.AttemptService;
 import com.psl.project.services.CourseService;
 import com.psl.project.services.LectureService;
 import com.psl.project.services.ProgressService;
 import com.psl.project.services.QuizService;
+import com.psl.project.services.SmtpMailSender;
+import com.psl.project.services.UserService;
+
+import javassist.bytecode.stackmap.TypeData.ClassName;
 
 @RestController
 public class AttemptController {
@@ -39,6 +49,14 @@ public class AttemptController {
 	
 	@Autowired
 	LectureService lectureService;
+	
+	@Autowired
+	UserService userService;
+	
+	@Autowired
+    private SmtpMailSender smtpMailSender;
+	
+	Logger logger = LoggerFactory.getLogger(AttemptController.class);
 	
 	@GetMapping("/user/attempts/{ucid}")
 	public List<Attempt> showAttemptsForUsercourse(@PathVariable("ucid") int ucid){
@@ -112,4 +130,33 @@ public class AttemptController {
 	public int getFailCount(@PathVariable("uid") Long uid) {
 		return courseService.getFailedQuizzes(uid);
 	}
+	
+	//Request OTP
+    @PostMapping("/reset")
+    public Map<String,String> changePassword(@RequestParam Map<String,String> responses) throws MessagingException {
+    	Map<String,String> response = new HashMap<String, String>();
+    	User user = userService.findByUsername(responses.get("username"));
+    	if(user == null) {
+    		response.put("status", "false");
+    		
+    	}
+    	else {
+    		String encodedPassword = smtpMailSender.send(responses.get("username"), "Forget Password - Easy Learn - One Time Password", "<h1>Forget Password Body</h1>");
+    		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12); // Strength set as 12
+    		String encodedUsername = encoder.encode(responses.get("username"));
+    		response.put("encodedUsername", encodedUsername);
+    		response.put("encodedOtp", encodedPassword);
+    		response.put("status", "true");
+    	}
+    	return response;
+    }
+    
+    @PostMapping("/otpmatch")
+    public boolean otpMatcher(HttpServletRequest request, @RequestParam Map<String,String> responses) {
+    	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+    	if(encoder.matches(responses.get("otp"), responses.get("encodedOtp"))) {
+    		return true;
+    	}
+    	return false;
+    }
 }

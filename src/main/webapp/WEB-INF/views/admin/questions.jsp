@@ -395,5 +395,15 @@
 		}, true);
 	
 	</script>
+		<script>
+	
+		//Warn user before leaving the page
+				window.addEventListener('beforeunload', function (e) {
+			  // Cancel the event
+			  e.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
+			  // Chrome requires returnValue to be set
+			  e.returnValue = 'The exam will end and an attempt will be lost';
+			});
+	</script>
 </body>
 </html>

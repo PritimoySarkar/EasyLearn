@@ -32,13 +32,13 @@
 					<c:when test="${status.equals('Passed')}">
 						<div class="ui visible green message">
 							<h3>Congratulations, you have passed the test!</h3>
-							<h4>Your Score: ${score}</h4>
+							<h4>Your Score: ${score} out of ${total}</h4>
 						</div>
 					</c:when>
 					<c:otherwise>
 						<div class="ui visible red message">
 							<h3>You've not passed the test! Try taking the test again.</h3>
-							<h4>Your Score: ${score}</h4>
+							<h4>Your Score: ${score} out of ${total}</h4>
 						</div>
 					</c:otherwise>
 				</c:choose>
@@ -51,13 +51,13 @@
 					<c:when test="${status.equals('Passed')}">
 						<div class="ui visible green message">
 							<h3>Congratulations, you have passed the test!</h3>
-							<h4>Your Score: ${score}</h4>
+							<h4>Your Score: ${score} out of ${total}</h4>
 						</div>
 					</c:when>
 					<c:otherwise>
 						<div class="ui visible red message">
 							<h3>You've not passed the test! Try taking the test again.</h3>
-							<h4>Your Score: ${score}</h4>
+							<h4>Your Score: ${score} out of ${total}</h4>
 						</div>
 					</c:otherwise>
 				</c:choose>
@@ -70,13 +70,13 @@
 					<c:when test="${status.equals('Passed')}">
 						<div class="ui visible green message">
 							<h3>Congratulations, you have passed the test!</h3>
-							<h4>Your Score: ${score}</h4>
+							<h4>Your Score: ${score} out of ${total}</h4>
 						</div>
 					</c:when>
 					<c:otherwise>
 						<div class="ui visible red message">
 							<h3>You've not passed the test! Try taking the test again.</h3>
-							<h4>Your Score: ${score}</h4>
+							<h4>Your Score: ${score} out of ${total}</h4>
 						</div>
 					</c:otherwise>
 				</c:choose>
