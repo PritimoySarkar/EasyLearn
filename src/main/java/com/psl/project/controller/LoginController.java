@@ -67,7 +67,11 @@ public class LoginController {
     		//If user inputs contain any error get back to registration page
     		return "registration";
         }
-        
+    	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+    	if(!encoder.matches(userForm.getOtp(), userForm.getEncodedOtp())) {
+    		return "registration";
+    	}
+    	
         //Saving new user in the database
         userService.save(userForm);
         

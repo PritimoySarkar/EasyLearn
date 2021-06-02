@@ -36,9 +36,16 @@ public class SmtpMailSender {
         return contentBuilder.toString();
     }
 	
-	public String send(String to,String subject, String body) throws MessagingException {
+	public String send(String to,String subject, String body,String purpose) throws MessagingException {
 		//Get the html template for sending OTP mail
-		String filePath = "src\\main\\resources\\mail.html";
+		String template = "";
+		if(purpose.equals("welcome")) {
+			template = "welcome.html";
+		}
+		else {
+			template = "mail.html";
+		}
+		String filePath = "src\\main\\resources\\"+template;
 		String htmlBody = readLineByLineJava8( filePath );
 		
 		//Create random OTP

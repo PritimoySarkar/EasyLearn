@@ -62,9 +62,14 @@ public class UserValidator implements Validator {
         if ( userService.findByUsername( user.getUsername()) != null ) {
             errors.rejectValue("username", "Duplicate.userForm.username");
         }
-
+        
         //Check for empty field or blank space entered in the username
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
+        
+        //OTP Validation
+        if (user.getOtp().length() < 6 || user.getOtp().length() > 6) {
+        	errors.rejectValue("otp", "Blank.userForm.otp");
+        }
         
         //Set error if length of the username is less than 8 or greater than 32
         if ( user.getPassword().length() < 8 || user.getPassword().length() > 32 ) {
@@ -93,6 +98,19 @@ public class UserValidator implements Validator {
         //Set error if entered password and confirm password is different
         if ( !user.getPasswordConfirm().equals(user.getPassword()) ) {
             errors.rejectValue("passwordConfirm", "Diff.userForm.passwordConfirm");
+        }
+    }
+    
+    public void validateUsername(Object o, Errors errors) {
+        User user = (User) o;
+        //Email Id regex
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@" +  //part before @
+                "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$"; 
+        Pattern pat = Pattern.compile(emailRegex);
+ 
+        //check username format if valid email address or not
+        if (!pat.matcher(user.getUsername()).matches()) {
+        	errors.rejectValue("username", "Pattern.userForm.username");
         }
     }
 }

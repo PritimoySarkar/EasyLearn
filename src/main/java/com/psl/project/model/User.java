@@ -19,6 +19,10 @@ public class User {
     private String firstname;
     private String lastname;
     private String username;
+    
+    @Transient
+    private String encodedUSername;
+    
     private String password;
     private String profilePicture;
 
@@ -40,8 +44,30 @@ public class User {
 
 	@Transient
     private String passwordConfirm;
+	
+	@Transient
+    private String otp;
+	
+	@Transient
+    private String encodedOtp;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
+    public String getOtp() {
+		return otp;
+	}
+
+	public void setOtp(String otp) {
+		this.otp = otp;
+	}
+
+	public String getEncodedOtp() {
+		return encodedOtp;
+	}
+
+	public void setEncodedOtp(String encodedOtp) {
+		this.encodedOtp = encodedOtp;
+	}
+
+	@ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
     		name="user_roles",
     				joinColumns = { @JoinColumn(name = "users_id") }, 

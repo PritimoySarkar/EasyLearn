@@ -53,9 +53,6 @@ public class AttemptController {
 	@Autowired
 	UserService userService;
 	
-	@Autowired
-    private SmtpMailSender smtpMailSender;
-	
 	Logger logger = LoggerFactory.getLogger(AttemptController.class);
 	
 	@GetMapping("/user/attempts/{ucid}")
@@ -130,33 +127,4 @@ public class AttemptController {
 	public int getFailCount(@PathVariable("uid") Long uid) {
 		return courseService.getFailedQuizzes(uid);
 	}
-	
-	//Request OTP
-    @PostMapping("/reset")
-    public Map<String,String> changePassword(@RequestParam Map<String,String> responses) throws MessagingException {
-    	Map<String,String> response = new HashMap<String, String>();
-    	User user = userService.findByUsername(responses.get("username"));
-    	if(user == null) {
-    		response.put("status", "false");
-    		
-    	}
-    	else {
-    		String encodedPassword = smtpMailSender.send(responses.get("username"), "Forget Password - Easy Learn - One Time Password", "<h1>Forget Password Body</h1>");
-    		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12); // Strength set as 12
-    		String encodedUsername = encoder.encode(responses.get("username"));
-    		response.put("encodedUsername", encodedUsername);
-    		response.put("encodedOtp", encodedPassword);
-    		response.put("status", "true");
-    	}
-    	return response;
-    }
-    
-    @PostMapping("/otpmatch")
-    public boolean otpMatcher(HttpServletRequest request, @RequestParam Map<String,String> responses) {
-    	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
-    	if(encoder.matches(responses.get("otp"), responses.get("encodedOtp"))) {
-    		return true;
-    	}
-    	return false;
-    }
 }
