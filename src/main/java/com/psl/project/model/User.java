@@ -184,4 +184,13 @@ public class User {
     public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
+
+	public User(String firstname, String lastname, String username, String password) {
+		super();
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.username = username;
+		this.password = password;
+	}
+    
 }

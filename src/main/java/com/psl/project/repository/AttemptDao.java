@@ -10,4 +10,6 @@ import com.psl.project.model.Attempt;
 @Repository
 public interface AttemptDao extends JpaRepository<Attempt, Long>{
 	public List<Attempt> findByUcid(int ucid);
+	
+	public List<Attempt> findByUcidAndAttemptNo(int ucid,int attemptNo);
 }

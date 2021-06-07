@@ -48,10 +48,10 @@
 				<form class="ui form" action="/course/quiz/scorecard" method="post">
 					<input type="hidden" name="aid"
 						value="${attempt.aid}" />
-					<input type="hidden" name="${_csrf.parameterName}"
+					<input type="hidden" id="csrf_token" name="${_csrf.parameterName}"
 						value="${_csrf.token}" />
 					<c:forEach var="question" items="${questions}">
-						<input type="hidden" name="qid" value="${question.qid}" />
+						<input class="each-question" type="hidden" name="qid" value="${question.qqid}" id="question-${question.qid}"/>
 						<div class="grouped fields">
 							<label for="${question.qqid}">${question.slno}).&nbsp;
 								${question.question}</label>
@@ -61,8 +61,8 @@
 								<c:when test="${not empty question.option1}">
 									<div class="field">
 										<div class="ui radio">
-											<label> <input type="radio" name="${question.qqid}"
-												value="A" id="${question.option1}">
+											<label> <input type="radio" class="${question.qqid}-option" name="${question.qqid}"
+												value="A" id="${question.qqid}-1" onclick='onChangeAnswer("${aid}","${question.qqid}","A")'>
 												&ensp;${question.option1}
 											</label>
 										</div>
@@ -74,8 +74,9 @@
 								<c:when test="${not empty question.option2}">
 									<div class="field">
 										<div class="ui radio">
-											<label> <input type="radio" name="${question.qqid}"
-												value="B" id="${question.option1}">
+											<label> <input type="radio" class="${question.qqid}-option" name="${question.qqid}"
+												value="B" id="${question.qqid}-2" onclick='onChangeAnswer("${aid}","${question.qqid}","B")'>
+												&ensp;${question.option1})">
 												&ensp;${question.option2}
 											</label>
 										</div>
@@ -87,8 +88,8 @@
 								<c:when test="${not empty question.option3}">
 									<div class="field">
 										<div class="ui radio">
-											<label> <input type="radio" name="${question.qqid}"
-												value="C" id="${question.option1}">
+											<label> <input type="radio" class="${question.qqid}-option" name="${question.qqid}"
+												value="C" id='${question.qqid}-3' onclick='onChangeAnswer("${aid}","${question.qqid}","C")'>
 												&ensp;${question.option3}
 											</label>
 										</div>
@@ -100,8 +101,8 @@
 								<c:when test="${not empty question.option4}">
 									<div class="field">
 										<div class="ui radio">
-											<label> <input type="radio" name="${question.qqid}"
-												value="D" id="${question.option1}">
+											<label> <input type="radio" class="${question.qqid}-option" name="${question.qqid}"
+												value="D" id="${question.qqid}-4" onclick='onChangeAnswer("${aid}","${question.qqid}","D")'>
 												&ensp;${question.option4}
 											</label>
 										</div>
@@ -197,13 +198,42 @@
 			</div>
 		</div>
 	</div>
+	<script>
+	function setAnswer(qqid,answer){
+		console.log("Question ID: "+qqid);
+		console.log("Question's answer: "+answer);
+		var id='';
+		if(answer=='A') id=qqid+"-1";
+		else if(answer=='B') id=qqid+"-2";
+		else if(answer=='C') id=qqid+"-3";
+		else if(answer=='D') id=qqid+"-4";
+		console.log()
+		$("#"+id).prop("checked", true);
+	}
+	</script>
+	<c:choose>
+		<c:when test="${not empty answersBackup}">
+			<c:forEach var="question" items="${answersBackup}">
+				<div id="answersBackup-qid">${question.qqid}</div>
+				<div id="answersBackup-answer">${question.answer}</div>
+				<script>
+					var qqid = $('#answersBackup-qid').html();
+					var answer = $('#answersBackup-answer').html();
+					setAnswer(qqid,answer);
+					$('#answersBackup-qid').remove();
+					$('#answersBackup-answer').remove();
+					//console.log(qqid,answer);
+				</script>
+			</c:forEach>
+		</c:when>
+	</c:choose>
 	<footer>
 		<script>
-			//Code to replace the state of the question page so user can't visit coursepage after submitting the test and by going back to the previous page
+			//Code to replace the state of the question page so user can't visit coursepage after submitting the test and by going back to the previous page			
 			if (window.history.replaceState) {
 				window.history.replaceState(null, null, window.location.href);
 			}
-
+	
 			//A method that can be called only once to restrict time countdown manipulation
 			var onceTimer = (function() {
 			    var executed = false;
@@ -211,10 +241,11 @@
 			        if (!executed) {
 			            executed = true;
 			            //Code for countdown timer
-			            const start = 20;
+			            console.log("Quesion count is: "+"${time_in_seconds}");
+			            const start = parseInt("${time_in_seconds}");
 						function timer() {				
 							//if (typeof fired !== 'undefined'){ return;}
-							let secs = start * 60;
+							let secs = start;
 							
 							//Get the element where the timer will be set
 							const countDownElemnt = document.getElementById('countdown');
@@ -253,6 +284,36 @@
 			//Call the onceTimer function
 			onceTimer();
 
+			function onChangeAnswer(aid,qqid,answer){
+				var toSend = {"${_csrf.parameterName}" : "${_csrf.token}","aid": aid};
+				toSend[qqid] = answer;
+				$.ajax({url:"http://localhost:8080/user/questions/autosub", data: toSend, method: "POST"})
+				.done(function(response){
+					console.log("data sent on change");
+				})
+				.fail(function(){
+					console.log("data sending failed");
+				});
+			}
+			
+			(function restoreAnswers(){
+				if(!"${answersBackup}"==undefined){
+					console.log("No Backup found");
+				}
+				else{
+					console.log("${answersBackup}");
+					console.log(typeof "${answersBackup}");
+					console.log(typeof "${questions}");
+				}
+			})();
+			
+			//Warning before leaving page
+			window.addEventListener('beforeunload', function (e) {
+				  // Cancel the event
+				  e.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
+				  // Chrome requires returnValue to be set
+				  e.returnValue = '';
+				});
 		</script>
 	</footer>
 </body>

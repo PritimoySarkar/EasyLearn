@@ -39,12 +39,8 @@ public class UserController {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (principal instanceof UserDetails) {
 			String username = ((UserDetails) principal).getUsername();
-			// String uid = ((UserDetails)principal).getAuthorities();
-			System.out.println(username);
-			// System.out.println();
 		} else {
 			String username = principal.toString();
-			System.out.println(username);
 		}
 		return "users";
 	}
@@ -74,7 +70,12 @@ public class UserController {
 
 				// Getting quiz details for each course user has enrolled
 				List<Quiz> quizs = quizService.getQuiz(uc.getCid());
-				int totalMarks = quizs.get(0).getTotal_score();
+				if(quizs.size()>0) {
+					int totalMarks = quizs.get(0).getTotal_score();
+				}
+				else {
+					int totalMarks=0;	
+				}
 
 				// Creating coursescore object to wrap show course name quiz score and test
 				// result status

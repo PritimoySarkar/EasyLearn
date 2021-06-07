@@ -29,7 +29,7 @@ public class Course {
 	@JoinTable(name="user_course",joinColumns = @JoinColumn(name="cid"),inverseJoinColumns = @JoinColumn(name="uid"))
 	private List<User> users = new ArrayList<User>();
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name="cid")
 	private List<Quiz> quiz;
 	

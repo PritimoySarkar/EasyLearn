@@ -1,9 +1,14 @@
 package com.psl.project.model;
 
+import java.sql.Timestamp;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -16,8 +21,33 @@ public class Attempt {
 	private int attemptNo;
 	private int score;
 	private String status;
+	private Timestamp timestamp;
 	
+	public Timestamp getTimestamp() {
+		return timestamp;
+	}
+	public void setTimestamp(Timestamp timestamp) {
+		this.timestamp = timestamp;
+	}
+	@OneToMany
+	@JoinColumn(name="aid")
+	private List<AnswersBackup> answerBackups;
 	
+	public List<AnswersBackup> getAnswerBackups() {
+		return answerBackups;
+	}
+	public void setAnswerBackups(List<AnswersBackup> answerBackups) {
+		this.answerBackups = answerBackups;
+	}
+	public Attempt(Long aid, int ucid, int attemptNo, int score, String status, List<AnswersBackup> answerBackups) {
+		super();
+		this.aid = aid;
+		this.ucid = ucid;
+		this.attemptNo = attemptNo;
+		this.score = score;
+		this.status = status;
+		this.answerBackups = answerBackups;
+	}
 	public Attempt() {
 		super();
 	}public Attempt(int ucid, int attemptNo, int score, String status) {
@@ -66,4 +96,13 @@ public class Attempt {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	public Attempt(int ucid, int attemptNo, int score, String status, Timestamp timestamp) {
+		super();
+		this.ucid = ucid;
+		this.attemptNo = attemptNo;
+		this.score = score;
+		this.status = status;
+		this.timestamp = timestamp;
+	}
+	
 }

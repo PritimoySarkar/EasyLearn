@@ -25,4 +25,8 @@ public class AttemptService {
 	public List<Attempt> getAttemptsByUsercourse(int ucid){
 		return attemptDao.findByUcid(ucid);
 	}
+	
+	public List<Attempt> getAttemptsByUsercourseAndAttempt(int ucid,int attemptNo){
+		return attemptDao.findByUcidAndAttemptNo(ucid, attemptNo);
+	}
 }

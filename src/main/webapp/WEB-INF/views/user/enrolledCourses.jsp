@@ -151,6 +151,7 @@
 		</div>
 	</div>
 	<script>
+	
 	//Showing course depending on search result
 	var ids = document.getElementsByClassName("courseIdDiv");
 	var names = document.getElementsByClassName("courseNameDiv");	

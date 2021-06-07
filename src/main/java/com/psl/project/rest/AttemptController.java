@@ -65,14 +65,22 @@ public class AttemptController {
 		Map<String,Integer> statusCount = new HashMap<String, Integer>();
 		UserCourse userCourse = courseService.getUserCourse(ucid).get();
 		int totalLectures = lectureService.getLectureCount(userCourse.getCid());
-		int progressLecture = lectureService.getInProgressLectureCount(userCourse.getUid(), userCourse.getCid());
-		int completedLecture = lectureService.getCompletedLectureCount(userCourse.getUid(), userCourse.getCid());
-		int reviewLecture = lectureService.getReviewLectureCount(userCourse.getUid(), userCourse.getCid());
-		
-		statusCount.put("Unexplored", Math.round(((totalLectures-progressLecture+completedLecture+reviewLecture)*100)/totalLectures));
-		statusCount.put("Progress", Math.round((progressLecture*100)/totalLectures));
-		statusCount.put("Completed", Math.round((completedLecture*100)/totalLectures));
-		statusCount.put("Review", Math.round((reviewLecture*100)/totalLectures));
+		if(totalLectures>0) {
+			int progressLecture = lectureService.getInProgressLectureCount(userCourse.getUid(), userCourse.getCid());
+			int completedLecture = lectureService.getCompletedLectureCount(userCourse.getUid(), userCourse.getCid());
+			int reviewLecture = lectureService.getReviewLectureCount(userCourse.getUid(), userCourse.getCid());
+			
+			statusCount.put("Unexplored", Math.round(((totalLectures-progressLecture+completedLecture+reviewLecture)*100)/totalLectures));
+			statusCount.put("Progress", Math.round((progressLecture*100)/totalLectures));
+			statusCount.put("Completed", Math.round((completedLecture*100)/totalLectures));
+			statusCount.put("Review", Math.round((reviewLecture*100)/totalLectures));
+		}
+		else {
+			statusCount.put("Unexplored", 0);
+			statusCount.put("Progress", 0);
+			statusCount.put("Completed", 0);
+			statusCount.put("Review", 0);
+		}
 		return statusCount;
 	}
 	

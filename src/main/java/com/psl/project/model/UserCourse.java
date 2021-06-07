@@ -21,6 +21,14 @@ public class UserCourse {
 	private int cid;
 	private String status;
 	private int attemptsLeft;
+	private int rating;
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
 	@OneToMany
 	@JoinColumn(name="ucid")
 	private List<Attempt> attempts;
@@ -29,6 +37,15 @@ public class UserCourse {
 		super();
 	}
 	
+	public UserCourse(Long uid, int cid, String status, int attemptsLeft, int rating) {
+		super();
+		this.uid = uid;
+		this.cid = cid;
+		this.status = status;
+		this.attemptsLeft = attemptsLeft;
+		this.rating = rating;
+	}
+
 	public UserCourse(Long uid, int cid, String status, int attemptsLeft) {
 		super();
 		this.uid = uid;

@@ -49,6 +49,7 @@ public class AdminQuestionController {
 			tempQuiz.setCid(cid);
 			tempQuiz.setQname(qname);
 			tempQuiz.setTotal_score(0);
+			tempQuiz.setTime(0);
 			
 			//Insert the customized QUiz object into the database
 			quizService.insertQuiz(tempQuiz);
@@ -89,6 +90,7 @@ public class AdminQuestionController {
 		//Adding 1 score with total score 
 		Quiz quiz = quizService.getQuizById(qid).get();
 		quiz.setTotal_score(totalQuestions+1);
+		quiz.setTime(totalQuestions+1);
 		quizService.insertQuiz(quiz);
 		
 		//Adding all attributes in model and request to render the page with proper details

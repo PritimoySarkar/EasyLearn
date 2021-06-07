@@ -1,6 +1,11 @@
 package com.psl.project.controller;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.psl.project.model.Course;
 import com.psl.project.model.User;
 import com.psl.project.rest.AttemptController;
 import com.psl.project.services.SecurityService;
@@ -155,4 +161,17 @@ public class LoginController {
     	}
     	return "redirect:/login";
     }
+    
+    /*
+    @GetMapping(value="/admin/inall")
+	public String insertAllCourses(Model model){
+		System.out.println("Working in all");
+			for(int i=0;i<933;i++) {
+				User temp = new User("Demo"+i,"User","demo@abcd.com","password123");
+				userService.save(temp);
+				System.out.println("Inserted: "+i);
+			}   
+		return "redirect:/allcourses";
+	}
+	*/
 }

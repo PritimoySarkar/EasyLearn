@@ -123,7 +123,7 @@
 		<div class="ui divider"></div>
 		<div class="ui grid computer only">
 			<c:forEach var="course" items="${enrolledCourses}">
-				<div id="card-${course.cid}" class="column five wide">
+				<div id="card-${course.cid}" class="column five wide course">
 					<div class="ui card">
 						<div class="image">
 							<img
@@ -237,6 +237,10 @@
 		        }
 		    }
 		});
+		
+	function test(){
+		//var all_courses = get
+	}();
 	</script>
 </body>
 </html>

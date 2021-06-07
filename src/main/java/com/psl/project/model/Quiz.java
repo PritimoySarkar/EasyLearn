@@ -20,7 +20,14 @@ public class Quiz {
 	private String qname;
 	private int total_score;
 	private int cid;
+	private int time;
 	
+	public int getTime() {
+		return time;
+	}
+	public void setTime(int time) {
+		this.time = time;
+	}
 	@OneToMany
 	@JoinColumn(name="qid")
 	private List<Question> questions;

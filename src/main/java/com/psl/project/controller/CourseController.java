@@ -1,7 +1,11 @@
 package com.psl.project.controller;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -109,4 +114,66 @@ public class CourseController {
 		}
 		return "redirect:/enrolledcourses";
 	}
+	
+	@GetMapping(value="/inall")
+	public String insertAllCourses(Model model,HttpServletRequest request) throws IOException, IllegalStateException {
+		System.out.println("Working in all");
+		List<Long> uid = new ArrayList<Long>(); 
+		List<Integer> cid = new ArrayList<Integer>();
+		List<Integer> rating = new ArrayList<Integer>();
+		try  
+		{  
+			//the file to be opened for reading  
+			FileInputStream uidStream=new FileInputStream("D:\\uid.txt");
+			FileInputStream cidStream=new FileInputStream("D:\\cid.txt");
+			FileInputStream ratingStream=new FileInputStream("D:\\rating.txt");
+			Scanner sc=new Scanner(uidStream,"UTF-8");    //file to be scanned
+			Scanner sc2=new Scanner(cidStream,"UTF-8");
+			Scanner sc3=new Scanner(ratingStream,"UTF-8");
+			//returns true if there is another line to read
+			int count=0;
+			while(sc.hasNextLine())  
+			{  
+				count+=1;
+				uid.add(Long.parseLong(sc.nextLine()));
+			}
+			System.out.println(count);
+			count=0;
+			while(sc2.hasNextLine())  
+			{  
+				count+=1;
+				cid.add(Integer.parseInt(sc2.nextLine()));
+			}
+			System.out.println(count);
+			count=0;
+			while(sc3.hasNextLine())  
+			{  
+				count+=1;
+				rating.add(Integer.parseInt(sc3.nextLine()));
+			}
+			System.out.println(count);
+			
+			for(int i=0;i<uid.size();i++) {
+				List<UserCourse> existing = courseservice.getUserCourses(uid.get(i).intValue(),cid.get(i));
+				if(existing.size()==0) {
+					UserCourse temp = new UserCourse(uid.get(i),cid.get(i),"Enrolled",5,rating.get(i));
+					courseservice.insertUserCourse(temp);
+					System.out.println("inserted: "+i);
+				}
+				//System.out.println("inserted: "+i);
+				//courseService.insertCourse(temp);
+			}
+			sc.close();     //closes the scanner  
+			sc2.close();     //closes the scanner
+			sc3.close();     //closes the scanner
+		}  
+		catch(IOException e)  
+		{  
+			e.printStackTrace();  
+		}      
+		
+
+		return "redirect:/";
+	}
+	
 }

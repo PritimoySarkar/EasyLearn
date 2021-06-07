@@ -94,8 +94,10 @@ function determineStatus(lid,status){
 				onclick="document.getElementById('startTestForm').submit();">
 				<form id="startTestForm" method="POST"
 					action="/course/${quiz.qid}/quiz">
-					<input type="hidden" name="cid" value="${cid}" /> <input
-						type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					<input type="hidden" name="cid" value="${cid}" />
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					<input type="hidden" id="assessment_status" name="assessment_status" value="${assessment_status}" />
+					<input type="hidden" id="aid" name="aid"/>
 					<div class="ui">
 						Start<i class="angle right icon"></i>
 					</div>
@@ -245,12 +247,12 @@ function determineStatus(lid,status){
 					<div class="column five wide">
 						<c:choose>
 							<c:when test="${attemptLeft>0}">
-								<button class="ui button fluid teal" onclick="openQuizPrompt()">
+								<button id="Assessment-button" class="ui button fluid teal" onclick="openQuizPrompt()">
 									Assessment <i class="arrow right icon"></i>
 								</button>
 							</c:when>
-							<c:when test="${attemptLeft==0}">
-								<button class="ui button fluid red">
+							<c:when test="${attemptLeft<=0}">
+								<button id="Assessment-button" class="ui button fluid red">
 									No Attempt left
 								</button>
 							</c:when>
@@ -279,7 +281,7 @@ function determineStatus(lid,status){
 		//Lecture is in progress
 		function inProgress(lid){
 			console.log("clicked");
-			const toSend = {"${_csrf.parameterName}" : "${_csrf.token}", "lid" : lid,"status" : "Progress"};
+			var toSend = {"${_csrf.parameterName}" : "${_csrf.token}", "lid" : lid,"status" : "Progress"};
 			$.ajax({url:"http://localhost:8080/user/lecture", data: toSend, method: "POST"})
 			.done(function(){
 				console.log("set as viewed");
@@ -327,6 +329,15 @@ function determineStatus(lid,status){
 			.fail(function(){
 				console.log("operation failed");
 			});
+		}
+		console.log("${assessment_status}");
+		if("${assessment_status}"=="Running"){
+			console.log("Running");
+			$('#aid').val("${aid}")
+			$("#Assessment-button").html("Resume Test<i class='arrow right icon'></i>");
+		}
+		else{
+			console.log("Not Running");
 		}
 	</script>
 </body>

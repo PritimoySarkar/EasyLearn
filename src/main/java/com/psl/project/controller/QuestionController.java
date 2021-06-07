@@ -1,5 +1,7 @@
 package com.psl.project.controller;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.psl.project.model.AnswersBackup;
 import com.psl.project.model.Attempt;
 import com.psl.project.model.Question;
 import com.psl.project.model.Quiz;
@@ -47,16 +50,58 @@ public class QuestionController {
 		if (session.getAttribute("userid") == null) {
 			return "redirect:/";
 		} else {
-			//Fetch UserCourse details
-			UserCourse userCourse = courseService.getUserCourses(Integer.parseInt(session.getAttribute("userid").toString()), Integer.parseInt(responses.get("cid"))).get(0);
-			int remainingAttempt = userCourse.getAttemptsLeft();
-			userCourse.setAttemptsLeft(remainingAttempt-1);
-			courseService.insertUserCourse(userCourse);
-			Attempt attempt = new Attempt(userCourse.getUcid(),6-remainingAttempt,0,"Failed");
-			request.setAttribute("attempt", attempt);
-			attemptService.insertAttempt(attempt);
+			if(responses.get("aid")==null || responses.get("aid").equals("")) {
+				//Fetch UserCourse details using user ID and CourseID
+				UserCourse userCourse = courseService.getUserCourses(Integer.parseInt(session.getAttribute("userid").toString()), Integer.parseInt(responses.get("cid"))).get(0);
+				
+				//Fetch remaining attempt from userCourse
+				int remainingAttempt = userCourse.getAttemptsLeft();
+				
+				//Decrease left attempt by 1 in fetched userCourse object
+				userCourse.setAttemptsLeft(remainingAttempt-1);
+				
+				//put the modified userCourse object back into the database
+				courseService.insertUserCourse(userCourse);
+				
+				//Create a new Attempt object 
+				Attempt attempt = new Attempt(userCourse.getUcid(),6-remainingAttempt,0,"Failed",new Timestamp(new Date().getTime()));
+				
+				//Insert the newly created attempt object in the database
+				attemptService.insertAttempt(attempt);
+				
+				//set the attempt object as a attribute in request object
+				request.setAttribute("attempt", attempt);
+				
+				//set the aid as a attribute in request object
+				request.setAttribute("aid", attempt.getAid());
+				
+				//Send total seconds for the assessment
+				request.setAttribute("time_in_seconds", service.getQuestions(qid).size()*60);
+				
+				//Start the timer to auto submit answers and resume test within time
+				service.startTimer(attempt.getAid(),service.getQuestions(qid).size());
+			}
+			else {
+				Timestamp startTime = attemptService.getAttemptById(Long.parseLong(responses.get("aid"))).get().getTimestamp();
+				Timestamp currentTime = new Timestamp(new Date().getTime());
+				int elapsedSeconds=Math.round((currentTime.getTime() - startTime.getTime())/1000);
+				int totalSeconds = quizService.getQuizById(qid).get().getTime()*60;
+				int remainingTime = totalSeconds - elapsedSeconds;
+				if(remainingTime>0) {
+					request.setAttribute("aid", responses.get("aid"));
+					List<AnswersBackup> answersBackup = service.getAnswersBackup(Long.parseLong(responses.get("aid")));
+					request.setAttribute("answersBackup", answersBackup);
+					
+					//Send total seconds for the assessment
+					request.setAttribute("time_in_seconds", remainingTime);
+				}
+				else {
+					return "redirect:/";
+				}
+			}
 		}
 		request.setAttribute("questions", service.getQuestions(qid));
+		
 		return "user/questionPage";
 	}
 

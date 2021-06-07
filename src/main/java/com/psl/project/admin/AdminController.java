@@ -1,9 +1,17 @@
 package com.psl.project.admin;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Scanner;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -26,6 +34,13 @@ import com.psl.project.model.UserCourse;
 import com.psl.project.services.CourseService;
 import com.psl.project.services.QuizService;
 import com.psl.project.services.UserService;
+
+import org.apache.commons.collections.map.HashedMap;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
+import org.apache.poi.ss.usermodel.Row; 
 
 @Controller
 @RequestMapping("/admin")
@@ -133,4 +148,62 @@ public class AdminController {
 		request.setAttribute("coursescore", cs);
 		return "admin/individualUser";
 	}
+	
+	/*
+	@GetMapping(value="/inall")
+	public String insertAllCourses(Model model,HttpServletRequest request) throws IOException, IllegalStateException {
+		System.out.println("Working in all");
+		List<String> title = new ArrayList<String>(); 
+		List<String> description = new ArrayList<String>(); 
+		try  
+		{  
+			//the file to be opened for reading  
+			FileInputStream ttl=new FileInputStream("D:\\title.txt");
+			FileInputStream dsc=new FileInputStream("D:\\description.txt");
+			Scanner sc=new Scanner(ttl,"UTF-8");    //file to be scanned
+			Scanner sc2=new Scanner(dsc,"UTF-8");
+			//returns true if there is another line to read
+			int count=0;
+			while(sc.hasNextLine())  
+			{  
+				count+=1;
+				title.add(sc.nextLine());
+				//System.out.println(sc.nextLine());      //returns the line that was skipped
+				//System.out.println(sc2.nextLine());
+				//System.out.println();
+			}
+			System.out.println(count);
+			count=0;
+			while(sc2.hasNextLine())  
+			{  
+				count+=1;
+				description.add(sc2.nextLine());
+				//System.out.println(sc.nextLine());      //returns the line that was skipped
+				//System.out.println(sc2.nextLine());
+				//System.out.println();
+			}
+			System.out.println(count);
+			int maxt=0;
+			int maxd=0;
+			for(int i=0;i<description.size();i++) {
+				if(title.get(i).length()>maxt) maxt=title.get(i).length();
+				if(description.get(i).length()>maxd) maxd=description.get(i).length();
+				Course temp = new Course(title.get(i),description.get(i));
+				System.out.println("inserted: "+i);
+				courseService.insertCourse(temp);
+			}
+			System.out.println("maxt and maxd: "+maxt+" "+maxd);
+			sc.close();     //closes the scanner  
+			sc2.close();     //closes the scanner  
+		}  
+		catch(IOException e)  
+		{  
+			e.printStackTrace();  
+		}      
+		
+		request.setAttribute("courses", courseService.getAllCourses());
+		model.addAttribute("newCourse",new Course());
+		return "admin/courses";
+	}
+	*/
 }
